@@ -16,7 +16,7 @@ class Home extends BaseController
             'title' => 'Login - Fakultas Kedokteran Universitas Mulawarman',
             'validation' => \Config\Services::validation()
         ];
-        return view('auth/login', $data);
+        return view('auth/login2', $data);
     }
 
     public function operator()
