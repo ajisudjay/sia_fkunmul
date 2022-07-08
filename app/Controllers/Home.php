@@ -28,7 +28,6 @@ class Home extends BaseController
         $data = [
             'title' => 'Beranda | Siakad - Fakultas Kedokteran UNMUL',
             'topHeader' => 'Beranda | Siakad - Fakultas Kedokteran UNMUL',
-            'header' => 'Beranda | Siakad - Fakultas Kedokteran UNMUL',
             'header' => 'Beranda',
         ];
 
@@ -57,6 +56,7 @@ class Home extends BaseController
 
         $data = [
             'title' => 'Beranda | Siakad - Fakultas Kedokteran UNMUL',
+            'topHeader' => 'Beranda | Siakad - Fakultas Kedokteran UNMUL',
             'header' => 'Beranda',
         ];
 

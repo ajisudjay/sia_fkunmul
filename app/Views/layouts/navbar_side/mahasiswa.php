@@ -1,47 +1,69 @@
-  <header class="main-nav">
-      <nav>
-          <div class="main-navbar">
-              <div id="mainnav">
-                  <ul class="nav-menu custom-scrollbar">
-                      <li class="back-btn">
-                          <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
-                      </li>
-                      <li class="dropdown"><a class="nav-link" href="" target="_blank"><i data-feather="home"></i><span>Beranda</span></a></li>
-                      <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i data-feather="book"></i><span>Perkuliahan</span></a>
-                          <ul class="nav-submenu menu-content">
-                              <li><a class="submenu-title" href="javascript:void(0)">Jadwal<span class="sub-arrow"><i class="fa fa-chevron-right"></i></span></a>
-                                  <ul class="nav-sub-childmenu submenu-content">
-                                      <li><a href="">Jadwal Kuliah</a></li>
-                                      <li><a href="">Jadwal Uas</a></li>
-                                  </ul>
-                              </li>
-                              <li> <a class="submenu-title" href="javascript:void(0)">Master Data<span class="sub-arrow"><i class="fa fa-chevron-right"></i></span></a>
-                                  <ul class="nav-sub-childmenu submenu-content">
-                                      <li><a href="">User</a></li>
-                                      <li><a href="">Data Dosen </a></li>
-                                  </ul>
-                              </li>
-                              <li> <a class="submenu-title" href="javascript:void(0)">Footers<span class="sub-arrow"><i class="fa fa-chevron-right"></i></span></a>
-                                  <ul class="nav-sub-childmenu submenu-content">
-                                      <li><a href="footer-light.html">Footer Light</a></li>
-                                      <li><a href="footer-dark.html">Footer Dark</a></li>
-                                      <li><a href="footer-fixed.html">Footer Fixed</a></li>
-                                  </ul>
-                              </li>
-                          </ul>
-                      </li>
-                      <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i data-feather="book"></i><span>Master Data</span></a>
-                          <ul class="nav-submenu menu-content">
-                              <li> <a class="submenu-title" href="javascript:void(0)">User<span class="sub-arrow"><i class="fa fa-chevron-right"></i></span></a>
-                                  <ul class="nav-sub-childmenu submenu-content">
-                                      <li><a href="">User</a></li>
-                                      <li><a href="">Data Dosen </a></li>
-                                  </ul>
-                              </li>
-                          </ul>
-                      </li>
-                  </ul>
-              </div>
-          </div>
-      </nav>
-  </header>
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+        <nav class="pcoded-navbar">
+            <div class="pcoded-inner-navbar main-menu">
+                <ul class="pcoded-item pcoded-left-item">
+                    <li class="<?= $header == 'Beranda' ? 'active' : '' ?>">
+                        <a href="/home/operator">
+                            <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                            <span class="pcoded-mtext">Beranda</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="pcoded-navigatio-lavel">Portofolio</div>
+                <ul class="pcoded-item pcoded-left-item">
+                    <li class="<?= $topHeader == 'Portofolio' ? 'pcoded-trigger' : '' ?> pcoded-hasmenu">
+                        <a href="javascript:void(0)">
+                            <span class="pcoded-micon"><i class="feather icon-calendar"></i></span>
+                            <span class="pcoded-mtext">Data</span>
+                        </a>
+                        <ul class="pcoded-submenu">
+                            <li class="<?= $header == 'Aktifitas' ? 'active' : '' ?>">
+                                <a href="<?= base_url('/aktivitas'); ?>">
+                                    <span class="pcoded-mtext">Aktivitas</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- <div class="pcoded-navigatio-lavel">Perkuliahan</div>
+                <ul class="pcoded-item pcoded-left-item">
+                    <li class="<?= $topHeader == 'Jadwal' ? 'pcoded-trigger' : '' ?> pcoded-hasmenu">
+                        <a href="javascript:void(0)">
+                            <span class="pcoded-micon"><i class="feather icon-calendar"></i></span>
+                            <span class="pcoded-mtext">Jadwal</span>
+                        </a>
+                        <ul class="pcoded-submenu">
+                            <li class="<?= $header == 'Jadwal Kuliah' ? 'active' : '' ?>">
+                                <a href="">
+                                    <span class="pcoded-mtext">Jadwal Kuliah</span>
+                                </a>
+                            </li>
+                            <li class="<?= $header == 'Jadwal Uas' ? 'active' : '' ?>">
+                                <a href="javascript:void(0)">
+                                    <span class="pcoded-mtext">Jadwal Uas</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="<?= $topHeader == 'Monitoring' ? 'pcoded-trigger' : '' ?> pcoded-hasmenu">
+                        <a href="javascript:void(0)">
+                            <span class="pcoded-micon"><i class="feather icon-calendar"></i></span>
+                            <span class="pcoded-mtext">Monitoring</span>
+                        </a>
+                        <ul class="pcoded-submenu">
+                            <li class="<?= $header == 'Rekap Monitoring' ? 'active' : '' ?>">
+                                <a href="<?= base_url('rekap-monitoring'); ?>">
+                                    <span class="pcoded-mtext">Rekap Monitoring</span>
+                                </a>
+                            </li>
+                            <li class="<?= $header == 'Evaluasi Monitoring' ? 'active' : '' ?>">
+                                <a href="javascript:void(0)">
+                                    <span class="pcoded-mtext">Evaluasi Monitoring</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul> -->
+            </div>
+        </nav>
