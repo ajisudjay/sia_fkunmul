@@ -39,7 +39,7 @@
                                          <div class="modal-body">
                                              <?php $id = $item['id'] ?>
                                              <?php
-                                                $sql_edit = mysqli_query($koneksi, "SELECT *, users.id as idx FROM users JOIN userroles ON users.role=userroles.id WHERE users.id='$id'");
+                                                $sql_edit = mysqli_query($koneksi, "SELECT *, users.id as idx FROM users JOIN userroles ON users.role=userroles.id_role WHERE users.id='$id'");
                                                 $dataEdit = mysqli_fetch_array($sql_edit); ?>
                                              <div class="row">
                                                  <div class="col-lg-5">

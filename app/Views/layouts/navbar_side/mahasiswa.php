@@ -4,7 +4,7 @@
             <div class="pcoded-inner-navbar main-menu">
                 <ul class="pcoded-item pcoded-left-item">
                     <li class="<?= $header == 'Beranda' ? 'active' : '' ?>">
-                        <a href="/home/operator">
+                        <a href="/mahasiswa">
                             <span class="pcoded-micon"><i class="feather icon-home"></i></span>
                             <span class="pcoded-mtext">Beranda</span>
                         </a>
@@ -12,15 +12,22 @@
                 </ul>
                 <div class="pcoded-navigatio-lavel">Portofolio</div>
                 <ul class="pcoded-item pcoded-left-item">
-                    <li class="<?= $topHeader == 'Portofolio' ? 'pcoded-trigger' : '' ?> pcoded-hasmenu">
+                    <li class="<?= $topHeader == 'Aktifitas' ? 'pcoded-trigger' : '' ?> pcoded-hasmenu">
                         <a href="javascript:void(0)">
                             <span class="pcoded-micon"><i class="feather icon-calendar"></i></span>
                             <span class="pcoded-mtext">Data</span>
                         </a>
                         <ul class="pcoded-submenu">
                             <li class="<?= $header == 'Aktifitas' ? 'active' : '' ?>">
-                                <a href="<?= base_url('/aktivitas'); ?>">
+                                <a href="<?= base_url('/aktivitas-mahasiswa'); ?>">
                                     <span class="pcoded-mtext">Aktivitas</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="pcoded-submenu">
+                            <li class="<?= $header == 'Pretasi' ? 'active' : '' ?>">
+                                <a href="<?= base_url('/prestasi-mahasiswa'); ?>">
+                                    <span class="pcoded-mtext">Prestasi</span>
                                 </a>
                             </li>
                         </ul>

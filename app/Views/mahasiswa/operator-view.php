@@ -45,19 +45,10 @@
                                     </div>
                                 </div>
                                 <div class="card-block">
-                                    <?php if (session()->get('pesanEdit')) { ?>
+                                    <?php if (session()->getFlashdata('pesanBerhasil')) { ?>
                                         <div class="alert alert-success alert-dismissible fade show flash" role="alert">
-                                            <strong>Berhasil !</strong> <?= session()->getFlashdata('pesanEdit') ?>
-                                        </div>
-                                    <?php } ?>
-                                    <?php if (session()->get('pesanHapus')) { ?>
-                                        <div class="alert alert-success alert-dismissible fade show flash" role="alert">
-                                            <strong>Berhasil !</strong> <?= session()->getFlashdata('pesanHapus') ?>
-                                        </div>
-                                    <?php } ?>
-                                    <?php if (session()->get('pesanInput')) { ?>
-                                        <div class="alert alert-success alert-dismissible fade show flash" role="alert">
-                                            <strong>Berhasil !</strong> <?= session()->getFlashdata('pesanInput') ?>
+                                            <strong>Berhasil !</strong> <?= session()->getFlashdata('pesanBerhasil') ?>
+                                            <div class="flash-data1" data-flashdata=1></div>
                                         </div>
                                     <?php } ?>
                                     <hr>
@@ -84,6 +75,13 @@
                                             </div>
                                         </div>
                                         <button class="btn btn-primary mt-3 btnTampilkan" type="submit">Tampilkan</button>
+                                        <button type="button" class="float-right btn ml-2 mt-3 btn-danger" data-toggle="modal" data-target="#tambahMahasiswaExcel">
+                                            <span class="fa fa-plus-circle text-light"> Import EXCEL</span>
+                                        </button>
+
+                                        <a href="<?= base_url('file/template/mahasiswa.xlsx'); ?>" download="<?= base_url('file/template/mahasiswa.xlsx'); ?>" class="btn mt-3 btn-info float-right">
+                                            <span class="fa fa-download text-light"> Format Excel</span>
+                                        </a>
                                     </form>
                                     <hr>
                                     <div class="bg-transparent border-0 mt-3" id="result"></div>
@@ -92,6 +90,33 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EXCEL MAHASISWA -->
+
+<div class="modal fade" id="tambahMahasiswaExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Import EXCEL</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="<?= base_url('mahasiswa/prosesExcel'); ?>" method="post" id="" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label>File Excel</label>
+                        <input type="file" name="fileexcel" class="form-control" id="fileexcel" accept=".xls, .xlsx" /></p>
+                        <span class="text-danger errorexcel"></span>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary btnSimpan" type="submit">Upload</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

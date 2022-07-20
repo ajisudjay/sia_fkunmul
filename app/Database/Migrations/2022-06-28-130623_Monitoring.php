@@ -18,30 +18,37 @@ class Monitoring extends Migration
             'id_matakuliah' => [
                 'type' => 'INT',
                 'unsigned' => true,
+                'null' => TRUE
             ],
             'id_fak' => [
                 'type' => 'INT',
                 'unsigned' => true,
+                'null' => TRUE
             ],
             'id_ps' => [
                 'type' => 'INT',
                 'unsigned' => true,
+                'null' => TRUE
             ],
             'id_ta' => [
                 'type' => 'INT',
                 'unsigned' => true,
+                'null' => TRUE
             ],
             'id_kelas' => [
                 'type' => 'INT',
                 'unsigned' => true,
+                'null' => TRUE
             ],
             'id_paket_semester' => [
                 'type' => 'INT',
                 'unsigned' => true,
+                'null' => TRUE
             ],
             'id_dosen' => [
                 'type' => 'INT',
                 'unsigned' => true,
+                'null' => TRUE
             ],
             'pertemuan' => [
                 'type' => 'VARCHAR',
@@ -96,12 +103,12 @@ class Monitoring extends Migration
         ]);
 
         $this->forge->addKey('id_monitoring', TRUE);
-        $this->forge->addForeignKey('id_ps', 'programstudis', 'id');
-        $this->forge->addForeignKey('id_matakuliah', 'matakuliahs', 'id');
-        $this->forge->addForeignKey('id_fak', 'fakultas', 'id');
-        $this->forge->addForeignKey('id_ta', 'tahunajarans', 'id');
-        $this->forge->addForeignKey('id_kelas', 'kelas', 'id');
-        $this->forge->addForeignKey('id_dosen', 'dosens', 'id');
+        $this->forge->addForeignKey('id_ps', 'programstudis', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_matakuliah', 'matakuliahs', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_fak', 'fakultas', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_ta', 'tahunajarans', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_kelas', 'kelas', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_dosen', 'dosens', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('monitorings', TRUE);
     }
 

@@ -1,12 +1,3 @@
-<style>
-    .select2-container .select2-selection--single {
-        height: 40px !important;
-    }
-
-    .select2-selection__arrow {
-        height: 38px !important;
-    }
-</style>
 <!-- Modal -->
 <div class="modal fade" id="modalInput" aria-labelledby="exampleModalCenterTitle">
     <div class="modal-dialog modal-dialog-centered" style="min-width: 80%;" role="document">

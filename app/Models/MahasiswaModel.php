@@ -14,7 +14,7 @@ class MahasiswaModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_ps', 'id_fak', 'nama_mahasiswa', 'nim', 'alamat', 'telepon', 'email', 'status', 'id_angkatan', 'jk'];
+    protected $allowedFields    = ['id_ps', 'id_fak', 'nama_mahasiswa', 'nim', 'alamat', 'telepon', 'email', 'status', 'id_angkatan', 'jk', 'id_pb1', 'id_pb2', 'id_pa'];
 
     // Dates
     protected $useTimestamps = false;
@@ -39,4 +39,36 @@ class MahasiswaModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function edit($data, $nim)
+    {
+        return $this->db->table('mahasiswas')->update($data, ['nim' => $nim]);
+    }
+
+    public function editMahasiswa($data, $id)
+    {
+        return $this->db->table('mahasiswas')->update($data, ['id_mahasiswa' => $id]);
+    }
+
+    public function editUser($data, $nim)
+    {
+        return $this->db->table('users')->update($data, ['username' => $nim]);
+    }
+
+    public function hapus($id)
+    {
+        return $this->db->table('mahasiswas')->delete(['id_mahasiswa' => $id]);
+    }
+
+    public function hapusUser($nim)
+    {
+        return $this->db->table('users')->delete(['username' => $nim]);
+    }
+
+    public function cekNim($nim)
+    {
+        return $this->db->table('mahasiswas')
+            ->where('nim', $nim)
+            ->get()->getRowArray();
+    }
 }

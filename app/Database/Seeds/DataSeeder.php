@@ -11,15 +11,21 @@ class DataSeeder extends Seeder
         $this->call('FakultasSeeder');
         $this->call('ProgramStudiSeeder');
         $this->call('TahunAjaranSeeder');
+        $this->call('UserRoleSeeder');
         $this->call('UserSedder');
         $this->call('KelasSeeder');
-        $this->call('DosenSeeder');
         $this->call('AngkatanSeeder');
-        $this->call('MahasiswaSeeder');
         $this->call('StatusDosenSeeder');
-        $this->call('UserRoleSeeder');
         $this->call('KurikulumSeeder');
         $this->call('SemesterSeeder');
+        $this->call('DosenSeeder');
+        $this->call('MahasiswaSeeder');
         $this->call('MataKuliahSeeder');
+        $this->call('ModulSeeder');
+        $this->call('KegiatanSeeder');
+        $this->call('DeskripsiAktifitasSeeder');
+        $this->call('AktifitasSeeder');
+        $this->call('BimbinganSeeder');
+        $this->call('FeedbackAktifitasSeeder');
     }
 }

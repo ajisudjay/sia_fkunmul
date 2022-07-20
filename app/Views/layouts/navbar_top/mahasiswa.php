@@ -1,3 +1,6 @@
+<?php $model_foto = new \App\Models\UserModel();
+$foto = $model_foto->where('username', session()->get('username'))->first(); ?>
+
 <body>
     <!-- Pre-loader start -->
     <div class="theme-loader">
@@ -48,7 +51,7 @@
                         <a class="mobile-menu" id="mobile-collapse" href="#!">
                             <i class="feather icon-menu"></i>
                         </a>
-                        <a href="<?= base_url(''); ?>/home/operator">
+                        <a href="<?= base_url(''); ?>/mahasiswa">
                             <img class="img-fluid d-inline" src="<?= base_url(''); ?>\assets\images\logosiakad.png" width="170px" alt="Theme-Logo">
                         </a>
                         <a class="mobile-options">
@@ -98,39 +101,30 @@
                             </li>
                             <li class="user-profile header-notification">
                                 <div class="dropdown-primary dropdown">
-                                    <div class="dropdown-toggle" data-toggle="dropdown">
-                                        <img src="<?= base_url(''); ?>\assets\images\avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
-                                        <span>John Doe</span>
+                                    <div class="dropdown-toggle foto_user_awal" data-toggle="dropdown">
+                                        <img src="<?= base_url(''); ?>/assets/images/user-profile/<?= $foto['foto'] ?>" class="foto_user_awal" alt="User-Profile-Image" style="border-radius: 50%; height:35px">
+                                        <div class="foto_user d-none"></div>
+                                        <span class="nama_user_awal"><?= $foto['nama_user'] ?></span>
+                                        <span class="nama_user d-none"></span>
                                         <i class="feather icon-chevron-down"></i>
                                     </div>
                                     <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                         <li>
-                                            <a href="#!">
-                                                <i class="feather icon-settings"></i> Settings
+                                            <a type="button" class="bg-transparent" onclick="gantiPassword('<?= $foto['id'] ?>')">
+                                                <i class="feather icon-user-plus"></i>Ubah Password
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="user-profile.htm">
-                                                <i class="feather icon-user"></i> Profile
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="email-inbox.htm">
-                                                <i class="feather icon-mail"></i> My Messages
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="auth-lock-screen.htm">
-                                                <i class="feather icon-lock"></i> Lock Screen
+                                            <a href="<?= base_url('/profil-mahasiswa'); ?>">
+                                                <i class="feather icon-user"></i> Profil
                                             </a>
                                         </li>
                                         <li>
                                             <a href="<?= base_url('auth/logout'); ?>">
-                                                <i class="feather icon-log-out"></i> Logout
+                                                <i class="feather icon-log-out"></i> Keluar
                                             </a>
                                         </li>
                                     </ul>
-
                                 </div>
                             </li>
                         </ul>

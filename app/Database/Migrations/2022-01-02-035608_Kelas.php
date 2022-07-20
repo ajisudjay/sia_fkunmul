@@ -17,15 +17,18 @@ class Kelas extends Migration
             ],
             'id_fak' => [
                 'type' => 'INT',
-                'unsigned' => TRUE
+                'unsigned' => TRUE,
+                'null' => TRUE
             ],
             'id_ps' => [
                 'type' => 'INT',
-                'unsigned' => TRUE
+                'unsigned' => TRUE,
+                'null' => TRUE
             ],
             'id_ta' => [
                 'type' => 'INT',
-                'unsigned' => TRUE
+                'unsigned' => TRUE,
+                'null' => TRUE
             ],
             'kelas' => [
                 'type' => 'VARCHAR',
@@ -35,9 +38,9 @@ class Kelas extends Migration
         ]);
 
         $this->forge->addKey('id', TRUE);
-        $this->forge->addForeignKey('id_fak', 'fakultas', 'id');
-        $this->forge->addForeignKey('id_ps', 'programstudis', 'id');
-        $this->forge->addForeignKey('id_ta', 'tahunajarans', 'id');
+        $this->forge->addForeignKey('id_fak', 'fakultas', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_ps', 'programstudis', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_ta', 'tahunajarans', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('kelas', TRUE);
     }
 

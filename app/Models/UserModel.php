@@ -14,7 +14,7 @@ class UserModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id', 'username', 'nama_user', 'password', 'role', 'jk', 'foto', 'status'];
+    protected $allowedFields    = ['id', 'username', 'nama_user', 'password', 'role', 'jk', 'foto', 'foto_cover', 'id_user_ps'];
 
     // Dates
     protected $useTimestamps = false;
@@ -40,7 +40,18 @@ class UserModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function cekUser($password, $username)
+    public function hapus($nim)
     {
+        $this->db->table('users')->delete('username', $nim);
+    }
+
+    public function viewBeranda($username)
+    {
+        return $this->db->table('mahasiswas')->join('users', 'mahasiswas.nim=users.username')->join('programstudis', 'programstudis.id=mahasiswas.id_ps')->join('angkatans', 'angkatans.id=mahasiswas.id_angkatan')->join('dosens', 'dosens.id=mahasiswas.id_pa')->where('mahasiswas.nim', $username)->get()->getRowArray();
+    }
+
+    public function viewBerandaDosen($username)
+    {
+        return $this->db->table('dosens')->join('users', 'dosens.nip=users.username')->join('programstudis', 'programstudis.id=dosens.id_ps')->where('dosens.nip', $username)->get()->getRowArray();
     }
 }

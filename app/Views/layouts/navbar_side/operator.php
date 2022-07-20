@@ -4,7 +4,7 @@
             <div class="pcoded-inner-navbar main-menu">
                 <ul class="pcoded-item pcoded-left-item">
                     <li class="<?= $header == 'Beranda' ? 'active' : '' ?>">
-                        <a href="/home/operator">
+                        <a href="/operator">
                             <span class="pcoded-micon"><i class="feather icon-home"></i></span>
                             <span class="pcoded-mtext">Beranda</span>
                         </a>
@@ -12,7 +12,7 @@
                 </ul>
                 <div class="pcoded-navigatio-lavel">Perkuliahan</div>
                 <ul class="pcoded-item pcoded-left-item">
-                    <li class="<?= $topHeader == 'Jadwal' ? 'pcoded-trigger' : '' ?> pcoded-hasmenu">
+                    <!-- <li class="<?= $topHeader == 'Jadwal' ? 'pcoded-trigger' : '' ?> pcoded-hasmenu">
                         <a href="javascript:void(0)">
                             <span class="pcoded-micon"><i class="feather icon-calendar"></i></span>
                             <span class="pcoded-mtext">Jadwal</span>
@@ -32,7 +32,7 @@
                     </li>
                     <li class="<?= $topHeader == 'Monitoring' ? 'pcoded-trigger' : '' ?> pcoded-hasmenu">
                         <a href="javascript:void(0)">
-                            <span class="pcoded-micon"><i class="feather icon-calendar"></i></span>
+                            <span class="pcoded-micon"><i class="feather icon-book"></i></span>
                             <span class="pcoded-mtext">Monitoring</span>
                         </a>
                         <ul class="pcoded-submenu">
@@ -47,6 +47,12 @@
                                 </a>
                             </li>
                         </ul>
+                    </li> -->
+                    <li class="<?= $topHeader == 'Bimbingan' ? 'active' : '' ?>">
+                        <a href="<?= base_url('bimbingan-akademik'); ?>">
+                            <span class="pcoded-micon"><i class="feather icon-user"></i></span>
+                            <span class="pcoded-mtext">Bimbingan Akademik</span>
+                        </a>
                     </li>
                 </ul>
                 <div class="pcoded-navigatio-lavel">Data</div>
@@ -57,11 +63,11 @@
                             <span class="pcoded-mtext">Master Data</span>
                         </a>
                         <ul class="pcoded-submenu">
-                            <li class="<?= $header == 'Fakultas' ? 'active' : '' ?>">
+                            <!-- <li class="<?= $header == 'Fakultas' ? 'active' : '' ?>">
                                 <a href="<?= base_url('fakultas'); ?>">
                                     <span class="pcoded-mtext">Fakultas</span>
                                 </a>
-                            </li>
+                            </li> -->
                             <li class="<?= $header == 'Kelas' ? 'active' : '' ?>">
                                 <a href="<?= base_url('kelas'); ?>">
                                     <span class="pcoded-mtext">Kelas</span>
@@ -94,12 +100,12 @@
                         </a>
                         <ul class="pcoded-submenu">
                             <li class="<?= $header == 'Dosen' ? 'active' : '' ?>">
-                                <a href="<?= base_url('dosen'); ?>">
+                                <a href="<?= base_url('data-dosen'); ?>">
                                     <span class="pcoded-mtext">Dosen</span>
                                 </a>
                             </li>
                             <li class="<?= $header == 'Mahasiswa' ? 'active' : '' ?>">
-                                <a href="<?= base_url('mahasiswa'); ?>">
+                                <a href="<?= base_url('data-mahasiswa'); ?>">
                                     <span class="pcoded-mtext">Mahasiswa</span>
                                 </a>
                             </li>

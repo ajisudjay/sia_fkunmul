@@ -18,7 +18,6 @@ class ProgramStudiSeeder extends Seeder
             [
                 'program_studi' => 'D-3 Keperawatan',
             ],
-
         ];
 
         foreach ($data as $item) {

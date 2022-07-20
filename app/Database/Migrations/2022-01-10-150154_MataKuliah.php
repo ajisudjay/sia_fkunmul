@@ -18,18 +18,22 @@ class MataKuliah extends Migration
             'id_fak' => [
                 'type' => 'INT',
                 'unsigned' => true,
+                'null' => TRUE
             ],
             'id_ps' => [
                 'type' => 'INT',
                 'unsigned' => true,
+                'null' => TRUE
             ],
             'id_kurikulum' => [
                 'type' => 'INT',
                 'unsigned' => true,
+                'null' => TRUE
             ],
             'id_semester' => [
                 'type' => 'INT',
                 'unsigned' => true,
+                'null' => TRUE
             ],
             'mata_kuliah' => [
                 'type' => 'VARCHAR',
@@ -69,10 +73,10 @@ class MataKuliah extends Migration
         ]);
 
         $this->forge->addKey('id', TRUE);
-        $this->forge->addForeignKey('id_ps', 'programstudis', 'id');
-        $this->forge->addForeignKey('id_fak', 'fakultas', 'id');
-        $this->forge->addForeignKey('id_kurikulum', 'kurikulums', 'id');
-        $this->forge->addForeignKey('id_semester', 'semesters', 'id');
+        $this->forge->addForeignKey('id_ps', 'programstudis', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_fak', 'fakultas', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_kurikulum', 'kurikulums', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_semester', 'semesters', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('matakuliahs', TRUE);
     }
 

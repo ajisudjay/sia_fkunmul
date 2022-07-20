@@ -21,6 +21,9 @@ class UserRoleSeeder extends Seeder
             [
                 'user_role' => 'Umum',
             ],
+            [
+                'user_role' => 'Super Admin',
+            ],
         ];
 
         foreach ($data as $item) {

@@ -17,6 +17,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-lg-4">
                             <div class="page-header-breadcrumb">
                                 <ul class="breadcrumb-title">
@@ -45,19 +46,15 @@
                                     </div>
                                 </div>
                                 <div class="card-block">
-                                    <?php if (session()->get('pesanEdit')) { ?>
-                                        <div class="alert alert-success alert-dismissible fade show flash" role="alert">
-                                            <strong>Berhasil !</strong> <?= session()->getFlashdata('pesanEdit') ?>
+                                    <?php if (session()->get('pesanGagal')) { ?>
+                                        <div class="alert alert-danger alert-dismissible fade show flash" role="alert">
+                                            <strong>Gagal !</strong> <?= session()->getFlashdata('pesanGagal') ?>
                                         </div>
                                     <?php } ?>
-                                    <?php if (session()->get('pesanHapus')) { ?>
+                                    <?php if (session()->getFlashdata('pesanBerhasil')) { ?>
                                         <div class="alert alert-success alert-dismissible fade show flash" role="alert">
-                                            <strong>Berhasil !</strong> <?= session()->getFlashdata('pesanHapus') ?>
-                                        </div>
-                                    <?php } ?>
-                                    <?php if (session()->get('pesanInput')) { ?>
-                                        <div class="alert alert-success alert-dismissible fade show flash" role="alert">
-                                            <strong>Berhasil !</strong> <?= session()->getFlashdata('pesanInput') ?>
+                                            <strong>Berhasil !</strong> <?= session()->getFlashdata('pesanBerhasil') ?>
+                                            <div class="flash-data1" data-flashdata=1></div>
                                         </div>
                                     <?php } ?>
                                     <hr>

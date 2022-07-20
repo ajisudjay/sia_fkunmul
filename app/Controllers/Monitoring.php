@@ -191,8 +191,6 @@ class Monitoring extends BaseController
         $slug_kelas = $this->KelasModel->where('id', $id_kelas)->first();
 
         if ($request->isAJAX()) {
-
-
             $validation = \Config\Services::validation();
             $valid = $this->validate([
                 'id_matakuliah' => [

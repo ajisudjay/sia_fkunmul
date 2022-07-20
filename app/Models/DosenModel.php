@@ -14,7 +14,7 @@ class DosenModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id', 'id_ps', 'id_fak', 'nama_dosen', 'nip', 'alamat', 'telepon', 'email', 'status', 'jk'];
+    protected $allowedFields    = ['id', 'id_ps', 'id_fak', 'nama_dosen', 'nip', 'alamat', 'telepon', 'email', 'id_status_dosen', 'jk', 'status_ajar'];
 
     // Dates
     protected $useTimestamps = false;
@@ -39,4 +39,40 @@ class DosenModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function view()
+    {
+        return $this->db->table('dosens')
+            ->where(['status_ajar' => 'aktif'])
+            ->orderBy('nama_dosen', 'ASC')
+            ->get()->getResultArray();
+    }
+
+    public function edit($data, $nip)
+    {
+        return $this->db->table('dosens')->update($data, ['nip' => $nip]);
+    }
+
+    public function editUser($data, $nip)
+    {
+        return $this->db->table('users')->update($data, ['username' => $nip]);
+    }
+
+    public function hapusUser($nip)
+    {
+        return $this->db->table('users')->delete(['username' => $nip]);
+    }
+
+    public function cekNip($nip)
+    {
+        return $this->db->table('dosens')
+            ->where('nip', $nip)
+            ->get()->getRowArray();
+    }
+
+    public function input()
+    {
+        return $this->db->table('dosens')
+            ->insert();
+    }
 }
