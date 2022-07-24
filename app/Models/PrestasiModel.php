@@ -14,7 +14,7 @@ class PrestasiModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id', 'id_mahasiswa', 'jenis', 'tingkat', 'tanggal', 'judul', 'file_bukti'];
+    protected $allowedFields    = ['id', 'jenis', 'tingkat', 'tanggal', 'judul', 'file_bukti', 'id_prestasi_mahasiswa'];
 
     // Dates
     protected $useTimestamps = false;

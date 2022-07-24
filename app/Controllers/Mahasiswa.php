@@ -262,9 +262,10 @@ class Mahasiswa extends BaseController
                 $data_user = [
                     'username' => $username,
                     'nama_user' => $nama_user,
-                    'role' => '3',
+                    'role' => '2',
                     'jk' => $jk,
                     'id_user_ps' => $status,
+                    'foto' => 'user1.png',
                     'password' => password_hash($password, PASSWORD_DEFAULT),
                 ];
 

@@ -66,7 +66,7 @@
     <!-- Select 2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+    <script src="https://js.pusher.com/7.1/pusher.min.js"></script>
 </head>
 <style>
     .select2-container--default .select2-selection--multiple .select2-selection__choice {
@@ -102,5 +102,49 @@
         padding: 40px;
         background: #f6f6f6;
         border-radius: 10px;
+    }
+
+    .scroll_aktifitas {
+        width: 100%;
+        height: 650px;
+        overflow: scroll;
+        padding: 40px;
+        background: #f6f6f6;
+        border-radius: 10px;
+    }
+
+    blink {
+        -webkit-animation: 2s linear infinite kedip;
+        /* for Safari 4.0 - 8.0 */
+        animation: 2s linear infinite kedip;
+    }
+
+    /* for Safari 4.0 - 8.0 */
+    @-webkit-keyframes kedip {
+        0% {
+            visibility: hidden;
+        }
+
+        50% {
+            visibility: hidden;
+        }
+
+        100% {
+            visibility: visible;
+        }
+    }
+
+    @keyframes kedip {
+        0% {
+            visibility: hidden;
+        }
+
+        50% {
+            visibility: hidden;
+        }
+
+        100% {
+            visibility: visible;
+        }
     }
 </style>

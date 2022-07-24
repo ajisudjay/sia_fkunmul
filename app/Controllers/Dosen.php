@@ -201,6 +201,7 @@ class Dosen extends BaseController
                     'nama_user' => $nama_user,
                     'role' => '3',
                     'jk' => $jk,
+                    'foto' => 'user1.png',
                     'id_user_ps' => $status,
                     'password' => password_hash($password, PASSWORD_DEFAULT),
                 ];

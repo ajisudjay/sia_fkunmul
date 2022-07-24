@@ -7,7 +7,7 @@
                     <div class="row timeline-right p-t-35">
                         <div class="col-2 col-sm-2 col-xl-1">
                             <div class="social-timelines-left">
-                                <img class="img-radius timeline-icon" src="<?= base_url(''); ?>\assets\images\timeline.jpg" alt="">
+                                <img class="img-radius timeline-icon" src="<?= base_url(''); ?>\assets\icon\document.png" alt="">
                             </div>
                         </div>
                         <div class="col-10 col-sm-10 col-xl-11 p-l-5">
@@ -106,11 +106,21 @@
                             $('.error_feedback').text('');
                         }
                     } else {
-                        Swal.fire({
-                            icon: 'success',
-                            text: response.sukses,
+                        const Toast = Swal.mixin({
+                            toast: true,
                             position: 'top-end',
-                        });
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        })
+                        Toast.fire({
+                            icon: 'success',
+                            title: response.sukses
+                        })
                         $(".result-timeline").html(response.data);
                     }
                 },

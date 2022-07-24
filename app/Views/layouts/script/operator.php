@@ -26,15 +26,9 @@
 <script type="text/javascript" src="<?= base_url(''); ?>\assets\pages\message\message.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script src="<?= base_url(''); ?>\bower_components\sweetalert\js\sweetalert2.all.min.js"></script>
-<!-- Bootstrap date-time-picker js -->
-<script type="text/javascript" src="<?= base_url(''); ?>\assets\pages\advance-elements\moment-with-locales.min.js"></script>
-<script type="text/javascript" src="<?= base_url(''); ?>\bower_components\bootstrap-datepicker\js\bootstrap-datepicker.min.js"></script>
-<script type="text/javascript" src="<?= base_url(''); ?>\assets\pages\advance-elements\bootstrap-datetimepicker.min.js"></script>
-<!-- Date-range picker js -->
-<script type="text/javascript" src="<?= base_url(''); ?>\bower_components\bootstrap-daterangepicker\js\daterangepicker.js"></script>
+
 <!-- Date-dropper js -->
 <script type="text/javascript" src="<?= base_url(''); ?>\bower_components\datedropper\js\datedropper.min.js"></script>
-<script type="text/javascript" src="<?= base_url(''); ?>\assets\pages\social-timeline\social.js"></script>
 <script type="text/javascript" src="<?= base_url(''); ?>\assets\js\toastr.js"></script>
 <script type="text/javascript" src="<?= base_url(''); ?>\assets\js\toastr.min.js"></script>
 <script type="text/javascript" src="<?= base_url(''); ?>\assets\js\toastr2.min.js"></script>
@@ -77,10 +71,10 @@
     // END SWEET ALERT //
 </script>
 
-<script src="https://js.pusher.com/7.1/pusher.min.js"></script>
+
 <script>
     // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
+    // Pusher.logToConsole = true;
 
     var pusher = new Pusher('f3d8b822045da0f51d29', {
         cluster: 'ap1'
@@ -92,6 +86,40 @@
         $('.nama_user').html(data.nama);
         $('.nama_user_awal').addClass('d-none');
         $('.nama_user').removeClass('d-none');
+    });
+
+    var channel = pusher.subscribe('sia-fkunmul');
+    channel.bind('feedback', function(data) {
+        //  dosen
+        $('.feedback_aktifitas_dosen').html(data.feedbackdosen);
+        $('.isi_pesan_feedback').html(data.isi_pesan_feedback);
+        $('.feedback_aktifitas_dosen_status').removeClass('d-none');
+        $('.feedback_aktifitas_dosen_awal').addClass('d-none');
+        $('.view_isi_pesan_feedback').addClass('d-none');
+
+        // mahasiswa
+        $('.feedback_aktifitas_mahasiswa').html(data.feedbackmahasiswa);
+        $('.isi_pesan_feedback_mahasiswa').html(data.isi_pesan_feedback_mahasiswa);
+        $('.feedback_aktifitas_mahasiswa_status').removeClass('d-none');
+        $('.feedback_aktifitas_mahasiswa_awal').addClass('d-none');
+        $('.view_isi_pesan_feedback_mahasiswa').addClass('d-none');
+    });
+
+    // var channel = pusher.subscribe('sia-fkunmul');
+    // channel.bind('modalfeedback', function(data) {
+    //     // alert(JSON.stringify(data));
+    //     $('.feedback_aktifitas_dosen').addClass('d-none');
+    //     $('.feedback_aktifitas_dosen_status').addClass('d-none');
+    // });
+
+    var channel = pusher.subscribe('sia-fkunmul');
+    channel.bind('aktifitas', function(data) {
+        // alert(JSON.stringify(data));
+        $('.aktifitas_dosen').html(data.aktifitas_dosen);
+        $('.isi_pesan_aktifitas').html(data.isi_pesan_aktifitas);
+        $('.aktifitas_dosen_status').removeClass('d-none');
+        $('.aktifitas_dosen_awal').addClass('d-none');
+        $('.view_isi_pesan_aktifitas').addClass('d-none');
     });
 </script>
 

@@ -35,6 +35,8 @@
                                                         <textarea rows="5" cols="5" class="feedback form-control" name="feedback" placeholder="Tulis Balasan . . ."></textarea>
                                                         <input type="text" name="id_aktifitas" value="<?= $id_aktifitas ?>" id="" hidden>
                                                         <input type="text" name="id_user" value="<?= $id_user ?>" id="" hidden>
+                                                        <input type="text" name="id_mahasiswa" value="<?= $id_mahasiswa ?>" id="" hidden>
+                                                        <input type="text" name="id_pa" value="<?= $id_pa ?>" id="" hidden>
                                                         <i style="font-size: 10px;" class="text-danger error_feedback"></i>
                                                         <div class="text-right m-t-20">
                                                             <button type="submit" class="btn btnFeedback btn-primary waves-effect waves-light">Kirim</button>
@@ -48,7 +50,7 @@
                                                 <label class="text-primary">Kegiatan Lainnya</label>
                                                 <hr>
                                                 <?php $id_mahasiswa = $aktifitas['id_mahasiswa_aktifitas'] ?>
-                                                <?php $sql_aktifitas = mysqli_query($koneksi, "SELECT * FROM aktifitas JOIN mahasiswas ON mahasiswas.id_mahasiswa=aktifitas.id_mahasiswa_aktifitas WHERE id_mahasiswa_aktifitas='$id_mahasiswa'");
+                                                <?php $sql_aktifitas = mysqli_query($koneksi, "SELECT * FROM aktifitas JOIN mahasiswas ON mahasiswas.id_mahasiswa=aktifitas.id_mahasiswa_aktifitas WHERE id_mahasiswa_aktifitas='$id_mahasiswa' ORDER BY id DESC LIMIT 5");
                                                 while ($itemOthers = mysqli_fetch_array($sql_aktifitas)) {
                                                     $id = $itemOthers['id'];
                                                     if ($id == $id_aktifitas) {

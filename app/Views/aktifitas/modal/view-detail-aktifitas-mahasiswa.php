@@ -1,18 +1,16 @@
 <!-- tambah modal-->
-<div class="modal fade modalViewDetail" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalInputAktifitas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="max-width: 80%;" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title font-weight-bold" id="exampleModalLabel">Detail Aktifitas</h5>
-                <button type="button" class="close" onclick="statusAktifitas()" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body scroll_aktifitas">
                 <div class="row">
-                    <!-- Left column start -->
                     <div class="col-lg-12 col-xl-9">
-                        <!-- Job description card start -->
                         <div class="card">
                             <div class="card-header">
                                 <div class="row">
@@ -59,7 +57,7 @@
                         <!-- Filter card start -->
                         <div class="card">
                             <div class="card-header">
-                                <h5><i class="icofont icofont-user m-r-5 text-warning"></i>Mahasiswa Bimbingan</h5>
+                                <h5><i class="icofont icofont-user m-r-5 text-warning"></i>Mahasiswa</h5>
                             </div>
                             <div class="card-block">
                                 <h5><?= $aktifitas['nama_mahasiswa'] ?></h5>
@@ -84,15 +82,6 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick="statusAktifitas()" data-dismiss="modal">Tutup</button>
-            </div>
         </div>
     </div>
 </div>
-
-<script>
-    function statusAktifitas() {
-        location.reload();
-    }
-</script>

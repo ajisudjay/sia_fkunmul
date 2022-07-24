@@ -19,29 +19,48 @@
     <table id="basic-row-reorder" class="table table-striped table-bordered nowrap">
         <thead>
             <tr>
-                <td style="max-width: 5%;">No</td>
-                <td style="max-width: 10%;">Aksi</td>
-                <td style="max-width: 20%;">Kegiatan</td>
-                <td style="max-width: 50%;">Judul</td>
-                <td style="max-width: 10%;">Tanggal</td>
+                <td>No</td>
+                <td>Status</td>
+                <td>Aksi</td>
+                <td>Modul</td>
+                <td>Tanggal</td>
+                <td>Matakuliah</td>
+                <td>Kegiatan</td>
+                <td>Judul</td>
             </tr>
         </thead>
         <tbody>
             <?php $no = 1 ?>
-            <?php $sql_aktifitas = mysqli_query($koneksi, "SELECT *, aktifitas.id as id_aktifitas FROM aktifitas JOIN kegiatans ON kegiatans.id=aktifitas.id_kegiatan JOIN mahasiswas ON mahasiswas.id_mahasiswa=aktifitas.id_mahasiswa_aktifitas WHERE mahasiswas.nim='$nim'");
+            <?php $sql_aktifitas = mysqli_query($koneksi, "SELECT *, aktifitas.id as id_aktifitas FROM aktifitas JOIN kegiatans ON kegiatans.id=aktifitas.id_kegiatan JOIN matakuliahs ON matakuliahs.id=aktifitas.id_matakuliahs JOIN mahasiswas ON mahasiswas.id_mahasiswa=aktifitas.id_mahasiswa_aktifitas WHERE mahasiswas.nim='$nim' ORDER BY id_aktifitas DESC");
             while ($item = mysqli_fetch_array($sql_aktifitas)) {
-                $id = $item['id_aktifitas'] ?>
+                $id = $item['id_aktifitas'];
+                $id_user = session()->get('id_user') ?>
                 <tr>
                     <td style="text-align: center;"><?= $no++ ?></td>
                     <td>
-                        <a href="<?= base_url('/detail-aktifitas-mahasiswa/' . $item['slug_aktifitas'] . ''); ?>">
-                            <span class="fa fa-eye-slash text-warning"></span>
-                        </a>
+                        <?php if ($feedbackaktifitas['id_aktifitas'] == $id && $feedbackaktifitas['penerima'] == $id_user) { ?>
+                            <div class="blink">
+                                <blink>
+                                    <span class="badge badge-danger">Feedback Baru</span>
+                                </blink>
+                            </div>
+                        <?php } ?>
+                    </td>
+                    <td>
+                        <button type="button" class="bg-transparent border-0" onclick="modalDetail('<?= $item['slug_aktifitas'] ?>')">
+                            <span class="ml-2 fa fa-info text-warning"></span>
+                        </button>
+                        <button type="button" class="bg-transparent border-0" onclick="modalFeedback('<?= $item['slug_aktifitas'] ?>')">
+                            <span class="fa fa-comments text-info"></span>
+                        </button>
+
                     </td>
                     <!-- ISI VIEW -->
+                    <td style="text-align: center;"><?= $item['id_modul'] ?></td>
+                    <td><?= date('d-m-Y', strtotime($item['tanggal'])) ?></td>
+                    <td><?= $item['mata_kuliah'] ?></td>
                     <td><?= $item['kegiatan'] ?></td>
                     <td><?= $item['judul'] ?></td>
-                    <td><?= date('d-m-y', strtotime($item['tanggal'])) ?></td>
                 </tr>
             <?php } ?>
         </tbody>
@@ -49,12 +68,13 @@
 </div>
 <div class="modalInputView" style="display: none;"></div>
 <div class="modalViewData" style="display: none;"></div>
+<!-- <div class="modalViewFeedback" style="display: none;"></div> -->
 <!-- SCRIPT AJAX -->
 <script>
     function modalInput() {
         $.ajax({
             type: "post",
-            url: "<?= base_url('aktifitas/modalInput') ?>",
+            url: "<?= base_url('aktifitas/modalInputMahasiswa') ?>",
             dataType: "JSON",
             success: function(response) {
                 if (response.sukses) {
@@ -68,26 +88,45 @@
         });
     }
 
-    $(document).ready(function() {
-        $('.modalView').submit(function(e) {
-            e.preventDefault(e);
-            $.ajax({
-                type: "post",
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
-                dataType: "json",
-                success: function(response) {
-                    if (response.sukses) {
-                        $('.modalViewData').html(response.sukses).show();
-                        $('#modalView').modal('show');
-                    }
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    function modalDetail(slug_aktifitas) {
+        $.ajax({
+            type: "post",
+            url: "<?= base_url('aktifitas/modalDetailMahasiswa') ?>",
+            dataType: "JSON",
+            data: {
+                slug_aktifitas: slug_aktifitas
+            },
+            success: function(response) {
+                if (response.sukses) {
+                    $('.modalViewData').html(response.sukses).show();
+                    $('#modalInputAktifitas').modal('show');
                 }
-            });
-        })
-    })
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            }
+        });
+    }
+
+    // function modalFeedback(slug_aktifitas) {
+    //     $.ajax({
+    //         type: "post",
+    //         url: "<?= base_url('aktifitas/modalFeedbackMahasiswa') ?>",
+    //         dataType: "JSON",
+    //         data: {
+    //             slug_aktifitas: slug_aktifitas
+    //         },
+    //         success: function(response) {
+    //             if (response.sukses) {
+    //                 $('.modalViewFeedback').html(response.sukses).show();
+    //                 $('#modalFeedbackAktifitas').modal('show');
+    //             }
+    //         },
+    //         error: function(xhr, ajaxOptions, thrownError) {
+    //             alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    //         }
+    //     });
+    // }
     //percobaan upload
     $(document).ready(function() {
         // function edit

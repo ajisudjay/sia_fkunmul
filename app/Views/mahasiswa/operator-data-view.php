@@ -5,16 +5,16 @@
  </button>
 
  <div class="dt-responsive table-responsive mt-3">
-     <table id="basic-row-reorder" class="table table-striped table-bordered nowrap">
+     <table id="" class="table table-striped table-bordered nowrap">
          <thead>
-             <tr>
-                 <td style="max-width: 5px;">No</td>
-                 <td style="max-width: 10px;">Aksi</td>
-                 <td style="max-width: 30px;">Foto</td>
-                 <td style="max-width: 50px;">Angkatan</td>
-                 <td style="width: 10px;">NIM</td>
-                 <td style="width: 300px;">Nama</td>
-                 <td style="width: 100px;">Akun User</td>
+             <tr style="font-weight: bold; text-align:center">
+                 <td>No</td>
+                 <td>Aksi</td>
+                 <td>Foto</td>
+                 <td>Angkatan</td>
+                 <td>NIM</td>
+                 <td>Nama</td>
+                 <td>Akun User</td>
              </tr>
          </thead>
          <tbody>
@@ -23,8 +23,8 @@
                     $id_user = $item['nim'];
                 ?>
                  <tr>
-                     <td style="text-align: center;"><?= $no++ ?></td>
-                     <td>
+                     <td style="max-width: 10px;text-align: center;"><?= $no++ ?></td>
+                     <td style="max-width: 90px;">
                          <!-- Modal EDIT -->
                          <button type="button" class="bg-transparent border-0" data-toggle="modal" data-target="#modalEdit<?= $item['id_mahasiswa'] ?>">
                              <span class="fa fa-edit text-primary"></span>
@@ -104,11 +104,12 @@
                                  <span class="feather icon-trash-2 text-danger"></span>
                              </button>
                          </form>
+
+                         <!-- Modal Detail-->
                          <button type="button" class="bg-transparent border-0" data-toggle="modal" data-target="#modalDetail<?= $item['id_mahasiswa'] ?>">
                              <span class="fa fa-info text-info"></span>
                          </button>
 
-                         <!-- Modal Detail-->
                          <div class="modal fade" id="modalDetail<?= $item['id_mahasiswa'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                              <div class="modal-dialog modal-lg" role="document">
                                  <div class="modal-content">
@@ -162,10 +163,10 @@
                                 $akun = 'hidden';
                             } ?>
 
-                         <button type="button" class="bg-transparent border-0" data-toggle="modal" data-target="#tambahUserMahasiswa<?= $item['id'] ?>" <?= $akun ?>>
+                         <button type="button" class="bg-transparent border-0" data-toggle="modal" data-target="#tambahUserMahasiswa<?= $item['id_mahasiswa'] ?>" <?= $akun ?>>
                              <span class="fa fa-key text-warning"></span>
                          </button>
-                         <div class="modal fade" id="tambahUserMahasiswa<?= $item['id'] ?>" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                         <div class="modal fade" id="tambahUserMahasiswa<?= $item['id_mahasiswa'] ?>" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                              <div class="modal-dialog modal-dialog-centered" role="document">
                                  <div class="modal-content">
                                      <div class="modal-header">
@@ -212,19 +213,19 @@
                              </div>
                          </div>
                      </td>
-                     <td align="center">
+                     <td align="center" style="max-width: 30px;">
                          <?php if ($item['foto'] == NULL) { ?>
                              <img src="<?= base_url('assets/images/user-profile.png'); ?>" width="30px" height="30px" alt="">
                          <?php } else { ?>
                              <img src="<?= base_url('foto/profile/' . $item['foto'] . ''); ?>" alt="">
                          <?php } ?>
-                     </td>
+                     </td style="max-width: 10px;">
                      <?php
                         $sql_angkatan = mysqli_query($koneksi, "SELECT * FROM mahasiswas JOIN angkatans ON mahasiswas.id_angkatan=angkatans.id WHERE mahasiswas.id_mahasiswa='$id'");
                         $dataAngkatan = mysqli_fetch_array($sql_angkatan); ?>
-                     <td><?= $dataAngkatan['angkatan'] ?></td>
-                     <td><?= $item['nim'] ?></td>
-                     <td><?= $item['nama_mahasiswa'] ?></td>
+                     <td style="max-width: 10px;text-align:center"><?= $dataAngkatan['angkatan'] ?></td>
+                     <td style="min-width: 100px;"><?= $item['nim'] ?></td>
+                     <td style="min-width: 300px;"><?= $item['nama_mahasiswa'] ?></td>
                      <td><?= $user ?></td>
                  </tr>
              <?php endforeach ?>
@@ -444,7 +445,7 @@
                      });
                      $('body').removeClass('modal-open');
                      $('.modal-backdrop').remove();
-                     $(".result").html(response.data);
+                     $("#result").html(response.data);
                  }
              },
              error: function(xhr, ajaxOptions, thrownError) {
@@ -492,7 +493,7 @@
                      });
                      $('body').removeClass('modal-open');
                      $('.modal-backdrop').remove();
-                     $(".result").html(response.data);
+                     $("#result").html(response.data);
                  }
              },
              error: function(xhr, ajaxOptions, thrownError) {

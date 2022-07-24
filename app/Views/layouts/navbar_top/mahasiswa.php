@@ -1,5 +1,15 @@
-<?php $model_foto = new \App\Models\UserModel();
-$foto = $model_foto->where('username', session()->get('username'))->first(); ?>
+<?php
+
+$model_foto = new \App\Models\UserModel();
+$this->KoneksiModel = new \App\Models\KoneksiModel();
+$this->MahasiswaModel = new \App\Models\MahasiswaModel();
+
+$foto = $model_foto->where('username', session()->get('username'))->first();
+$koneksi = $this->KoneksiModel->koneksi();
+
+$id_user = session()->get('id_user');
+$username = session()->get('username'); ?>
+
 
 <body>
     <!-- Pre-loader start -->
@@ -62,43 +72,56 @@ $foto = $model_foto->where('username', session()->get('username'))->first(); ?>
                     <div class="navbar-container container-fluid">
                         <ul class="nav-left"></ul>
                         <ul class="nav-right">
-                            <li>
-                                <a href="#!" onclick="javascript:toggleFullScreen()">
-                                    <i class="feather icon-maximize full-screen"></i>
-                                </a>
-                            </li>
+
+                            <!-- NOTIF FEEDBACK BARU -->
+                            <?php $sql_feedback = mysqli_query($koneksi, "SELECT * FROM aktifitas JOIN mahasiswas ON aktifitas.id_mahasiswa_aktifitas=mahasiswas.id_mahasiswa JOIN feedbackaktifitas ON aktifitas.id=feedbackaktifitas.id_aktifitas WHERE feedbackaktifitas.status='new' AND penerima='$id_user'"); ?>
+                            <?php $jumlahFeedback = mysqli_num_rows($sql_feedback);
+                            if ($jumlahFeedback > 0) {
+                                $view_li_fb = '';
+                            } else {
+                                $view_li_fb = 'hidden';
+                            } ?>
                             <li class="header-notification">
                                 <div class="dropdown-primary dropdown">
-                                    <div class="dropdown-toggle" data-toggle="dropdown">
-                                        <i class="feather icon-bell"></i>
-                                        <span class="badge bg-c-pink">5</span>
+                                    <div class="dropdown-toggle feedback_aktifitas_mahasiswa_awal" data-toggle="dropdown">
+                                        <i class="fa fa-comment-o"></i>
+                                        <?php if ($jumlahFeedback > 0) { ?>
+                                            <span class="badge bg-c-pink d-none"><?= $jumlahFeedback ?></span>
+                                        <?php } ?>
+                                    </div>
+                                    <div class="dropdown-toggle feedback_aktifitas_mahasiswa_status d-none" data-toggle="dropdown">
+                                        <i class="fa fa-comment-o"></i>
+                                        <span class="badge bg-c-pink feedback_aktifitas_mahasiswa"></span>
                                     </div>
                                     <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                         <li>
-                                            <h6>Pemberitahuan</h6>
+                                            <h6>Feedback Aktifitas</h6>
                                             <label class="label label-danger">Baru</label>
                                         </li>
                                         <li>
-                                            <div class="media">
-                                                <img class="d-flex align-self-center img-radius" src="<?= base_url(''); ?>\assets\images\avatar-4.jpg" alt="Generic placeholder image">
-                                                <div class="media-body">
-                                                    <h5 class="notification-user">John Doe</h5>
-                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                    <span class="notification-time">30 minutes ago</span>
-                                                </div>
+                                            <div class="isi_pesan_feedback_mahasiswa"></div>
+                                            <div class="view_isi_pesan_feedback_mahasiswa">
+                                                <?php $sql_feedbacks = mysqli_query($koneksi, "SELECT *, aktifitas.id as id_akt FROM aktifitas JOIN mahasiswas ON aktifitas.id_mahasiswa_aktifitas=mahasiswas.id_mahasiswa JOIN feedbackaktifitas ON aktifitas.id=feedbackaktifitas.id_aktifitas JOIN users ON mahasiswas.nim=users.username JOIN dosens ON mahasiswas.id_pa=dosens.id  WHERE feedbackaktifitas.status='new' AND penerima='$id_user' ORDER BY id_feedback DESC LIMIT 5"); ?>
+                                                <?php while ($dataFeedback = mysqli_fetch_array($sql_feedbacks)) {
+                                                    $nim = base64_encode($dataFeedback['nim']);
+                                                    $id_ta = base64_encode('@49innqwj//;-' . $dataFeedback['id_tahun_ajaran'] . '') ?>
+                                                    <div class="media mb-3">
+                                                        <img class="d-flex align-self-center img-radius" src="<?= base_url(''); ?>\assets\images\user-profile\<?= $dataFeedback['foto'] ?>" alt="Generic placeholder image">
+                                                        <a onclick="modalFeedback('<?= $dataFeedback['slug_aktifitas'] ?>')">
+                                                            <div class=" media-body" style="min-width: 100%;">
+                                                                <h5 class="notification-user"><?= $dataFeedback['judul'] ?></h5>
+                                                                <p class="notification-msg mb-1" style="margin-bottom: -5px;"><?= $dataFeedback['feedback'] ?></p>
+                                                                <span class="notification-time"><?= date('d-m-Y', strtotime($dataFeedback['tanggal'])) ?></span>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                <?php } ?>
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
-                            <li class="header-notification">
-                                <div class="dropdown-primary dropdown">
-                                    <div class="displayChatbox dropdown-toggle" data-toggle="dropdown">
-                                        <i class="feather icon-message-square"></i>
-                                        <span class="badge bg-c-green">3</span>
-                                    </div>
-                                </div>
-                            </li>
+
                             <li class="user-profile header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle foto_user_awal" data-toggle="dropdown">
@@ -238,3 +261,27 @@ $foto = $model_foto->where('username', session()->get('username'))->first(); ?>
                     </div>
                 </div>
             </div>
+
+            <div class="modalViewFeedback" style="display: none;"></div>
+
+            <script>
+                function modalFeedback(slug_aktifitas) {
+                    $.ajax({
+                        type: "post",
+                        url: "<?= base_url('aktifitas/modalFeedbackMahasiswa') ?>",
+                        dataType: "JSON",
+                        data: {
+                            slug_aktifitas: slug_aktifitas
+                        },
+                        success: function(response) {
+                            if (response.sukses) {
+                                $('.modalViewFeedback').html(response.sukses).show();
+                                $('#modalFeedbackAktifitas').modal('show');
+                            }
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+                        }
+                    });
+                }
+            </script>

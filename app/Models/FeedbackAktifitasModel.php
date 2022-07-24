@@ -14,7 +14,7 @@ class FeedbackAktifitasModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_aktifitas', 'feedback', 'id_user', 'waktu', 'status'];
+    protected $allowedFields    = ['id_aktifitas', 'feedback', 'id_user', 'waktu', 'status', 'penerima', 'pengirim'];
 
     // Dates
     protected $useTimestamps = false;
@@ -39,4 +39,19 @@ class FeedbackAktifitasModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function ubah($data_update, $id_aktifitas, $id_user)
+    {
+        return $this->db->table('feedbackaktifitas')->update($data_update, ['id_aktifitas' => $id_aktifitas, 'penerima' => $id_user]);
+    }
+
+    public function count($id_penerima, $id_aktifitas)
+    {
+        return $this->db->query("SELECT *, COUNT(feedback) as jumlah FROM feedbackaktifitas WHERE id_aktifitas=$id_aktifitas AND status='new' AND penerima=$id_penerima")->getRowArray();
+    }
+
+    // public function countMahasiswa($id_penerima, $id_aktifitas)
+    // {
+    //     return $this->db->query("SELECT *, COUNT(feedback) as jumlah FROM feedbackaktifitas WHERE id_aktifitas=$id_aktifitas AND status='new' AND penerima=$id_penerima")->getRowArray();
+    // }
 }

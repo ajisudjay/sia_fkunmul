@@ -33,6 +33,30 @@
                         </ul>
                     </li>
                 </ul>
+                <div class="pcoded-navigatio-lavel">Profil</div>
+                <ul class="pcoded-item pcoded-left-item">
+                    <li class="<?= $topHeader == 'Edit Profil' ? 'pcoded-trigger' : '' ?> pcoded-hasmenu">
+                        <a href="javascript:void(0)">
+                            <span class="pcoded-micon"><i class="feather icon-calendar"></i></span>
+                            <span class="pcoded-mtext">Profil</span>
+                        </a>
+                        <ul class="pcoded-submenu">
+                            <li class="<?= $header == 'Edit Profil' ? 'active' : '' ?>">
+                                <a href="<?= base_url('/profil-mahasiswa'); ?>">
+                                    <span class="pcoded-mtext">Edit Profil</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="pcoded-submenu">
+                            <?php $nim = base64_encode(session()->get('username')) ?>
+                            <li class="<?= $header == 'Data Diri' ? 'active' : '' ?>">
+                                <a href="<?= base_url('/data-diri-mahasiswa/' . $nim . ''); ?>">
+                                    <span class="pcoded-mtext">Data Diri</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
                 <!-- <div class="pcoded-navigatio-lavel">Perkuliahan</div>
                 <ul class="pcoded-item pcoded-left-item">
                     <li class="<?= $topHeader == 'Jadwal' ? 'pcoded-trigger' : '' ?> pcoded-hasmenu">

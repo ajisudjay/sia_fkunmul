@@ -25,6 +25,16 @@ class FeedbackAktifitas extends Migration
                 'unsigned' => true,
                 'null' => TRUE
             ],
+            'penerima' => [
+                'type' => 'INT',
+                'unsigned' => true,
+                'null' => TRUE
+            ],
+            'pengirim' => [
+                'type' => 'INT',
+                'unsigned' => true,
+                'null' => TRUE
+            ],
             'feedback' => [
                 'type' => 'TEXT',
                 'constraint' => '20000',
@@ -43,6 +53,8 @@ class FeedbackAktifitas extends Migration
 
         $this->forge->addKey('id_feedback', TRUE);
         $this->forge->addForeignKey('id_user', 'users', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('penerima', 'users', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('pengirim', 'users', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('id_aktifitas', 'aktifitas', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('feedbackaktifitas', TRUE);
     }

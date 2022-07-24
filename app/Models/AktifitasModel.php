@@ -14,7 +14,7 @@ class AktifitasModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['judul', 'id_kegiatan', 'tanggal', 'id_modul', 'id_tahun_ajaran', 'id_matakuliahs', 'file_bukti', 'id_mahasiswa_aktifitas', 'deskripsi', 'slug_aktifitas'];
+    protected $allowedFields    = ['judul', 'id_kegiatan', 'tanggal', 'id_modul', 'id_tahun_ajaran', 'id_matakuliahs', 'file_bukti', 'id_mahasiswa_aktifitas', 'deskripsi', 'slug_aktifitas', 'status_aktifitas'];
 
     // Dates
     protected $useTimestamps = false;
@@ -88,16 +88,27 @@ class AktifitasModel extends Model
             ->join('users', 'mahasiswas.nim=users.username')
             ->join('tahunajarans', 'tahunajarans.id=aktifitas.id_tahun_ajaran')
             ->join('programstudis', 'mahasiswas.id_ps=programstudis.id')
-            ->where('aktifitas.id', $id_aktifitas)->get()->getRowArray();
+            ->where('aktifitas.id', $id_aktifitas)
+            ->get()->getRowArray();
     }
 
     public function viewDetailAktifitasDosen($id_mahasiswa)
     {
-        return $this->db->query('SELECT *, aktifitas.id as id_aktifitas FROM aktifitas JOIN kegiatans ON kegiatans.id=aktifitas.id_kegiatan JOIN mahasiswas ON mahasiswas.id_mahasiswa=aktifitas.id_mahasiswa_aktifitas JOIN dosens ON dosens.id=mahasiswas.id_pa JOIN matakuliahs ON matakuliahs.id=aktifitas.id_matakuliahs WHERE aktifitas.id_mahasiswa_aktifitas=' . $id_mahasiswa . '')->getResultArray();
+        return $this->db->query("SELECT *, aktifitas.id as id_aktifitas FROM aktifitas JOIN kegiatans ON kegiatans.id=aktifitas.id_kegiatan JOIN mahasiswas ON mahasiswas.id_mahasiswa=aktifitas.id_mahasiswa_aktifitas JOIN dosens ON dosens.id=mahasiswas.id_pa JOIN matakuliahs ON matakuliahs.id=aktifitas.id_matakuliahs WHERE aktifitas.id_mahasiswa_aktifitas=$id_mahasiswa ORDER BY id_aktifitas DESC")->getResultArray();
     }
 
-    public function viewDetailAktifitasSemester($id_tahun_ajaran, $id_mahasiswa)
+    public function viewDetailAktifitasSemester($id_mahasiswa, $id_tahun_ajaran)
     {
-        return $this->db->query('SELECT *, aktifitas.id as id_aktifitas FROM aktifitas JOIN kegiatans ON kegiatans.id=aktifitas.id_kegiatan JOIN mahasiswas ON mahasiswas.id_mahasiswa=aktifitas.id_mahasiswa_aktifitas JOIN dosens ON dosens.id=mahasiswas.id_pa JOIN matakuliahs ON matakuliahs.id=aktifitas.id_matakuliahs WHERE aktifitas.id_mahasiswa_aktifitas=' . $id_mahasiswa . ' AND aktifitas.id_tahun_ajaran=' . $id_tahun_ajaran . '')->getResultArray();
+        return $this->db->query("SELECT *, aktifitas.id as id_aktifitas FROM aktifitas JOIN kegiatans ON kegiatans.id=aktifitas.id_kegiatan JOIN mahasiswas ON mahasiswas.id_mahasiswa=aktifitas.id_mahasiswa_aktifitas JOIN dosens ON dosens.id=mahasiswas.id_pa JOIN matakuliahs ON matakuliahs.id=aktifitas.id_matakuliahs WHERE aktifitas.id_mahasiswa_aktifitas=$id_mahasiswa AND aktifitas.id_tahun_ajaran= $id_tahun_ajaran ORDER BY id_aktifitas DESC")->getResultArray();
+    }
+
+    public function viewDetailNotifDosen($slug_aktifitas)
+    {
+        return $this->db->query("SELECT *, aktifitas.id as id_aktifitas FROM aktifitas JOIN kegiatans ON kegiatans.id=aktifitas.id_kegiatan JOIN mahasiswas ON mahasiswas.id_mahasiswa=aktifitas.id_mahasiswa_aktifitas JOIN dosens ON dosens.id=mahasiswas.id_pa JOIN matakuliahs ON matakuliahs.id=aktifitas.id_matakuliahs WHERE aktifitas.slug_aktifitas=$slug_aktifitas")->getRowArray();
+    }
+
+    public function count($id_pa)
+    {
+        return $this->db->query("SELECT *, COUNT(status_aktifitas) as jumlah FROM aktifitas JOIN mahasiswas ON aktifitas.id_mahasiswa_aktifitas=mahasiswas.id_mahasiswa WHERE aktifitas.status_aktifitas='new' AND mahasiswas.id_pa='$id_pa'")->getRowArray();
     }
 }

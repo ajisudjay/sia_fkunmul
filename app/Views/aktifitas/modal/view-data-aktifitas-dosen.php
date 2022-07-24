@@ -1,5 +1,5 @@
 <!-- tambah modal-->
-<div class="modal fade" id="modalViewFeedbackAktifitas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalViewFeedbackAktifitas" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="max-width: 80%;" role="document">
         <div class="modal-header"></div>
         <div class="modal-content">
@@ -26,7 +26,7 @@
                                                             <img class="media-object img-radius msg-img-h" src="<?= base_url('assets/icon/document.png') ?>" alt="" style="border-radius: 10%; height:50px">
                                                         </a>
                                                         <div class="media-body">
-                                                            <div class="txt-white font-weight-bold"><?= $aktifitas['judul'] ?></div>
+                                                            <div class="txt-white font-weight-bold"><?= word_limiter($aktifitas['judul'], 11) ?></div>
                                                             <p class="mt-2 text-muted m-b-0"><?= $aktifitas['kegiatan'] ?></p>
                                                             <hr>
                                                             <span class="text-muted f-14 m-b-10"><?= $aktifitas['mata_kuliah'] ?></span>
@@ -47,10 +47,11 @@
                                             <input type="text" name="id_user" value="<?= $id_user ?>" id="" hidden>
                                             <input type="text" name="id_mahasiswa" value="<?= $id_mahasiswa ?>" id="" hidden>
                                             <i style="font-size: 10px;" class="text-danger error_feedback"></i>
-                                            <div class="text-right m-t-20">
-                                                <button type="submit" class="btn btnFeedback btn-primary waves-effect waves-light">Kirim</button>
+                                            <div class="m-t-20">
+                                                <button type="submit" class="btn float-left btnFeedback btn-primary waves-effect waves-light">Kirim</button>
                                             </div>
                                         </form>
+                                        <button type="button" class="float-right btn btn-danger" onclick="statusFeedback()" data-dismiss="modal">Batal</button>
                                     </div>
                                 </div>
                             </div>
@@ -58,9 +59,18 @@
                     </div>
                 </div>
             </div>
+            <div class="modal-footer">
+
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    function statusFeedback() {
+        location.reload();
+    }
+</script>
 
 <script>
     $(document).ready(function() {

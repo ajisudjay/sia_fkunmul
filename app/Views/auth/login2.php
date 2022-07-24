@@ -84,16 +84,16 @@
                             <form class="theme-form login-form" action="<?= base_url('auth/index'); ?>" method="post">
                                 <?= csrf_field() ?>
                                 <div class="form-group">
-                                    <input type="text" name="username" style="height: 40px; width:300px" class="form-control username" placeholder="Username" autofocus>
+                                    <input type="text" name="username" style="text-align:center;font-size:15px; height: 40px; width:300px" class="form-control username" placeholder="Username" autofocus>
                                     <span class="form-bar"></span>
-                                    <div class="invalid-feedback errorusername"></div>
+                                    <div class="font-weight-bold invalid-feedback errorusername"></div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" name="password" style="height: 40px; width:300px" class="form-control password" placeholder="Password">
+                                    <input type="password" name="password" style="text-align:center;font-size:15px; height: 40px; width:300px" class="form-control password" placeholder="Password">
                                     <span class="form-bar"></span>
-                                    <div class="invalid-feedback errorpassword"></div>
-                                    <div class="text-danger errorgagal_login"></div>
-                                    <div class="text-danger errorgagal_user"></div>
+                                    <div class="font-weight-bold invalid-feedback errorpassword"></div>
+                                    <div class="font-weight-bold text-danger errorgagal_login"></div>
+                                    <div class="font-weight-bold text-danger errorgagal_user"></div>
                                 </div>
                                 <br>
                                 <div class="row m-t-20">

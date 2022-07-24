@@ -147,7 +147,7 @@
                                                  <div class="card social-tabs">
                                                      <ul class="nav nav-tabs md-tabs tab-timeline" role="tablist">
                                                          <li class="nav-item">
-                                                             <a class="nav-link timeline active" data-toggle="tab" href="" role="tab">Timeline</a>
+                                                             <a class="nav-link timeline active" data-toggle="tab" href="" role="tab">Aktifitas</a>
                                                              <div class="slide"></div>
                                                          </li>
                                                          <li class="nav-item">

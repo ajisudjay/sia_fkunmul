@@ -62,7 +62,7 @@
 <script>
     $(document).ready(function() {
         $.ajax({
-            url: '<?= base_url('aktifitas/viewData') ?>',
+            url: '<?= base_url('aktifitas/viewDataMahasiswa') ?>',
             dataType: 'json',
             success: function(response) {
                 $("#result").html(response.data);

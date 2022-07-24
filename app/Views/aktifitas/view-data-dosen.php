@@ -1,36 +1,40 @@
 <!-- VIEW-->
-<div class="dt-responsive table-responsive mt-3">
-    <table id="basic-row-reorder" class="table table-striped table-bordered nowrap">
-        <thead>
-            <tr>
-                <td style="max-width: 5px;">No</td>
-                <td style="max-width: 5px;">Aksi</td>
-                <td style="max-width: 5px;">NIM</td>
-                <td style="max-width: 20px;">Mahasiswa</td>
-            </tr>
-        </thead>
-        <tbody>
-            <?php $no = 1 ?>
-            <?php $sql_aktifitas = mysqli_query($koneksi, "SELECT *, aktifitas.id as id_aktifitas FROM aktifitas JOIN kegiatans ON kegiatans.id=aktifitas.id_kegiatan JOIN mahasiswas ON mahasiswas.id_mahasiswa=aktifitas.id_mahasiswa_aktifitas JOIN dosens ON dosens.id=mahasiswas.id_pa WHERE dosens.nip='$username' GROUP BY nim");
-            while ($item = mysqli_fetch_array($sql_aktifitas)) {
-                $id = $item['id_aktifitas'];
-                $nimHash = base64_encode($item['nim']);
-            ?>
+<?php if ($id_tahun_ajaran != null) { ?>
+
+    <div class="dt-responsive table-responsive mt-3">
+        <table id="basic-row-reorder" class="table table-striped table-bordered nowrap">
+            <thead>
                 <tr>
-                    <td style="text-align: center;"><?= $no++ ?></td>
-                    <td>
-                        <a href="<?= base_url('/detail-aktifitas-dosen/' . $nimHash . ''); ?>">
-                            <span class="fa fa-eye-slash text-warning"></span>
-                        </a>
-                    </td>
-                    <!-- ISI VIEW -->
-                    <td><?= $item['nim'] ?></td>
-                    <td><?= $item['nama_mahasiswa'] ?></td>
+                    <td style="max-width: 5px;">No</td>
+                    <td style="max-width: 5px;">Aksi</td>
+                    <td style="max-width: 5px;">NIM</td>
+                    <td style="max-width: 20px;">Mahasiswa</td>
                 </tr>
-            <?php } ?>
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                <?php $no = 1 ?>
+                <?php $sql_aktifitas = mysqli_query($koneksi, "SELECT *, aktifitas.id as id_aktifitas FROM aktifitas JOIN kegiatans ON kegiatans.id=aktifitas.id_kegiatan JOIN mahasiswas ON mahasiswas.id_mahasiswa=aktifitas.id_mahasiswa_aktifitas JOIN dosens ON dosens.id=mahasiswas.id_pa WHERE dosens.nip='$username' AND id_tahun_ajaran='$id_tahun_ajaran' GROUP BY nim");
+                while ($item = mysqli_fetch_array($sql_aktifitas)) {
+                    $id = $item['id_aktifitas'];
+                    $nimHash = base64_encode($item['nim']);
+                    $id_ta = base64_encode('@49innqwj//;-' . $id_tahun_ajaran . '')
+                ?>
+                    <tr>
+                        <td style="text-align: center;"><?= $no++ ?></td>
+                        <td>
+                            <a href="<?= base_url('/detail-aktifitas-dosen/' . $nimHash . '/' . $id_ta . ''); ?>">
+                                <span class="fa fa-eye-slash text-warning"></span>
+                            </a>
+                        </td>
+                        <!-- ISI VIEW -->
+                        <td><?= $item['nim'] ?></td>
+                        <td><?= $item['nama_mahasiswa'] ?></td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+<?php } ?>
 <div class="modalInputView" style="display: none;"></div>
 <div class="modalViewData" style="display: none;"></div>
 <!-- SCRIPT AJAX -->

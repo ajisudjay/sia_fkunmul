@@ -64,13 +64,17 @@ class Aktifitas extends Migration
                 'constraint' => 255,
                 'null' => true,
             ],
+            'status_aktifitas' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'null' => true,
+            ],
 
         ]);
 
         $this->forge->addKey('id', TRUE);
         $this->forge->addForeignKey('id_matakuliahs', 'matakuliahs', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('id_kegiatan', 'kegiatans', 'id', 'CASCADE', 'CASCADE');
-        $this->forge->addForeignKey('id_modul', 'moduls', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('id_tahun_ajaran', 'tahunajarans', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('id_mahasiswa_aktifitas', 'mahasiswas', 'id_mahasiswa', 'CASCADE', 'CASCADE');
         $this->forge->createTable('aktifitas', TRUE);

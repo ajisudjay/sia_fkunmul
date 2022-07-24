@@ -36,8 +36,8 @@ class Profil extends BaseController
             return redirect()->to('/');
         }
         $data = [
-            'title' => 'Mahasiswa - Fakultas Kedokteran Universitas Mulawarman',
-            'topHeader' => 'Manajemen User',
+            'title' => 'Edit Profil - Fakultas Kedokteran Universitas Mulawarman',
+            'topHeader' => 'Edit Profil',
             'header' => 'Edit Profil',
         ];
         return view('profil/mahasiswa', $data);
@@ -215,6 +215,10 @@ class Profil extends BaseController
         } else {
             exit('Data Tidak Dapat diproses');
         }
+    }
+
+    public function viewDataDiriMahasiswa()
+    {
     }
 
     // AKHIR MAHASISWA

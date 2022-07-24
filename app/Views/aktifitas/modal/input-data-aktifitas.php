@@ -8,20 +8,30 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('aktifitas/tambah'); ?>" method="post" enctype="multipart/form-data">
+            <form action="<?= base_url('aktifitas/tambahMahasiswa'); ?>" method="post" enctype="multipart/form-data">
                 <?php csrf_field() ?>
                 <div class="modal-body">
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-lg-3">
+                            <div class="col-lg-1">
                                 <label class="font-weight-bold mt-3 text-primary">Modul</label>
                                 <select required class="form-control id_modul" name="id_modul" id="id_modul">
+                                    <option value=""></option>
+                                    <?php for ($i = 1; $i <= 16; $i++) { ?>
+                                        <option><?= $i ?></option>
+                                    <?php } ?>
+                                </select>
+                                <div class="invalid-feedback errorid_modul"></div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="font-weight-bold mt-3 text-primary">Mata Kuliah</label>
+                                <select required class="form-control id_matakuliah" name="id_matakuliah" id="id_matakuliah">
                                     <option value=""></option>
                                     <?php foreach ($matakuliah as $data) : ?>
                                         <option value="<?= $data['id'] ?>"><?= $data['mata_kuliah'] ?></option>
                                     <?php endforeach ?>
                                 </select>
-                                <div class="invalid-feedback errorid_modul"></div>
+                                <div class="invalid-feedback errorid_matakuliah"></div>
                             </div>
                             <div class="col-lg-3">
                                 <label class="font-weight-bold mt-3 text-primary">Kegiatan</label>
@@ -33,7 +43,7 @@
                                 </select>
                                 <div class="invalid-feedback errorKegiatan"></div>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-2">
                                 <label class="font-weight-bold mt-3 text-primary">Tanggal</label>
                                 <input required type="date" name="tanggal" class="form-control tanggal" id="tanggal">
                                 <div class="invalid-feedback errorTanggal"></div>
@@ -76,7 +86,7 @@
                             <?php foreach ($deskripsiaktifitas as $data) : ?>
                                 <div class="col-lg-4">
                                     <label class="font-weight-bold text-bold mt-2">- <?= $data['pertanyaan'] ?></label>
-                                    <input required type="text" name="id_deskripsi_aktifitas" value="<?= $data['id'] ?>" hidden>
+                                    <input required type="text" name="id_deskripsi_aktifitas[]" value="<?= $data['id'] ?>" hidden>
                                     <textarea name="deskripsi[]" id="deskripsi" class="form-control" cols="30" rows="5" required></textarea>
                                 </div>
                             <?php endforeach ?>
@@ -193,4 +203,8 @@
             }
         })
     });
+
+    $('.btnSimpan').click(function() {
+        $('.btnSimpan').html('<i class="fa fa-spin fa-spinner"></i>');
+    })
 </script>

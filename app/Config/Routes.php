@@ -57,10 +57,15 @@ $routes->get('/profil-dosen', 'Profil::editDosen');
 $routes->get('/profil-operator', 'Profil::editOperator');
 
 $routes->get('/aktivitas-mahasiswa', 'Aktifitas::mahasiswa');
+$routes->get('/prestasi-mahasiswa', 'Prestasi::index');
 $routes->get('/aktivitas-dosen', 'Aktifitas::dosen');
 $routes->get('/detail-aktifitas-mahasiswa/(:any)', 'Aktifitas::detailMahasiswa/$1');
 $routes->get('/detail-aktifitas-dosen/(:any)', 'Aktifitas::detailDosen/$1');
 $routes->get('/detail-bimbingan-dosen/(:any)', 'Aktifitas::viewBimbinganDosen/$1');
+$routes->get('/data-diri-mahasiswa/(:any)', 'Profil::viewDataDiriMahasiswa/$1');
+
+$routes->get('/detail-notif-dosen/(:any)', 'Aktifitas::detailNotifDosen/$1');
+
 
 /*
  * --------------------------------------------------------------------
