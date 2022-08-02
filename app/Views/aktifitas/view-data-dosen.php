@@ -1,42 +1,46 @@
 <!-- VIEW-->
-<?php if ($id_tahun_ajaran != null) { ?>
-
-    <div class="dt-responsive table-responsive mt-3">
-        <table id="basic-row-reorder" class="table table-striped table-bordered nowrap">
-            <thead>
+<div class="dt-responsive table-responsive mt-3">
+    <table id="basic-row-reorder" class="table table-striped table-bordered nowrap">
+        <thead>
+            <tr>
+                <td>No</td>
+                <td>Aksi</td>
+                <td>NIM</td>
+                <td>Angkatan</td>
+                <td>Nama</td>
+                <td>Program Studi</td>
+            </tr>
+        </thead>
+        <tbody>
+            <?php $no = 1 ?>
+            <?php foreach ($aktifitas as $item) :
+                $id = $item['id_aktifitas'];
+                $nimHash = base64_encode($item['nim']);
+                // $id_ta = base64_encode('@49innqwj//;-' . $id_tahun_ajaran . '')
+            ?>
                 <tr>
-                    <td style="max-width: 5px;">No</td>
-                    <td style="max-width: 5px;">Aksi</td>
-                    <td style="max-width: 5px;">NIM</td>
-                    <td style="max-width: 20px;">Mahasiswa</td>
+                    <td style="text-align: center;width: 5%;"><?= $no++ ?></td>
+                    <td style="width: 6%;">
+                        <a href="<?= base_url('/detail-aktifitas-dosen/' . $nimHash . ''); ?>" class="badge badge-inverse-info">
+                            <span class="icofont icofont-info-circle" style="font-size: 11px;font-weight:bold; text-align:center"> Detail</span>
+                        </a>
+                        <a href="#" class="badge badge-inverse-warning">
+                            <span class="icofont icofont-chart-bar-graph ml-2" style="font-size: 11px;font-weight:bold; text-align:center" onclick="modalGrafik('<?= $id ?>')"> Rekap</span>
+                        </a>
+                    </td>
+                    <!-- ISI VIEW -->
+                    <td style="width: 10%;"><?= $item['nim'] ?></td>
+                    <td style="width: 5%;"><?= $item['angkatan'] ?></td>
+                    <td><?= $item['nama_mahasiswa'] ?></td>
+                    <td><?= $item['program_studi'] ?></td>
                 </tr>
-            </thead>
-            <tbody>
-                <?php $no = 1 ?>
-                <?php $sql_aktifitas = mysqli_query($koneksi, "SELECT *, aktifitas.id as id_aktifitas FROM aktifitas JOIN kegiatans ON kegiatans.id=aktifitas.id_kegiatan JOIN mahasiswas ON mahasiswas.id_mahasiswa=aktifitas.id_mahasiswa_aktifitas JOIN dosens ON dosens.id=mahasiswas.id_pa WHERE dosens.nip='$username' AND id_tahun_ajaran='$id_tahun_ajaran' GROUP BY nim");
-                while ($item = mysqli_fetch_array($sql_aktifitas)) {
-                    $id = $item['id_aktifitas'];
-                    $nimHash = base64_encode($item['nim']);
-                    $id_ta = base64_encode('@49innqwj//;-' . $id_tahun_ajaran . '')
-                ?>
-                    <tr>
-                        <td style="text-align: center;"><?= $no++ ?></td>
-                        <td>
-                            <a href="<?= base_url('/detail-aktifitas-dosen/' . $nimHash . '/' . $id_ta . ''); ?>">
-                                <span class="fa fa-eye-slash text-warning"></span>
-                            </a>
-                        </td>
-                        <!-- ISI VIEW -->
-                        <td><?= $item['nim'] ?></td>
-                        <td><?= $item['nama_mahasiswa'] ?></td>
-                    </tr>
-                <?php } ?>
-            </tbody>
-        </table>
-    </div>
-<?php } ?>
+            <?php endforeach ?>
+        </tbody>
+    </table>
+</div>
 <div class="modalInputView" style="display: none;"></div>
 <div class="modalViewData" style="display: none;"></div>
+<div class="modalDetailGrafik" style="display: none;"></div>
 <!-- SCRIPT AJAX -->
 <script>
     function modalInput() {
@@ -48,6 +52,26 @@
                 if (response.sukses) {
                     $('.modalInputView').html(response.sukses).show();
                     $('#modalInputAktifitas').modal('show');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            }
+        });
+    }
+
+    function modalGrafik(id) {
+        $.ajax({
+            type: "post",
+            url: "<?= base_url('aktifitas/modalGrafik') ?>",
+            dataType: "JSON",
+            data: {
+                id: id
+            },
+            success: function(response) {
+                if (response.sukses) {
+                    $('.modalDetailGrafik').html(response.sukses).show();
+                    $('#modalGrafikAktifitas').modal('show');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

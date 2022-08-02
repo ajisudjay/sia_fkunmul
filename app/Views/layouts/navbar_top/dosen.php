@@ -102,7 +102,7 @@ $foto = $model_foto->where('username', session()->get('username'))->first(); ?>
                                         <li>
                                             <div class="isi_pesan_aktifitas"></div>
                                             <div class="view_isi_pesan_aktifitas">
-                                                <?php $sql_aktifitas = mysqli_query($koneksi, "SELECT *, aktifitas.id as id_aktifitas, users.id as id_user FROM aktifitas JOIN mahasiswas ON aktifitas.id_mahasiswa_aktifitas=mahasiswas.id_mahasiswa JOIN users ON mahasiswas.nim=users.username WHERE status_aktifitas='new' AND mahasiswas.id_pa=$id_dosen ORDER BY id_aktifitas DESC LIMIT 5"); ?>
+                                                <?php $sql_aktifitas = mysqli_query($koneksi, "SELECT *, aktifitas.id as id_aktifitas, users.id as id_user FROM aktifitas JOIN mahasiswas ON aktifitas.id_mahasiswa_aktifitas=mahasiswas.id_mahasiswa JOIN users ON mahasiswas.nim=users.username WHERE status_aktifitas='new' AND mahasiswas.id_pa=$id_dosen GROUP BY judul ORDER BY id_aktifitas DESC LIMIT 5"); ?>
                                                 <?php while ($dataAktifitas = mysqli_fetch_array($sql_aktifitas)) {
                                                     $nim = base64_encode($dataAktifitas['nim']);
                                                     $id_ta = base64_encode('@49innqwj//;-' . $dataAktifitas['id_tahun_ajaran'] . '') ?>
@@ -152,7 +152,7 @@ $foto = $model_foto->where('username', session()->get('username'))->first(); ?>
                                         <li>
                                             <div class="isi_pesan_feedback"></div>
                                             <div class="view_isi_pesan_feedback">
-                                                <?php $sql_feedbacks = mysqli_query($koneksi, "SELECT *, aktifitas.id as id_akt FROM aktifitas JOIN mahasiswas ON aktifitas.id_mahasiswa_aktifitas=mahasiswas.id_mahasiswa JOIN feedbackaktifitas ON aktifitas.id=feedbackaktifitas.id_aktifitas JOIN users ON mahasiswas.nim=users.username WHERE feedbackaktifitas.status='new' AND penerima='$id_user' ORDER BY id_feedback DESC LIMIT 5"); ?>
+                                                <?php $sql_feedbacks = mysqli_query($koneksi, "SELECT *, aktifitas.id as id_akt FROM aktifitas JOIN mahasiswas ON aktifitas.id_mahasiswa_aktifitas=mahasiswas.id_mahasiswa JOIN feedbackaktifitas ON aktifitas.id=feedbackaktifitas.id_aktifitas JOIN users ON mahasiswas.nim=users.username WHERE feedbackaktifitas.status='new' AND penerima='$id_user' GROUP BY feedback ORDER BY id_feedback DESC LIMIT 5"); ?>
                                                 <?php while ($dataFeedback = mysqli_fetch_array($sql_feedbacks)) {
                                                     $nim = base64_encode($dataFeedback['nim']);
                                                     $id_ta = base64_encode('@49innqwj//;-' . $dataFeedback['id_tahun_ajaran'] . '') ?>

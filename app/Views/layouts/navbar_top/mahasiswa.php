@@ -84,13 +84,13 @@ $username = session()->get('username'); ?>
                             <li class="header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle feedback_aktifitas_mahasiswa_awal" data-toggle="dropdown">
-                                        <i class="fa fa-comment-o"></i>
+                                        <i class="fa icofont icofont-comment"></i>
                                         <?php if ($jumlahFeedback > 0) { ?>
                                             <span class="badge bg-c-pink d-none"><?= $jumlahFeedback ?></span>
                                         <?php } ?>
                                     </div>
                                     <div class="dropdown-toggle feedback_aktifitas_mahasiswa_status d-none" data-toggle="dropdown">
-                                        <i class="fa fa-comment-o"></i>
+                                        <i class="fa icofont icofont-comment"></i>
                                         <span class="badge bg-c-pink feedback_aktifitas_mahasiswa"></span>
                                     </div>
                                     <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">

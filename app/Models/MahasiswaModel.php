@@ -14,7 +14,7 @@ class MahasiswaModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_ps', 'id_fak', 'nama_mahasiswa', 'nim', 'alamat', 'telepon', 'email', 'status', 'id_angkatan', 'jk', 'id_pb1', 'id_pb2', 'id_pa'];
+    protected $allowedFields    = ['id_ps', 'id_fak', 'nama_mahasiswa', 'nim', 'alamat', 'telepon', 'email', 'status', 'id_angkatan', 'jk', 'id_pb1', 'id_pb2', 'id_pa', 'id_dosen_ipe'];
 
     // Dates
     protected $useTimestamps = false;

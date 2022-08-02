@@ -20,6 +20,16 @@ class Aktifitas extends Migration
                 'constraint' => 255,
                 'null' => true,
             ],
+            'kompetensi_aktifitas' => [
+                'type' => 'INT',
+                'unsigned' => true,
+                'null' => true,
+            ],
+            'subkompetensi_aktifitas' => [
+                'type' => 'INT',
+                'unsigned' => true,
+                'null' => true,
+            ],
             'id_kegiatan' => [
                 'type' => 'INT',
                 'unsigned' => true,

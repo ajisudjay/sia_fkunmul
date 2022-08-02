@@ -10,10 +10,13 @@
                             <div class="col-sm-12">
                                 <div class="card">
                                     <div class="bg-primary" style="padding: 15px;border-radius:10px">
-                                        <p style="font-size:20px">Feedback Aktifitas</p>
+                                        <span style="font-size:20px">Feedback Aktifitas</span>
+                                        <button type="button" onclick="statusFeedback()" class="d-inline btn btn-danger rounded float-right" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-9 col-md-12 messages-content ">
+                                        <div class="col-lg-9 col-md-12 messages-content">
                                             <div class="scroll_view">
                                                 <div class="viewModal"></div>
                                             </div>
@@ -29,7 +32,8 @@
                                                             <div class="txt-white font-weight-bold"><?= word_limiter($aktifitas['judul'], 11) ?></div>
                                                             <p class="mt-2 text-muted m-b-0"><?= $aktifitas['kegiatan'] ?></p>
                                                             <hr>
-                                                            <span class="text-muted f-14 m-b-10"><?= $aktifitas['mata_kuliah'] ?></span>
+                                                            <span class="text-muted f-14 m-b-10"><?= $aktifitas['data_kompetensi'] ?></span>
+                                                            <span class="text-muted f-14 m-b-10"><?= $aktifitas['sub_kompetensi'] ?></span>
                                                             <span class="text-muted f-14 m-b-10"><?= $aktifitas['tahun_ajaran'] ?></span>
                                                         </div>
                                                     </div>
@@ -51,16 +55,12 @@
                                                 <button type="submit" class="btn float-left btnFeedback btn-primary waves-effect waves-light">Kirim</button>
                                             </div>
                                         </form>
-                                        <button type="button" class="float-right btn btn-danger" onclick="statusFeedback()" data-dismiss="modal">Batal</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-
             </div>
         </div>
     </div>

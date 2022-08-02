@@ -52,7 +52,7 @@
                                          </div>
                                          <!-- Row end -->
                                          <!-- Row Starts -->
-                                         <div class="row">
+                                         <div class="row" style="margin-bottom: 50px;">
                                              <div class="col-xl-3 col-lg-4 col-md-4 col-xs-12">
                                                  <!-- Social timeline left start -->
                                                  <div class="social-timeline-left">
@@ -71,8 +71,6 @@
                                                              <h5><?= $user['user_role'] ?></h5>
                                                          </div>
                                                      </div>
-                                                     <!-- social-profile card end -->
-                                                     <!-- Who to follow card start -->
                                                      <div class="card">
                                                          <div class="card-header">
                                                              <h5 class="text-muted card-header-text">
@@ -119,28 +117,7 @@
                                                              <hr>
                                                          </div>
                                                      </div>
-                                                     <!-- Who to follow card end -->
-                                                     <!-- Friends card start -->
-                                                     <div class="card">
-                                                         <div class="card-header">
-                                                             <h5 class="card-header-text d-inline-block">Friends</h5>
-                                                             <!-- <span class="friend-more f-right">see 12 more</span> -->
-                                                             <span class="label label-primary f-right"> See 12 More </span>
-                                                         </div>
-                                                         <div class="card-block friend-box">
-                                                             <img class="media-object img-radius" src="<?= base_url(''); ?>\assets\images\avatar-1.jpg" alt="" data-toggle="tooltip" data-placement="top" title="user image">
-                                                             <img class="media-object img-radius" src="<?= base_url(''); ?>\assets\images\avatar-2.jpg" alt="" data-toggle="tooltip" data-placement="top" title="user image">
-                                                             <img class="media-object img-radius" src="<?= base_url(''); ?>\assets\images\avatar-3.jpg" alt="" data-toggle="tooltip" data-placement="top" title="user image">
-                                                             <img class="media-object img-radius" src="<?= base_url(''); ?>\assets\images\avatar-4.jpg" alt="" data-toggle="tooltip" data-placement="top" title="user image">
-                                                             <img class="media-object img-radius" src="<?= base_url(''); ?>\assets\images\avatar-1.jpg" alt="" data-toggle="tooltip" data-placement="top" title="user image">
-                                                             <img class="media-object img-radius" src="<?= base_url(''); ?>\assets\images\avatar-4.jpg" alt="" data-toggle="tooltip" data-placement="top" title="user image">
-                                                             <img class="media-object img-radius" src="<?= base_url(''); ?>\assets\images\avatar-3.jpg" alt="" data-toggle="tooltip" data-placement="top" title="user image">
-                                                             <img class="media-object img-radius" src="<?= base_url(''); ?>\assets\images\avatar-2.jpg" alt="" data-toggle="tooltip" data-placement="top" title="user image">
-                                                         </div>
-                                                     </div>
-                                                     <!-- Friends card end -->
                                                  </div>
-                                                 <!-- Social timeline left end -->
                                              </div>
                                              <div class="col-xl-9 col-lg-8 col-md-8 col-xs-12 ">
                                                  <!-- Nav tabs -->
@@ -208,7 +185,7 @@
                  </div>
              </div>
              <div class="modal-footer">
-                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                  <button type="button" class="formEditFotoCover btn btn-primary">Simpan</button>
              </div>
          </div>

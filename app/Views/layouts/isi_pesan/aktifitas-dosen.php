@@ -1,4 +1,4 @@
-<?php $sql_aktifitas = mysqli_query($koneksi, "SELECT *, aktifitas.id as id_aktifitas, users.id as id_user FROM aktifitas JOIN mahasiswas ON aktifitas.id_mahasiswa_aktifitas=mahasiswas.id_mahasiswa JOIN users ON mahasiswas.nim=users.username WHERE status_aktifitas='new' AND mahasiswas.id_pa=$id_pa ORDER BY id_aktifitas DESC LIMIT 5"); ?>
+<?php $sql_aktifitas = mysqli_query($koneksi, "SELECT *, aktifitas.id as id_aktifitas, users.id as id_user FROM aktifitas JOIN mahasiswas ON aktifitas.id_mahasiswa_aktifitas=mahasiswas.id_mahasiswa JOIN users ON mahasiswas.nim=users.username WHERE status_aktifitas='new' AND mahasiswas.id_pa=$id_pa  GROUP BY judul ORDER BY id_aktifitas DESC LIMIT 5"); ?>
 <?php while ($dataAktifitas = mysqli_fetch_array($sql_aktifitas)) {
     $nim = base64_encode($dataAktifitas['nim']);
     $id_ta = base64_encode('@49innqwj//;-' . $dataAktifitas['id_tahun_ajaran'] . '') ?>

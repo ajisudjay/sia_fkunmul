@@ -1,133 +1,103 @@
-<div class="tab-pane" id="timeline" style="position: sticky;">
-    <div class="row">
-        <div class="col-md-12 timeline-dot">
-            <?php foreach ($aktifitas as $data) :
-                $id_act = $data['id'] ?>
-                <div class="social-timelines p-absolute">
-                    <div class="row timeline-right p-t-35">
-                        <div class="col-2 col-sm-2 col-xl-1">
-                            <div class="social-timelines-left">
-                                <img class="img-radius timeline-icon" src="<?= base_url(''); ?>\assets\icon\document.png" alt="">
-                            </div>
-                        </div>
-                        <div class="col-10 col-sm-10 col-xl-11 p-l-5">
-                            <div class="card">
-                                <div class="card-block post-timelines">
-                                    <div class="chat-header f-w-600"><?= $data['judul'] ?></div>
+ <figure class="highcharts-figure mt-5">
+     <div id="container"></div>
+ </figure>
 
-                                    <div class="social-time text-muted"><?= date('d-m-Y', strtotime($data['tanggal'])) ?></div>
-                                </div>
-                                <div class="card-block" style="margin-top:-30px">
-                                    <div class="timeline-details">
-                                        <p class="text-muted"><?= $data['deskripsi'] ?></p>
-                                    </div>
-                                </div>
-                                <div class="card-block b-b-theme b-t-theme social-msg">
-                                    <!-- <a href="#"> <i class="icofont icofont-heart-alt text-muted"></i><span class="b-r-muted">Like (20)</span> </a> -->
-                                    <a href="#"> <i class="icofont icofont-comment text-muted"></i> <span class="b-r-muted">Balas</span></a>
-                                    <!-- <a href="#"> <i class="icofont icofont-share text-muted"></i> <span>Share (10)</span></a> -->
-                                </div>
-                                <div class="card-block user-box">
+ <div class="card text-left">
+     <div class="card-body">
+         <h5 class="card-title" style="text-align: center;">Pencapaian Kompetensi</h5>
+         <hr>
+         <div class="highcharts-description mt-4">
+             <div class="container">
+                 <?php foreach ($sqlkompetensi as $itemKompetensi) : ?>
+                     <table class="mt-3">
+                         <tr>
+                             <td style="width: 400px;">
+                                 <p class="alert alert-primary col-lg-4 d-inline" style="margin-bottom:10px"><?= $itemKompetensi['data_kompetensi'] ?></p>
+                             </td>
+                             <td>
+                                 <span class="text-primary"><?= $itemKompetensi['jumlah'] ?></span>
+                             </td>
+                         </tr>
+                     </table>
+                     <?php foreach ($sqlcount as $dataCount) : ?>
+                         <?php if ($dataCount['kompetensi'] == $itemKompetensi['id_kompetensi']) { ?>
+                             <table class="mt-3">
+                                 <tr>
+                                     <td style="width: 400px;"><span class="icofont icofont-check-circled text-primary"></span> <?= $dataCount['sub_kompetensi'] ?></td>
+                                     <td><?= $dataCount['jumlah'] ?></td>
+                                 </tr>
+                             </table>
+                         <?php } ?>
+                     <?php endforeach ?>
+                     <hr>
+                 <?php endforeach ?>
+                 <center>
+                     <h5 class="text-danger">BELUM ADA AKTIFITAS KOMPETENSI</h5>
+                 </center>
+             </div>
+         </div>
+     </div>
+ </div>
 
-                                    <?php $sql = mysqli_query($koneksi, "SELECT COUNT(feedback) as jumlah FROM feedbackaktifitas WHERE id_aktifitas=$id_act "); ?>
-                                    <?php while ($data_count = mysqli_fetch_array($sql)) { ?>
-                                        <div class="p-b-20"> <span class="f-14"><a href="#">Feedback (<?= $data_count['jumlah'] ?>)</a></span><span class="f-right">Lihat Semua</span></div>
-                                    <?php } ?>
 
-                                    <?php $sql_item = mysqli_query($koneksi, "SELECT * FROM feedbackaktifitas JOIN users ON users.id=feedbackaktifitas.id_user WHERE feedbackaktifitas.id_aktifitas=$id_act ORDER BY id_feedback DESC LIMIT 3"); ?>
-                                    <?php while ($item = mysqli_fetch_array($sql_item)) { ?>
-                                        <div class="media">
-                                            <a class="media-left" href="#">
-                                                <img class="media-object mt-2 img-radius m-r-20" src="<?= $item['foto'] == null ? base_url('assets/images/auth/no-image.png') : base_url('assets/images/user-profile/' . $item['foto'] . '') ?>" alt="Generic placeholder image">
-                                            </a>
-                                            <div class="media-body b-b-muted social-client-description">
-                                                <div class="chat-header"><?= $item['nama_user'] ?>
-                                                    <br>
-                                                    <span class="text-muted ml-0">
-                                                        <?= date('d-m-Y H:i:s', strtotime($item['waktu'])) ?>
-                                                    </span>
-                                                </div>
-                                                <p class="text-muted"><?= $item['feedback'] ?></p>
-                                            </div>
-                                        </div>
-                                    <?php } ?>
-                                    <div class="media">
-                                        <a class="media-left" href="#">
-                                            <img class="media-object img-radius mt-2 m-r-20" src="<?= $user['foto'] == null ? base_url('assets/images/auth/no-image.png') : base_url('assets/images/user-profile/' . $user['foto'] . '') ?>" alt=" Generic placeholder image">
-                                        </a>
-                                        <div class="media-body">
-                                            <form class="formFeedback" action="<?= base_url('feedbackAktifitas/inputMahasiwaBeranda'); ?>" method="post">
-                                                <div class="">
-                                                    <textarea required rows="5" cols="5" class="feedback form-control" name="feedback" placeholder="Tulis Balasan . . ."></textarea>
-                                                    <input type="text" name="id_aktifitas" value="<?= $data['id'] ?>" id="" hidden>
-                                                    <input type="text" name="id_user" value="<?= $user['id'] ?>" id="" hidden>
-                                                    <!-- <span class="text-danger error_feedback"></span> -->
-                                                    <div class="text-right m-t-20">
-                                                        <button type="submit" class="btn btnFeedback btn-primary waves-effect waves-light">Kirim</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach ?>
-        </div>
-    </div>
-</div>
+ <!-- Select 2 js -->
+ <script type="text/javascript" src="<?= base_url(''); ?>\bower_components\select2\js\select2.full.min.js"></script>
+ <!-- Multiselect js -->
+ <script type="text/javascript" src="<?= base_url(''); ?>\bower_components\bootstrap-multiselect\js\bootstrap-multiselect.js"></script>
+ <script type="text/javascript" src="<?= base_url(''); ?>\bower_components\multiselect\js\jquery.multi-select.js"></script>
+ <script type="text/javascript" src="<?= base_url(''); ?>\assets\js\jquery.quicksearch.js"></script>
+ <script type="text/javascript" src="<?= base_url(''); ?>\assets\pages\advance-elements\select2-custom.js"></script>
 
-<script>
-    $(document).ready(function() {
-        $('.formFeedback').submit(function(e) {
-            e.preventDefault();
-            $.ajax({
-                type: "post",
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
-                dataType: "json",
-                beforeSend: function() {
-                    $('.btnFeedback').attr('disable', 'disabled');
-                    $('.btnFeedback').html('<i class="fa fa-spin fa-spinner"></i>');
-                },
-                complete: function() {
-                    $('.btnFeedback').removeAttr('disable', 'disabled');
-                    $('.btnFeedback').html('Kirim');
-                },
-                success: function(response) {
-                    if (response.error) {
-                        if (response.error.feedback) {
-                            $('.feedback').addClass('is-invalid');
-                            $('.error_feedback').text(response.error.feedback);
-                        } else {
-                            $('.feedback').removeClass('is_invalid');
-                            $('.error_feedback').text('');
-                        }
-                    } else {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                        })
-                        Toast.fire({
-                            icon: 'success',
-                            title: response.sukses
-                        })
-                        $(".result-timeline").html(response.data);
-                    }
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-                }
-            })
-        });
-    });
-</script>
+
+ <script src="<?= base_url(''); ?>\bower_components\datatables.net\js\jquery.dataTables.min.js">
+ </script>
+ <script src="<?= base_url(''); ?>\bower_components\datatables.net-buttons\js\dataTables.buttons.min.js">
+ </script>
+ <script src="<?= base_url(''); ?>\assets\pages\data-table\extensions\row-reorder\js\dataTables.rowReorder.min.js">
+ </script>
+ <script src="<?= base_url(''); ?>\bower_components\datatables.net-bs4\js\dataTables.bootstrap4.min.js"></script>
+ <script src="<?= base_url(''); ?>\bower_components\datatables.net-responsive\js\dataTables.responsive.min.js">
+ </script>
+ <script src="<?= base_url(''); ?>\bower_components\datatables.net-responsive-bs4\js\responsive.bootstrap4.min.js">
+ </script>
+ <!-- Custom js -->
+ <script src="<?= base_url(''); ?>\assets\pages\data-table\extensions\row-reorder\js\row-reorder-custom.js"></script>
+
+
+ <script>
+     Highcharts.chart('container', {
+         title: {
+             text: 'Progress Kompetensi'
+         },
+         xAxis: {
+             categories: [<?= $jumlahsub ?>]
+         },
+         labels: {
+             items: [{
+                 html: '',
+                 style: {
+                     left: '50px',
+                     top: '18px',
+                     color: ( // theme
+                         Highcharts.defaultOptions.title.style &&
+                         Highcharts.defaultOptions.title.style.color
+                     ) || 'black'
+                 }
+             }]
+         },
+         series: [{
+             type: 'column',
+             name: 'Sub Kompetensi',
+             data: [<?= $jumlah ?>]
+         }, {
+             type: 'spline',
+             name: 'Progress',
+             data: [<?= $jumlah ?>],
+             marker: {
+                 lineWidth: 2,
+                 lineColor: Highcharts.getOptions().colors[3],
+                 fillColor: 'white'
+             }
+         }, ]
+     });
+ </script>

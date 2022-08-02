@@ -1,81 +1,161 @@
 <!-- tambah modal-->
-<div class="modal fade" id="modalInputAktifitas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalDetailAktifitas" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="max-width: 80%;" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title font-weight-bold" id="exampleModalLabel">Detail Aktifitas</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn btn-danger rounded" onclick="statusAktifitas()" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body scroll_aktifitas">
-                <div class="row">
-                    <div class="col-lg-12 col-xl-9">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="row">
-                                    <div class="col-lg-10">
-                                        <h5><?= $aktifitas['judul'] ?></h5>
-                                        <span class="text-muted f-14 m-b-10"><?= date('d-m-Y', strtotime($aktifitas['tanggal'])) ?></span>
-                                        <p class="text-muted m-b-0"><?= $aktifitas['kegiatan'] ?></p>
-                                        <p class="text-muted m-b-0"><?= $aktifitas['mata_kuliah'] ?></p>
-                                        <p class="text-muted m-b-0"><?= $aktifitas['tahun_ajaran'] ?></p>
+                <div class="card p-4">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <!-- Filter card start -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="icofont icofont-user m-r-5 text-warning"></i>Mahasiswa</h5>
+                                </div>
+                                <div class="card-block">
+                                    <h5><?= $aktifitas['nama_mahasiswa'] ?></h5>
+                                    <p class="mt-2 text-muted m-b-0"><?= $aktifitas['program_studi'] ?></p>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                            <span class="font-weight-bold text-primary">Judul</span>
+                                            <p class="text-muted m-b-0"><?= $aktifitas['judul'] ?></p>
+                                            <hr>
+                                            <span class="font-weight-bold text-primary">Kegiatan</span>
+                                            <p class="text-muted m-b-0"><?= $aktifitas['kegiatan'] ?></p>
+                                            <hr>
+                                            <span class="font-weight-bold text-primary">Kompetensi</span>
+                                            <p class="text-muted m-b-0"><?= $aktifitas['data_kompetensi'] ?></p>
+                                            <hr>
+                                            <span class="font-weight-bold text-primary">Sub Kompetensi</span>
+                                            <p class="text-muted m-b-0"><?= $aktifitas['sub_kompetensi'] ?></p>
+                                            <hr>
+                                            <span class="font-weight-bold text-primary">Kegiatan</span>
+                                            <span class="text-muted f-14 m-b-10"><?= date('d-m-Y', strtotime($aktifitas['tanggal'])) ?></span>
+                                            <hr>
+                                            <span class="font-weight-bold text-primary">Tahun Ajaran</span>
+                                            <p class="text-muted m-b-0"><?= $aktifitas['tahun_ajaran'] ?></p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="card">
+                                <div class="card-block">
+                                    <label class="font-weight-bold text-danger alert-danger alert" style="margin-bottom: 0px;"> Feedback Aktifitas</label>
+                                    <!-- <form action="<?= base_url('aktifitas/tambahProgressMahasiswa'); ?>" method="POST" class="formCollapseProgress">
+                                        <?php csrf_field() ?>
+                                        <label class="text-primary font-weight-bold mb-2">
+                                            <span class="icofont icofont-chart-flow"></span> Progress</label>
+                                        <input type="text" name="id_aktifitas" value="<?= $aktifitas['id_aktifitas'] ?>" id="" hidden>
+                                        <input type="text" name="id_mahasiswa" value="<?= $aktifitas['id_mahasiswa'] ?>" id="" hidden>
+                                        <input type="text" name="id_dosen" value="<?= $aktifitas['id_pa'] ?>" id="" hidden>
+                                        <textarea name="progress" id="" cols="30" rows="12" class="form-control" placeholder="Deskripsikan  progress apa yang sudah dilakukan di aktifitas ini . ."></textarea>
+                                        <span style="font-size: 10px;" class="text-danger error_progress"></span>
+                                        <br>
+                                        <label class="text-primary font-weight-bold mt-2"><span class="icofont icofont-ui-calendar"></span> Tanggal</label>
+                                        <input type="date" name="tanggal" class="form-control mt-1" id="">
+                                        <span style="font-size: 10px;" class="text-danger error_tanggal"></span>
+                                        <br>
+                                        <div class="notif_progress"></div>
+                                        <button type="submit" class="float-right btn btn-primary btnProgress">Simpan</button>
+                                    </form> -->
+                                    <div class="row">
+                                        <div class="col-lg-12 messages-content">
+                                            <div class="scroll_view_mahasiswa">
+                                                <div class="viewModal"></div>
+                                            </div>
+                                            <hr>
+                                            <div class="messages-send">
+                                                <div class="form-group">
+                                                    <div class="alertSukses"></div>
+                                                    <form class="formFeedback" action="<?= base_url('aktifitas/inputMahasiwaFeedback'); ?>" method="post">
+                                                        <textarea rows="5" cols="5" class="feedback form-control" name="feedback" placeholder="Tulis Balasan . . ."></textarea>
+                                                        <input type="text" name="id_aktifitas" value="<?= $id_aktifitas ?>" id="" hidden>
+                                                        <input type="text" name="id_user" value="<?= $id_user ?>" id="" hidden>
+                                                        <input type="text" name="id_mahasiswa" value="<?= $id_mahasiswa ?>" id="" hidden>
+                                                        <input type="text" name="id_pa" value="<?= $id_pa ?>" id="" hidden>
+                                                        <i style="font-size: 10px;" class="text-danger error_feedback"></i>
+                                                        <div class="text-right m-t-20">
+                                                            <button type="submit" class="btn btnFeedback btn-primary waves-effect waves-light">Kirim</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <hr>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
                             <div class="card-block">
                                 <h4 class="sub-title">
-                                    <span class="fa fa-check-square-o text-c-lite-green"></span> Gambaran Umum
+                                    <span class="fa fa-check-square-o text-c-lite-green"></span> Refleksi Diri
                                 </h4>
-                                <p><?= $aktifitas['deskripsi'] ?></p>
-                                <hr>
-                                <?php foreach ($deskripsiaktifitas as $data) :
-                                    $id_deskripsi = $data['id'] ?>
-                                    <h4 class="sub-title"><span class="fa fa-check-square-o text-c-lite-green"></span> <?= $data['pertanyaan'] ?></h4>
-                                    <?php $sql_deskripsi = mysqli_query($koneksi, "SELECT * FROM detailaktifitas WHERE id_deskripsi_aktifitas='$id_deskripsi' AND id_aktifitas='$id_aktifitas'");
-                                    while ($item = mysqli_fetch_array($sql_deskripsi)) { ?>
-                                        <ul class="job-details-list">
-                                            <li>
-                                                <?= $item['deskripsi_aktifitas'] ?>
-                                            </li>
-                                        </ul>
-                                    <?php } ?>
+                                <?php foreach ($deskripsiaktifitas as $dataDeskripsiAktifitas) : ?>
+                                    <p class="font-weight-bold text-primary"><?= $dataDeskripsiAktifitas['pertanyaan'] ?></p>
+                                    <?php foreach ($detailaktifitas as $item) :
+                                        if ($item['id_deskripsi_aktifitas'] == $dataDeskripsiAktifitas['id']) { ?>
+                                            <p class="text-muted"><?= $item['deskripsi_aktifitas'] ?></p>
+                                        <?php } ?>
+                                    <?php endforeach ?>
                                 <?php endforeach ?>
-                            </div>
-                            <div class="card-footer">
-                                <div class="row">
-
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Job description card end -->
-                    </div>
-                    <!-- Left column end -->
-                    <!-- right column start -->
-                    <div class="col-lg-12 col-xl-3">
-                        <!-- Filter card start -->
-                        <div class="card">
-                            <div class="card-header">
-                                <h5><i class="icofont icofont-user m-r-5 text-warning"></i>Mahasiswa</h5>
-                            </div>
-                            <div class="card-block">
-                                <h5><?= $aktifitas['nama_mahasiswa'] ?></h5>
-                                <p class="mt-2 text-muted m-b-0"><?= $aktifitas['program_studi'] ?></p>
                                 <hr>
-                                <span class="text-muted f-14 m-b-10"><?= $aktifitas['tahun_ajaran'] ?></span>
+                                <!-- <h4 class="sub-title">
+                                        <span class="fa fa-check-square-o text-c-lite-green"></span> Progress
+                                    </h4>
+                                    <div class="isi_pesan_progress"></div>
+                                    <div class="view_isi_pesan_progress">
+                                        <div class="main-timeline">
+                                            <div class="cd-timeline cd-container">
+                                                <?php foreach ($progress as $data) : ?>
+                                                    <div class="cd-timeline-block">
+                                                        <div class="cd-timeline-icon bg-primary">
+                                                            <a class="bg-transparent border-0">
+                                                                <i class="icofont icofont-ui-file"></i>
+                                                            </a>
+                                                        </div>
+                                                        <div class="cd-timeline-content card_main">
+                                                            <div class="pr-3 pt-4 pb-3 pl-3">
+                                                                <?= $data['progress'] ?>
+                                                            </div>
+                                                            <span class="cd-date">
+                                                                <i class="icofont icofont-ui-calendar"></i> <span><?= $data['tanggal'] ?></span>
+                                                            </span>
+                                                            <span class="cd-details"></span>
+                                                        </div>
+                                                    </div>
+                                                <?php endforeach ?>
+                                            </div>
+                                        </div>
+                                    </div> -->
                             </div>
                         </div>
-                        <!-- Filter card end -->
                     </div>
+
                     <div class="col-lg-12">
-                        <!-- Filter card start -->
                         <div class="card">
                             <div class="card-header">
                                 <h5><i class="icofont icofont-file m-r-5 text-primary"></i>File Bukti</h5>
                             </div>
                             <div class="card-block">
-                                <embed src="<?= base_url('file/aktifitas/' . $aktifitas['file_bukti'] . ''); ?>" type="application/pdf" width="770px" height="500px">
+                                <center>
+                                    <embed src="<?= base_url('file/aktifitas/' . $aktifitas['file_bukti'] . ''); ?>" type="application/pdf" width="770px" height="500px">
+                                </center>
                             </div>
                         </div>
                         <!-- Filter card end -->
@@ -85,3 +165,128 @@
         </div>
     </div>
 </div>
+<div class="modalViewData" style="display: none;"></div>
+
+<script>
+    function statusAktifitas() {
+        location.reload();
+    }
+
+    $('.formCollapseProgress').submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            dataType: "json",
+            beforeSend: function() {
+                $('.btnProgress').attr('disable', 'disabled');
+                $('.btnProgress').html('<i class="fa fa-spin fa-spinner"></i>');
+            },
+            complete: function() {
+                $('.btnProgress').removeAttr('disable', 'disabled');
+                $('.btnProgress').html('Simpan');
+            },
+            success: function(response) {
+                if (response.error) {
+                    if (response.error.progress) {
+                        $('.progress').addClass('is-invalid');
+                        $('.error_progress').text(response.error.progress);
+                    } else {
+                        $('.progress').removeClass('is_invalid');
+                        $('.error_progress').text('');
+                    }
+
+                    if (response.error.tanggal) {
+                        $('.tanggal').addClass('is-invalid');
+                        $('.error_tanggal').text(response.error.tanggal);
+                    } else {
+                        $('.tanggal').removeClass('is_invalid');
+                        $('.error_tanggal').text('');
+                    }
+                } else {
+                    $('.notif_progress').addClass('alert alert-success');
+                    $('.notif_progress').html('Progress Berhasil Ditambahkan !')
+                    $('.notif_progress').addClass('flash');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            }
+        })
+    })
+
+    $(document).ready(function() {
+        $.ajax({
+            url: '<?= base_url('aktifitas/viewDataDetailMahasiswa') ?>',
+            dataType: 'json',
+            data: {
+                id_aktifitas: <?= $id_aktifitas ?>,
+                id_user: <?= $id_user ?>,
+                id_mahasiswa: <?= $id_mahasiswa ?>,
+            },
+            success: function(response) {
+                $(".viewModal").html(response.data);
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            }
+        });
+
+        $('.formFeedback').submit(function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: "post",
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                dataType: "json",
+                beforeSend: function() {
+                    $('.btnFeedback').attr('disable', 'disabled');
+                    $('.btnFeedback').html('<i class="fa fa-spin fa-spinner"></i>');
+                },
+                complete: function() {
+                    $('.btnFeedback').removeAttr('disable', 'disabled');
+                    $('.btnFeedback').html('Kirim');
+                },
+                success: function(response) {
+                    if (response.error) {
+                        if (response.error.feedback) {
+                            $('.feedback').addClass('is-invalid');
+                            $('.error_feedback').text(response.error.feedback);
+                        } else {
+                            $('.feedback').removeClass('is_invalid');
+                            $('.error_feedback').text('');
+                        }
+                    } else {
+                        // const Toast = Swal.mixin({
+                        //     toast: true,
+                        //     position: 'top',
+                        //     showConfirmButton: false,
+                        //     timer: 3000,
+                        //     timerProgressBar: true,
+                        //     didOpen: (toast) => {
+                        //         toast.addEventListener('mouseenter', Swal.stopTimer)
+                        //         toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        //     }
+                        // })
+                        // Toast.fire({
+                        //     icon: 'success',
+                        //     title: response.sukses
+                        // })
+                        $('.alertSukses').html('<div class="alert alert-success">Feedback Berhasil Dikrim !</div>')
+                        $(".viewModal").html(response.data);
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+                }
+            })
+        });
+    });
+
+    window.setTimeout(function() {
+        $(".alertSukses").fadeTo(2000, 0).slideUp(2000, function() {
+            $(this).remove();
+        });
+    }, 8000);
+</script>

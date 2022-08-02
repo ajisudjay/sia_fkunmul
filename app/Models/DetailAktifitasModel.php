@@ -39,4 +39,10 @@ class DetailAktifitasModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function ubah($data, $id_aktifitas)
+    {
+        return $this->db->table('detailaktifitas')
+            ->update($data, ['id_aktifitas' => $id_aktifitas]);
+    }
 }

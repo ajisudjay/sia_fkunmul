@@ -37,7 +37,7 @@ class FeedbackAktifitas extends Migration
             ],
             'feedback' => [
                 'type' => 'TEXT',
-                'constraint' => '20000',
+                'constraint' => '50000',
                 'null' => TRUE
             ],
             'waktu' => [

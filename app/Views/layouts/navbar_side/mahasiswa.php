@@ -20,7 +20,7 @@
                         <ul class="pcoded-submenu">
                             <li class="<?= $header == 'Aktifitas' ? 'active' : '' ?>">
                                 <a href="<?= base_url('/aktivitas-mahasiswa'); ?>">
-                                    <span class="pcoded-mtext">Aktivitas</span>
+                                    <span class="pcoded-mtext">Aktifitas</span>
                                 </a>
                             </li>
                         </ul>

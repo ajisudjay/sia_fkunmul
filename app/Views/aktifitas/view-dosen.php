@@ -1,68 +1,74 @@
-<div class="main-timeline">
-    <div class="cd-timeline cd-container">
-        <?php foreach ($aktifitas as $item) :
-            $id_aktifitas = $item['id_aktifitas'];
-            $id_user = session()->get('id_user'); ?>
-            <div class="cd-timeline-block">
-                <div class="cd-timeline-icon bg-primary">
-                    <a class="bg-transparent border-0" onclick="modalDetail('<?= $item['id_aktifitas'] ?>')">
-                        <i class="icofont icofont-ui-file"></i>
-                    </a>
-                </div>
-                <div class="cd-timeline-content card_main">
-                    <div class="pr-3 pt-4 pb-3 pl-3">
+  <div class="card p-4">
+      <div class="dt-responsive table-responsive mt-3">
+          <table id="basic-row-reorder" class="table table-striped table-bordered nowrap">
+              <thead>
+                  <tr>
+                      <td>No</td>
+                      <td>Status</td>
+                      <td>Aksi</td>
+                      <td>Kompetensi</td>
+                      <td>Sub kompetensi</td>
+                      <td>Kegiatan</td>
+                      <td>Judul</td>
+                  </tr>
+              </thead>
+              <tbody>
+                  <?php $no = 1 ?>
+                  <?php foreach ($aktifitas as $item) :
+                        $id_aktifitas = $item['id_aktifitas'];
+                        $id_user = session()->get('id_user'); ?>
+                      <tr>
+                          <td style="width: 5%;"><?= $no++ ?></td>
+                          <td style="width: 10%;">
+                              <?php if ($item['status_aktifitas'] == 'new') { ?>
+                                  <blink>
+                                      <span class="badge badge-danger"> Aktifitas Baru</span>
+                                  </blink>
+                              <?php } ?>
+                              <?php $sql_aktifitas_count = mysqli_query($koneksi, "SELECT *, COUNT(feedback) as jumlah FROM feedbackaktifitas WHERE id_aktifitas='$id_aktifitas' AND status='new' AND penerima=$id_user");
+                                while ($item_count = mysqli_fetch_array($sql_aktifitas_count)) {
+                                    if ($item_count['jumlah'] > 0) { ?>
+                                      <blink>
+                                          <span class="badge badge-danger"><?= $item_count['jumlah'] ?> Feedback Baru</span>
+                                      </blink>
+                                  <?php } else { ?>
+                                      <?php $sql_aktifitas_jumlah = mysqli_query($koneksi, "SELECT COUNT(feedback) as jumlah FROM feedbackaktifitas WHERE id_aktifitas='$id_aktifitas'");
+                                        while ($item_jumlah = mysqli_fetch_array($sql_aktifitas_jumlah)) { ?>
+                                          <span class="badge badge-primary"><?= $item_jumlah['jumlah'] ?> Feedback</span>
+                                      <?php } ?>
+                                  <?php  } ?>
+                              <?php  } ?>
+                          </td>
+                          <td style="width: 10%;">
+                              <a href="#" class="badge badge-inverse-success" onclick="modalFeedback('<?= $item['id_aktifitas'] ?>')">
+                                  <span class="font-weight-bold fa fa-comment"> Feedback</span>
+                              </a>
+                              <a href="#" class="ml-2 badge badge-inverse-info" onclick="modalDetail('<?= $item['id_aktifitas'] ?>')">
+                                  <span class="text-purple font-weight-bold fa fa-eye"> Detail</span>
+                              </a>
+                          </td>
+                          <td><?= $item['data_kompetensi'] ?></td>
+                          <td><?= $item['sub_kompetensi'] ?></td>
+                          <td><?= $item['kegiatan'] ?></td>
+                          <td><?= $item['judul'] ?></td>
+                      </tr>
+                  <?php endforeach ?>
+              </tbody>
+          </table>
+      </div>
+  </div>
 
-                        <a onclick="modalDetail('<?= $item['id_aktifitas'] ?>')">
-                            <p class="font-weight-bold" style="font-size: 16px;"><?= $item['judul'] ?></p>
-                            <span class="text-c-lite-green">[ <?= $item['kegiatan'] ?> ]</span>
-                            <!-- status aktifitas -->
-                            <?php if ($item['status_aktifitas'] == 'new') { ?>
-                                <blink class="">
-                                    <span class="ml-3 bagde badge-danger rounded px-2 py-1">
-                                        Aktifitas Baru
-                                    </span>
-                                </blink>
-                            <?php } ?>
-                            <!-- <blink class="aktifitas_dosen_status d-none">
-                                <span class="ml-3 bagde badge-danger aktifitas_dosen rounded px-2 py-1">
-                                    Aktifitas Baru
-                                </span>
-                            </blink> -->
-                            <!-- feedback -->
-                            <?php $sql_feedback = mysqli_query($koneksi, "SELECT *, COUNT(feedback) as jumlah FROM feedbackaktifitas WHERE id_aktifitas=$id_aktifitas AND status='new' AND penerima=$id_user") ?>
-                            <?php while ($status_feedback = mysqli_fetch_array($sql_feedback)) {
-                                if ($status_feedback['jumlah'] > 0) { ?>
-                                    <blink class="">
-                                        <span class="ml-3 bagde badge-success rounded px-2 py-1">
-                                            <?= $status_feedback['jumlah'] ?> Feedback Baru
-                                        </span>
-                                    </blink>
-                                <?php } ?>
-                            <?php } ?>
-                            <!-- <blink class="feedback_aktifitas_dosen_status d-none">
-                                <span class="ml-3 feedback_aktifitas_dosen bagde badge-success rounded px-2 py-1"></span>
-                                <span class="bagde badge-success rounded px-2 py-1">Feedback Baru</span>
-                            </blink> -->
-                            <hr>
-                            <p class=""><?= word_limiter($item['deskripsi'], 15) ?></p>
-                        </a>
-                        <button type="" class="d-inline bg-transparent border-0" onclick="modalFeedback('<?= $item['id_aktifitas'] ?>')">
-                            <?php $sql = mysqli_query($koneksi, "SELECT COUNT(feedback) as jumlah FROM feedbackaktifitas WHERE id_aktifitas=$id_aktifitas"); ?>
-                            <?php while ($data_count = mysqli_fetch_array($sql)) { ?>
-                                <span class="mt-2 fa fa-comment text-c-orenge"></span>
-                                <span class="text-c-orenge" style="font-size: 12px;font-weight:bold"><?= $data_count['jumlah'] ?> Feedback [ Berikan Komentar ]</span>
-                            <?php } ?>
-                        </button>
-                        <button class="d-inline mt-2 float-right bg-transparent border-0" onclick="modalDetail('<?= $item['id_aktifitas'] ?>')">
-                            <span class="text-purple fa fa-eye" style="font-size: 12px;font-weight:bold"> Detail</span>
-                        </button>
-                    </div>
-                    <span class="cd-date">
-                        <i class="icofont icofont-ui-calendar"></i> <span><?= date('d-m-Y', strtotime($item['tanggal'])) ?></span>
-                    </span>
-                    <span class="cd-details"><?= $item['mata_kuliah'] ?></span>
-                </div>
-            </div>
-        <?php endforeach ?>
-    </div>
-</div>
+
+  <script src="<?= base_url(''); ?>\bower_components\datatables.net\js\jquery.dataTables.min.js">
+  </script>
+  <script src="<?= base_url(''); ?>\bower_components\datatables.net-buttons\js\dataTables.buttons.min.js">
+  </script>
+  <script src="<?= base_url(''); ?>\assets\pages\data-table\extensions\row-reorder\js\dataTables.rowReorder.min.js">
+  </script>
+  <script src="<?= base_url(''); ?>\bower_components\datatables.net-bs4\js\dataTables.bootstrap4.min.js"></script>
+  <script src="<?= base_url(''); ?>\bower_components\datatables.net-responsive\js\dataTables.responsive.min.js">
+  </script>
+  <script src="<?= base_url(''); ?>\bower_components\datatables.net-responsive-bs4\js\responsive.bootstrap4.min.js">
+  </script>
+  <!-- Custom js -->
+  <script src="<?= base_url(''); ?>\assets\pages\data-table\extensions\row-reorder\js\row-reorder-custom.js"></script>

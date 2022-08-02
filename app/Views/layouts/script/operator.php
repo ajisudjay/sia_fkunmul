@@ -33,6 +33,11 @@
 <script type="text/javascript" src="<?= base_url(''); ?>\assets\js\toastr.min.js"></script>
 <script type="text/javascript" src="<?= base_url(''); ?>\assets\js\toastr2.min.js"></script>
 
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <script>
     // SWEET ALERT //
     $('.btn-del').on('click', function(e) {
@@ -54,10 +59,18 @@
     });
 
     const flashdata1 = $('.flash-data1').data('flashdata')
+    const flashdata2 = $('.flash-data2').data('flashdata')
     if (flashdata1) {
         Swal.fire({
             title: 'Berhasil',
             text: 'Data Berhasil Ditambahkan!',
+            icon: 'success',
+            AnimationEffect: 'bounce'
+        })
+    } else if (flashdata2) {
+        Swal.fire({
+            title: 'Berhasil',
+            text: 'Data Berhasil Diubah!',
             icon: 'success',
             AnimationEffect: 'bounce'
         })
@@ -105,13 +118,6 @@
         $('.view_isi_pesan_feedback_mahasiswa').addClass('d-none');
     });
 
-    // var channel = pusher.subscribe('sia-fkunmul');
-    // channel.bind('modalfeedback', function(data) {
-    //     // alert(JSON.stringify(data));
-    //     $('.feedback_aktifitas_dosen').addClass('d-none');
-    //     $('.feedback_aktifitas_dosen_status').addClass('d-none');
-    // });
-
     var channel = pusher.subscribe('sia-fkunmul');
     channel.bind('aktifitas', function(data) {
         // alert(JSON.stringify(data));
@@ -120,6 +126,13 @@
         $('.aktifitas_dosen_status').removeClass('d-none');
         $('.aktifitas_dosen_awal').addClass('d-none');
         $('.view_isi_pesan_aktifitas').addClass('d-none');
+    });
+
+    var channel = pusher.subscribe('sia-fkunmul');
+    channel.bind('progress', function(data) {
+        // alert(JSON.stringify(data));
+        $('.isi_pesan_progress').html(data.isi_pesan_progress);
+        $('.view_isi_pesan_progress').addClass('d-none');
     });
 </script>
 

@@ -97,7 +97,16 @@
 
     .scroll_view {
         width: 100%;
-        height: 300px;
+        height: 350px;
+        overflow: scroll;
+        padding: 40px;
+        background: #f6f6f6;
+        border-radius: 10px;
+    }
+
+    .scroll_view_mahasiswa {
+        width: 100%;
+        height: 400px;
         overflow: scroll;
         padding: 40px;
         background: #f6f6f6;

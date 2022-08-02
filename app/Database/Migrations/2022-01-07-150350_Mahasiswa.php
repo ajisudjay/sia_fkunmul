@@ -35,6 +35,11 @@ class Mahasiswa extends Migration
                 'null' => TRUE,
                 'unsigned' => true,
             ],
+            'id_dosen_ipe' => [
+                'type' => 'INT',
+                'null' => TRUE,
+                'unsigned' => true,
+            ],
             'id_pb1' => [
                 'type' => 'INT',
                 'null' => TRUE,
@@ -89,6 +94,7 @@ class Mahasiswa extends Migration
         $this->forge->addForeignKey('id_fak', 'fakultas', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('id_angkatan', 'angkatans', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('id_pa', 'dosens', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_dosen_ipe', 'dosens', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('id_pb1', 'dosens', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('id_pb2', 'dosens', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('mahasiswas', TRUE);

@@ -99,11 +99,13 @@ class Home extends BaseController
         if (session()->get('username') == NULL || session()->get('role') !== '2') {
             return redirect()->to('/');
         }
-
+        $nim = session()->get('username');
         $data = [
             'title' => 'Beranda | Siakad - Fakultas Kedokteran UNMUL',
             'topHeader' => 'Beranda | Siakad - Fakultas Kedokteran UNMUL',
             'header' => 'Beranda',
+            'sqlcount' => $this->AktifitasModel->viewJumlahSubAktifitasHome($nim),
+            'sqlkompetensi' => $this->AktifitasModel->viewJumlahAktifitasHome($nim),
         ];
 
         return view('halaman_awal/mahasiswa', $data);
@@ -144,6 +146,7 @@ class Home extends BaseController
         $request = \Config\Services::request();
         $username = session()->get('username');
         $koneksi = $this->KoneksiModel->koneksi();
+        $nim = session()->get('username');
 
         if ($request->isAJAX()) {
             $data = [
@@ -155,6 +158,8 @@ class Home extends BaseController
                 'feedback' => $this->AktifitasModel->viewFeedback(),
                 'koneksi' => $koneksi,
                 'mahasiswa' => $this->UserModel->viewBeranda($username),
+                'sqlcount' => $this->AktifitasModel->viewJumlahSubAktifitasHome($nim),
+                'sqlkompetensi' => $this->AktifitasModel->viewJumlahAktifitasHome($nim),
 
             ];
 
@@ -206,6 +211,20 @@ class Home extends BaseController
         }
         $request = \Config\Services::request();
         $username = session()->get('username');
+        $nim = session()->get('username');
+
+        $jumlahsub = null;
+        $jumlah = null;
+
+        $sqlcount = $this->AktifitasModel->viewJumlahAktifitasHome($nim);
+        foreach ($sqlcount as $datacount) {
+            $count = $datacount['jumlah'];
+            $jumlah .= "$count" . ",";
+
+            $countsub = $datacount['data_kompetensi'];
+            $jumlahsub .= "'$countsub'" . ",";
+        }
+
         $koneksi = $this->KoneksiModel->koneksi();
         if ($request->isAJAX()) {
             $data = [
@@ -213,7 +232,11 @@ class Home extends BaseController
                 'mahasiswa' => $this->UserModel->viewBeranda($username),
                 'aktifitas' => $this->AktifitasModel->viewTimelineFeedback($username),
                 'feedback' => $this->AktifitasModel->viewFeedback(),
-                'koneksi' => $koneksi
+                'koneksi' => $koneksi,
+                'sqlcount' => $this->AktifitasModel->viewJumlahSubAktifitasHome($nim),
+                'sqlkompetensi' => $this->AktifitasModel->viewJumlahAktifitasHome($nim),
+                'jumlah' => $jumlah,
+                'jumlahsub' => $jumlahsub,
             ];
 
             $msg = [

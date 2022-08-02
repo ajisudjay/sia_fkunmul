@@ -24,7 +24,7 @@ class DataSeeder extends Seeder
         $this->call('ModulSeeder');
         $this->call('KegiatanSeeder');
         $this->call('DeskripsiAktifitasSeeder');
-        $this->call('AktifitasSeeder');
+        // $this->call('AktifitasSeeder');
         $this->call('BimbinganSeeder');
         $this->call('FeedbackAktifitasSeeder');
     }

@@ -37,7 +37,7 @@ class DetailAktifitas extends Migration
             ],
             'deskripsi_aktifitas' => [
                 'type' => 'TEXT',
-                'constraint' => '30000',
+                'constraint' => '50000',
                 'null' => TRUE
             ],
         ]);

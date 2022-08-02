@@ -1,9 +1,9 @@
-<div class="modal fade" id="modalFeedbackAktifitas" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalFeedbackAktifitas" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" style="min-width:80%" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Feedback Aktifitas</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" onclick="statusAktifitas()" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -39,6 +39,7 @@
                                                         <input type="text" name="id_pa" value="<?= $id_pa ?>" id="" hidden>
                                                         <i style="font-size: 10px;" class="text-danger error_feedback"></i>
                                                         <div class="text-right m-t-20">
+                                                            <button type="button" class="float-left btn btn-danger" onclick="statusAktifitas()" data-dismiss="modal">Tutup</button>
                                                             <button type="submit" class="btn btnFeedback btn-primary waves-effect waves-light">Kirim</button>
                                                         </div>
                                                     </form>
@@ -88,6 +89,10 @@
 </div>
 
 <script>
+    function statusAktifitas() {
+        location.reload();
+    }
+
     $(document).ready(function() {
         $.ajax({
             url: '<?= base_url('aktifitas/viewDataDetailMahasiswa') ?>',
