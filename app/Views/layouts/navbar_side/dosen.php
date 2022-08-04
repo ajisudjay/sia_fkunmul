@@ -20,17 +20,24 @@
                         <ul class="pcoded-submenu">
                             <li class="<?= $header == 'Aktifitas' ? 'active' : '' ?>">
                                 <a href="<?= base_url('/aktivitas-dosen'); ?>">
-                                    <span class="pcoded-mtext">Aktivitas</span>
+                                    <span class="pcoded-mtext">Bimbingan Akademik</span>
                                 </a>
                             </li>
                         </ul>
                         <ul class="pcoded-submenu">
+                            <li class="<?= $header == 'IPE' ? 'active' : '' ?>">
+                                <a href="<?= base_url('/aktivitas-dosen-ipe'); ?>">
+                                    <span class="pcoded-mtext">IPE</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- <ul class="pcoded-submenu">
                             <li class="<?= $header == 'Bimbingan' ? 'active' : '' ?>">
                                 <a href="<?= base_url('/bimbingan-dosen'); ?>">
                                     <span class="pcoded-mtext">Bimbingan Akademik</span>
                                 </a>
                             </li>
-                        </ul>
+                        </ul> -->
                     </li>
                 </ul>
                 <!-- <div class="pcoded-navigatio-lavel">Perkuliahan</div>

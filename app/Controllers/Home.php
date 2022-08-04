@@ -3,9 +3,9 @@
 namespace App\Controllers;
 
 use App\Models\AktifitasModel;
+use App\Models\DosenModel;
 use App\Models\KoneksiModel;
 use App\Models\UserModel;
-use mysqli;
 
 class Home extends BaseController
 {
@@ -13,6 +13,7 @@ class Home extends BaseController
     protected $UserModel;
     protected $AktifitasModel;
     protected $KoneksiModel;
+    protected $DosenModel;
 
     public function __construct()
     {
@@ -20,6 +21,7 @@ class Home extends BaseController
         $this->UserModel = new UserModel();
         $this->AktifitasModel = new AktifitasModel();
         $this->KoneksiModel = new KoneksiModel();
+        $this->DosenModel = new DosenModel();
     }
 
     public function login()
@@ -296,6 +298,62 @@ class Home extends BaseController
 
             $msg = [
                 'data' => view('halaman_awal/perkuliahan/mahasiswa-data-view-perkuliahan', $data)
+            ];
+
+            echo json_encode($msg);
+        } else {
+            exit('Data Tidak Dapat diproses');
+        }
+    }
+
+    public function timelineDosen()
+    {
+        if (session()->get('username') == NULL || session()->get('role') !== '3') {
+            return redirect()->to('/');
+        }
+        $request = \Config\Services::request();
+        $username = session()->get('username');
+        $nim = session()->get('username');
+
+
+        $koneksi = $this->KoneksiModel->koneksi();
+        if ($request->isAJAX()) {
+            $data = [
+                'user' => $this->UserModel->where('username', $username)->join('userroles', 'userroles.id_role=users.role')->first(),
+                'mahasiswa' => $this->UserModel->viewBeranda($username),
+                'aktifitas' => $this->AktifitasModel->viewTimelineFeedback($username),
+                'feedback' => $this->AktifitasModel->viewFeedback(),
+                'koneksi' => $koneksi,
+            ];
+
+            $msg = [
+                'data' => view('halaman_awal/timeline/dosen-data-view-timeline', $data)
+            ];
+
+            echo json_encode($msg);
+        } else {
+            exit('Data Tidak Dapat diproses');
+        }
+    }
+
+    public function profilDosen()
+    {
+        if (session()->get('username') == NULL || session()->get('role') !== '3') {
+            return redirect()->to('/');
+        }
+        $request = \Config\Services::request();
+        $username = session()->get('username');
+
+        $koneksi = $this->KoneksiModel->koneksi();
+        if ($request->isAJAX()) {
+            $data = [
+                'user' => $this->UserModel->where('username', $username)->join('userroles', 'userroles.id_role=users.role')->first(),
+                'koneksi' => $koneksi,
+                'profil' => $this->DosenModel->viewDosen($username),
+            ];
+
+            $msg = [
+                'data' => view('halaman_awal/profil/view-dosen', $data)
             ];
 
             echo json_encode($msg);

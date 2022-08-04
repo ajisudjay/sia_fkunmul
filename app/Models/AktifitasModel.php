@@ -96,7 +96,7 @@ class AktifitasModel extends Model
             ->join('subkompetensis', 'aktifitas.subkompetensi_aktifitas=subkompetensis.id_sub_kompetensi', 'left')
             ->where('mahasiswas.nim', $nim)
             // ->where('jenis', 'REGULAR')
-            ->groupBy('id_tahun_ajaran')
+            ->groupBy('kompetensis.kompetensi')
             ->orderBy('kompetensis.id_kompetensi', 'ASC')->get()->getResultArray();
     }
 
@@ -144,16 +144,17 @@ class AktifitasModel extends Model
             ->selectCount('kompetensis.kompetensi', 'jumlah')
             ->join('mahasiswas', 'mahasiswas.id_mahasiswa=aktifitas.id_mahasiswa_aktifitas')
             ->join('kompetensis', 'aktifitas.kompetensi_aktifitas=kompetensis.id_kompetensi')
+            ->join('tahunajarans', 'aktifitas.id_tahun_ajaran=tahunajarans.id')
             ->join('subkompetensis', 'aktifitas.subkompetensi_aktifitas=subkompetensis.id_sub_kompetensi', 'left')
             ->where('mahasiswas.nim', $nim)
             // ->where('id_tahun_ajaran', $id_tahun_ajaran)
             // ->where('jenis', 'REGULAR')
-            ->groupBy('kompetensis.kompetensi')
-            ->orderBy('kompetensis.id_kompetensi', 'ASC')->get()->getResultArray();
+            // ->groupBy('kompetensis.kompetensi')
+            ->groupBy('id_tahun_ajaran')
+            ->orderBy('tahunajarans.id', 'ASC')->get()->getResultArray();
     }
 
-
-    public function viewJumlahSubAktifitasHome($nim)
+    public function viewJumlahAktifitasGrafik($nim)
     {
         return $this->db->table('aktifitas')
             ->select('*')
@@ -162,12 +163,32 @@ class AktifitasModel extends Model
             ->selectCount('kompetensis.kompetensi', 'jumlah')
             ->join('mahasiswas', 'mahasiswas.id_mahasiswa=aktifitas.id_mahasiswa_aktifitas')
             ->join('kompetensis', 'aktifitas.kompetensi_aktifitas=kompetensis.id_kompetensi')
+            ->join('tahunajarans', 'aktifitas.id_tahun_ajaran=tahunajarans.id')
+            ->where('mahasiswas.nim', $nim)
+            // ->where('id_tahun_ajaran', $id_tahun_ajaran)
+            // ->where('jenis', 'REGULAR')
+            ->groupBy('id_tahun_ajaran')
+            ->groupBy('kompetensis.kompetensi')
+            ->orderBy('tahunajarans.id', 'ASC')->get()->getResultArray();
+    }
+
+    public function viewJumlahSubAktifitasHome($nim)
+    {
+        return $this->db->table('aktifitas')
+            ->select('*')
+            ->select('aktifitas.id as id_aktifitas')
+            ->select('kompetensis.kompetensi as data_kompetensi')
+            ->selectCount('subkompetensis.sub_kompetensi', 'jumlah')
+            ->join('mahasiswas', 'mahasiswas.id_mahasiswa=aktifitas.id_mahasiswa_aktifitas')
+            ->join('kompetensis', 'aktifitas.kompetensi_aktifitas=kompetensis.id_kompetensi')
             ->join('subkompetensis', 'aktifitas.subkompetensi_aktifitas=subkompetensis.id_sub_kompetensi', 'left')
             ->where('mahasiswas.nim', $nim)
             // ->where('id_tahun_ajaran', $id_tahun_ajaran)
             // ->where('jenis', 'REGULAR')
-            ->groupBy('sub_kompetensi')
-            ->orderBy('kompetensis.id_kompetensi', 'ASC')->get()->getResultArray();
+            ->groupBy('id_tahun_ajaran')
+            ->groupBy('kompetensis.kompetensi')
+            ->groupBy('subkompetensis.sub_kompetensi')
+            ->get()->getResultArray();
     }
 
     public function viewDetailAktifitas($id_aktifitas)
@@ -209,6 +230,7 @@ class AktifitasModel extends Model
             ->join('programstudis', 'mahasiswas.id_ps=programstudis.id')
             ->where('aktifitas.id_mahasiswa_aktifitas', $id_mahasiswa)
             ->where('aktifitas.id_tahun_ajaran', $id_tahun_ajaran)
+            ->where('jenis', 'REGULAR')
             ->orderBy('status_aktifitas', 'ASC')
             ->orderBy('aktifitas.id', 'DESC')
             ->get()->getResultArray();
@@ -255,11 +277,6 @@ class AktifitasModel extends Model
             ->get()->getResultArray();
     }
 
-    // public function viewDetailAktifitasSemester($id_mahasiswa, $id_tahun_ajaran)
-    // {
-    //     return $this->db->query("SELECT *, aktifitas.id as id_aktifitas FROM aktifitas JOIN kegiatans ON kegiatans.id=aktifitas.id_kegiatan JOIN mahasiswas ON mahasiswas.id_mahasiswa=aktifitas.id_mahasiswa_aktifitas JOIN dosens ON dosens.id=mahasiswas.id_pa WHERE aktifitas.id_mahasiswa_aktifitas=$id_mahasiswa AND aktifitas.id_tahun_ajaran= $id_tahun_ajaran ORDER BY id_aktifitas DESC")->getResultArray();
-    // }
-
     public function viewSearchAktifitasSemester($id_mahasiswa, $id_tahun_ajaran, $cari)
     {
         return $this->db->query("SELECT *, aktifitas.id as id_aktifitas FROM aktifitas JOIN kegiatans ON kegiatans.id=aktifitas.id_kegiatan JOIN mahasiswas ON mahasiswas.id_mahasiswa=aktifitas.id_mahasiswa_aktifitas JOIN dosens ON dosens.id=mahasiswas.id_pa WHERE aktifitas.id_mahasiswa_aktifitas=$id_mahasiswa AND aktifitas.id_tahun_ajaran= $id_tahun_ajaran ORDER BY id_aktifitas DESC")->getResultArray();
@@ -286,6 +303,30 @@ class AktifitasModel extends Model
             ->where('dosens.nip', $usernamae)
             ->where('id_tahun_ajaran', $id_tahun_ajaran)
             ->groupBy('nim')
+            ->get()->getResultArray();
+    }
+
+    // IPE //
+
+    public function viewIpeDosen($id_dosen, $id_tahun_ajaran)
+    {
+        return $this->db->table('aktifitas')
+            ->select('*')
+            ->select('aktifitas.id as id_aktifitas')
+            ->select('kompetensis.kompetensi as data_kompetensi')
+            ->join('kegiatans', 'aktifitas.id_kegiatan=kegiatans.id')
+            ->join('kompetensis', 'aktifitas.kompetensi_aktifitas=kompetensis.id_kompetensi')
+            ->join('subkompetensis', 'aktifitas.subkompetensi_aktifitas=subkompetensis.id_sub_kompetensi', 'left')
+            ->join('mahasiswas', 'mahasiswas.id_mahasiswa=aktifitas.id_mahasiswa_aktifitas')
+            ->join('dosens', 'dosens.id=mahasiswas.id_pa')
+            ->join('tahunajarans', 'tahunajarans.id=aktifitas.id_tahun_ajaran')
+            ->join('angkatans', 'mahasiswas.id_angkatan=angkatans.id')
+            ->join('programstudis', 'mahasiswas.id_ps=programstudis.id')
+            ->where('mahasiswas.id_dosen_ipe', $id_dosen)
+            ->where('aktifitas.id_tahun_ajaran', $id_tahun_ajaran)
+            ->where('kompetensis.jenis', 'IPE')
+            ->orderBy('status_aktifitas', 'ASC')
+            ->orderBy('aktifitas.id', 'DESC')
             ->get()->getResultArray();
     }
 }

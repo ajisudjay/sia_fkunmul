@@ -6,10 +6,10 @@
                       <td>No</td>
                       <td>Status</td>
                       <td>Aksi</td>
+                      <td>Judul</td>
                       <td>Kompetensi</td>
                       <td>Sub kompetensi</td>
                       <td>Kegiatan</td>
-                      <td>Judul</td>
                   </tr>
               </thead>
               <tbody>
@@ -47,10 +47,10 @@
                                   <span class="text-purple font-weight-bold fa fa-eye"> Detail</span>
                               </a>
                           </td>
+                          <td><?= $item['judul'] ?></td>
                           <td><?= $item['data_kompetensi'] ?></td>
                           <td><?= $item['sub_kompetensi'] ?></td>
                           <td><?= $item['kegiatan'] ?></td>
-                          <td><?= $item['judul'] ?></td>
                       </tr>
                   <?php endforeach ?>
               </tbody>

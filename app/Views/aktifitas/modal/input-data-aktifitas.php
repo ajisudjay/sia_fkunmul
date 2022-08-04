@@ -59,7 +59,9 @@
                                         </select>
                                     </div>
                                     <div class="col-lg-6">
-                                        <label class="font-weight-bold mt-3 text-primary">File Bukti</label><br>
+                                        <label class="font-weight-bold mt-3 text-primary">File Bukti</label>
+                                        <i class="text-danger" style="font-size: 10px;">Bentuk file wajib .pdf</i>
+                                        <br>
                                         <div class="j-input">
                                             <input required type="file" name="file" id="file" class="form-control" accept=".pdf">
                                         </div>

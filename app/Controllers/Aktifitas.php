@@ -110,14 +110,13 @@ class Aktifitas extends BaseController
                 'aktifitas' => $this->AktifitasModel->viewDetailAktifitasSemester($id_mahasiswa, $id_tahun_ajaran),
             ];
             $msg = [
-                'data' => view('aktifitas/view-dosen', $data)
+                'data' => view('aktifitas/view-detail-aktifitas-dosen', $data)
             ];
             echo json_encode($msg);
         } else {
             exit('Data Tidak Dapat diproses');
         }
     }
-
 
     public function viewDataDosen()
     {
@@ -193,6 +192,15 @@ class Aktifitas extends BaseController
         $uri_ta = $request->uri->getSegment(3);
         $cek_ta = base64_decode($uri_ta);
         $id_tahun_ajaran = substr($cek_ta, 13);
+
+        if ($id_tahun_ajaran == null) {
+            $id_tahun_ajaran = '';
+        } else {
+            $query_nama_ta = $this->TahunAjaranModel->where('id', $id_tahun_ajaran)->first();
+            $session_nama_ta = $query_nama_ta['tahun_ajaran'];
+            session()->set('session_ta', $id_tahun_ajaran);
+            session()->set('session_nama_ta', $session_nama_ta);
+        }
 
         $data = [
             'title' => 'Aktifitas - Fakultas Kedokteran Universitas Mulawarman',
@@ -354,41 +362,24 @@ class Aktifitas extends BaseController
         $id = $request->getVar('id');
         $cek = $this->AktifitasModel->join('mahasiswas', 'aktifitas.id_mahasiswa_aktifitas=mahasiswas.id_mahasiswa')->where('id', $id)->first();
         $nim = $cek['nim'];
-        $id_mahasiswa = $cek['id_mahasiswa'];
+        $nama_mahasiswa = $cek['nama_mahasiswa'];
         $id_tahun_ajaran = $cek['id_tahun_ajaran'];
 
         if ($request->isAJAX()) {
-            $jumlahSemester = '';
-            $jumlahdata = '';
+            $jumlahsub = null;
             $jumlah = null;
+            $jumlahIPE = null;
 
-            $dataAkt = '';
-
-            $sqlcount1 = $this->AktifitasModel->viewJumlahAktifitasDosen($nim);
-            foreach ($sqlcount1 as $datacount) {
-                $id_ta = $datacount['id_tahun_ajaran'];
-
+            $sqlcount = $this->AktifitasModel->viewJumlahAktifitasDosen($nim);
+            foreach ($sqlcount as $datacount) {
                 $count = $datacount['jumlah'];
                 $jumlah .= "$count" . ",";
 
-                $countsub = $datacount['tahun_ajaran'];
-                $jumlahSemester .= "'$countsub'" . ",";
+                $countsub = $datacount['sub_kompetensi'];
+                $jumlahsub .= "'$countsub'" . ",";
 
-                $sqlcount = $this->AktifitasModel->viewJumlahAktifitas($nim, $id_ta);
-                foreach ($sqlcount as $datacount_akt) {
-                    $count_akt = $datacount_akt['jumlah'];
-                    $dataAkt .= "$count_akt" . ",";
-
-                    $count_data = $datacount_akt['data_kompetensi'];
-                    $jumlahdata .= "'$count_data'" . ",";
-
-                    $array = array(
-                        'type' => 'column',
-                        'name' => '' . $count_data . '',
-                        'data' => [$dataAkt],
-                    );
-                    $json = json_encode($array);
-                }
+                $countipe = $datacount['data_kompetensi'];
+                $jumlahIPE .= "'$countipe'" . ",";
             }
 
             if ($request->isAJAX()) {
@@ -399,16 +390,16 @@ class Aktifitas extends BaseController
                     'deskripsiaktifitas' => $this->DeskripsiAktifitasModel->get()->getResultArray(),
                     'feedbackaktifitas' => $this->FeedbackAktifitasModel->select('*')->selectCount('id_aktifitas', 'jumlah')->get()->getRowArray(),
                     'nim' => $nim,
+                    'nama_mahasiswa' => $nama_mahasiswa,
                     'id_tahun_ajaran' => $id_tahun_ajaran,
                     'aktifitas' => $this->AktifitasModel->viewAktifitas($nim, $id_tahun_ajaran),
                     'jumlah' => $jumlah,
-                    'jumlahSemester' => $jumlahSemester,
-                    'jumlahdata' => $jumlahdata,
-                    'dataAkt' => $dataAkt,
-                    'json' => $json,
-                    'sqlcount' => $this->AktifitasModel->viewDetailDosenPa($id_mahasiswa),
-                    'sqlcount1' => $sqlcount1,
-                    'sqlkompetensi' => $this->AktifitasModel->viewJumlahAktifitas($nim, $id_tahun_ajaran),
+                    'sqlcount' => $this->AktifitasModel->viewJumlahSubAktifitasHome($nim),
+                    'sqlgrafik1' => $this->AktifitasModel->viewJumlahAktifitasGrafik($nim),
+                    'sqlkompetensi' => $this->AktifitasModel->viewJumlahAktifitasHome($nim),
+                    'jumlah' => $jumlah,
+                    'jumlahsub' => $jumlahsub,
+                    'jumlahIPE' => $jumlahIPE,
                 ];
                 $msg = [
                     'sukses' => view('aktifitas/modal/view-grafik-dosen', $data_view)
@@ -546,6 +537,212 @@ class Aktifitas extends BaseController
         return view('aktifitas/detail-bimbingan-dosen', $data);
     }
 
+    // DOSEN IPE //
+
+    public function ipeDosen()
+    {
+        if (session()->get('username') == NULL || session()->get('role') !== '3') {
+            return redirect()->to('/');
+        }
+        $data = [
+            'title' => 'Aktifitas - Fakultas Kedokteran Universitas Mulawarman',
+            'topHeader' => 'Aktifitas',
+            'header' => 'IPE',
+            'programstudi' => $this->ProgramStudiModel->orderBy('id', 'DESC')->get()->getResultArray(),
+            'tahunajaran' => $this->TahunAjaranModel->orderBy('id', 'DESC')->get()->getResultArray(),
+        ];
+        return view('aktifitas/ipe/dosen', $data);
+    }
+
+    public function ipeViewDosen()
+    {
+        if (session()->get('username') == NULL || session()->get('role') !== '3') {
+            return redirect()->to('/');
+        }
+        $request = \Config\Services::request();
+        $id_tahun_ajaran = $request->getVar('id_tahun_ajaran');
+        $username = session()->get('username');
+
+        if ($id_tahun_ajaran !== '') {
+            $query_nama_ta = $this->TahunAjaranModel->where('id', $id_tahun_ajaran)->first();
+            $session_nama_ta = $query_nama_ta['tahun_ajaran'];
+            session()->set('session_ta', $id_tahun_ajaran);
+            session()->set('session_nama_ta', $session_nama_ta);
+        }
+
+        $cek = $this->DosenModel->where('nip', $username)->first();
+        $id_dosen = $cek['id'];
+
+        // $cek = $this->MahasiswaModel->where('id_mahasiswa', $id_mahasiswa)->first();
+        // $cekNim = $cek['nim'];
+        // $sqlUser = $this->UserModel->where('username', $cekNim)->first();
+        // $id_penerima = $sqlUser['id'];
+
+        if ($request->isAJAX()) {
+            $data = [
+                // 'id_penerima' => $id_penerima,
+                'koneksi' => $this->KoneksiModel->koneksi(),
+                'kegiatan' => $this->KegiatanModel->get()->getResultArray(),
+                'deskripsiaktifitas' => $this->DeskripsiAktifitasModel->get()->getResultArray(),
+                'aktifitas' => $this->AktifitasModel->viewIpeDosen($id_dosen, $id_tahun_ajaran),
+            ];
+            $msg = [
+                'data' => view('aktifitas/ipe/view-dosen', $data)
+            ];
+            echo json_encode($msg);
+        } else {
+            exit('Data Tidak Dapat diproses');
+        }
+    }
+
+    public function ipeViewSessionDosen()
+    {
+        if (session()->get('username') == NULL || session()->get('role') !== '3') {
+            return redirect()->to('/');
+        }
+        $request = \Config\Services::request();
+        $id_tahun_ajaran = $request->getVar('id_tahun_ajaran');
+        $username = session()->get('username');
+
+        if ($id_tahun_ajaran !== '') {
+            $query_nama_ta = $this->TahunAjaranModel->where('id', $id_tahun_ajaran)->first();
+            $session_nama_ta = $query_nama_ta['tahun_ajaran'];
+            session()->set('session_ta', $id_tahun_ajaran);
+            session()->set('session_nama_ta', $session_nama_ta);
+        }
+
+        $cek = $this->DosenModel->where('nip', $username)->first();
+        $id_dosen = $cek['id'];
+
+        // $cek = $this->MahasiswaModel->where('id_mahasiswa', $id_mahasiswa)->first();
+        // $cekNim = $cek['nim'];
+        // $sqlUser = $this->UserModel->where('username', $cekNim)->first();
+        // $id_penerima = $sqlUser['id'];
+
+        if ($request->isAJAX()) {
+            $data = [
+                // 'id_penerima' => $id_penerima,
+                'koneksi' => $this->KoneksiModel->koneksi(),
+                'kegiatan' => $this->KegiatanModel->get()->getResultArray(),
+                'deskripsiaktifitas' => $this->DeskripsiAktifitasModel->get()->getResultArray(),
+                'aktifitas' => $this->AktifitasModel->viewIpeDosen($id_dosen, $id_tahun_ajaran),
+            ];
+            $msg = [
+                'data' => view('aktifitas/ipe/view-dosen', $data)
+            ];
+            echo json_encode($msg);
+        } else {
+            exit('Data Tidak Dapat diproses');
+        }
+    }
+
+    public function ipeModalFeedbackDosen()
+    {
+        $request = \Config\Services::request();
+        $id_aktifitas = $request->getVar('id_aktifitas');
+
+        $cek = $this->AktifitasModel->where('id', $id_aktifitas)->first();
+        $id_mahasiswa = $cek['id_mahasiswa_aktifitas'];
+
+        $id_user =  session()->get('id_user');
+        if ($request->isAJAX()) {
+            $data_update = [
+                'status' => 'read',
+            ];
+            $this->FeedbackAktifitasModel->ubah($data_update, $id_aktifitas, $id_user);
+
+            $data = [
+                'koneksi' => $this->KoneksiModel->koneksi(),
+                'aktifitas' => $this->AktifitasModel->viewDetailAktifitas($id_aktifitas),
+                'kegiatan' => $this->KegiatanModel->get()->getResultArray(),
+                'matakuliah' => $this->MataKuliahModel->get()->getResultArray(),
+                'deskripsiaktifitas' => $this->DeskripsiAktifitasModel->get()->getResultArray(),
+                'id_aktifitas' => $id_aktifitas,
+                'id_user' => $id_user,
+                'id_mahasiswa' => $id_mahasiswa,
+            ];
+            $msg = [
+                'sukses' => view('aktifitas/ipe/view-feedback-aktifitas-dosen', $data)
+            ];
+            require __DIR__ . '/../../vendor/autoload.php';
+
+            $options = array(
+                'cluster' => 'ap1',
+                'useTLS' => true
+            );
+            $pusher = new Pusher(
+                'f3d8b822045da0f51d29',
+                'ebdba4f0d29bb0207ec3',
+                '1435175',
+                $options
+            );
+
+            // $sql = $this->FeedbackAktifitasModel->count($id_penerima, $id_aktifitas);
+
+            $data['feedbackdosen'] = '';
+            $pusher->trigger('sia-fkunmul', 'modalfeedback', $data);
+            echo json_encode($msg);
+        } else {
+            exit('Maaf Tidak Dapat Diproses');
+        }
+    }
+
+    public function ipeModalAktifitasDosen()
+    {
+        $request = \Config\Services::request();
+        $id_aktifitas = $request->getVar('id_aktifitas');
+        $cek = $this->AktifitasModel->where('id', $id_aktifitas)->first();
+        $id_mahasiswa = $cek['id_mahasiswa_aktifitas'];
+        $id_user =  session()->get('id_user');
+
+        if ($request->isAJAX()) {
+            $data_update = [
+                'status_aktifitas' => 'read',
+            ];
+            $this->AktifitasModel->update($id_aktifitas, $data_update);
+
+            $data_feedback = [
+                'status' => 'read',
+            ];
+            $this->FeedbackAktifitasModel->ubah($data_feedback, $id_aktifitas, $id_user);
+
+            $data_view = [
+                'koneksi' => $this->KoneksiModel->koneksi(),
+                'aktifitas' => $this->AktifitasModel->viewDetailAktifitas($id_aktifitas),
+                'kegiatan' => $this->KegiatanModel->get()->getResultArray(),
+                'matakuliah' => $this->MataKuliahModel->get()->getResultArray(),
+                'deskripsiaktifitas' => $this->DeskripsiAktifitasModel->get()->getResultArray(),
+                'detailaktifitas' => $this->DetailAktifitasModel->where('id_aktifitas', $id_aktifitas)->get()->getResultArray(),
+                'id_aktifitas' => $id_aktifitas,
+                'id_user' => $id_user,
+                'id_mahasiswa' => $id_mahasiswa,
+                'progress' => $this->ProgressAktifitasModel->where('id_aktifitas', $id_aktifitas)->orderBy('id_progress', 'DESC')->get()->getResultArray(),
+            ];
+            $msg = [
+                'sukses' => view('aktifitas/modal/view-detail-aktifitas-dosen', $data_view)
+            ];
+            require __DIR__ . '/../../vendor/autoload.php';
+
+            $options = array(
+                'cluster' => 'ap1',
+                'useTLS' => true
+            );
+            $pusher = new Pusher(
+                'f3d8b822045da0f51d29',
+                'ebdba4f0d29bb0207ec3',
+                '1435175',
+                $options
+            );
+
+            // $sql = $this->FeedbackAktifitasModel->count($id_penerima, $id_aktifitas);
+            session()->set('id_aktifitas_view_dosen', $id_aktifitas);
+            $data['modalaktifitas'] = $id_aktifitas;
+            $pusher->trigger('sia-fkunmul', 'modal_aktifitas', $data);
+            echo json_encode($msg);
+        } else {
+            exit('Maaf Tidak Dapat Diproses');
+        }
+    }
 
     // MAHASISWA ----
 
@@ -886,7 +1083,7 @@ class Aktifitas extends BaseController
             $char = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>{}[]';
             $slug_aktifitas = substr(str_shuffle($char), 0, 50);
 
-            $data = [
+            $data_input = [
                 'kompetensi_aktifitas' => $kompetensi,
                 'subkompetensi_aktifitas' => $subkompetensi,
                 'judul' => $judul,
@@ -902,20 +1099,20 @@ class Aktifitas extends BaseController
                 'status_aktifitas' => 'new',
             ];
 
-            $this->AktifitasModel->insert($data);
+            $this->AktifitasModel->insert($data_input);
 
             $cek = $this->AktifitasModel->orderBy('id', 'DESC')->limit(1)->first();
             $id_aktifitas = $cek['id'];
 
             for ($i = 0; $i < $total; $i++) {
-                $data[$i] = array(
+                $data_detail[$i] = array(
                     'id_aktifitas' => $id_aktifitas,
                     'deskripsi_aktifitas' => $deskripsi[$i],
                     'mahasiswa' => $nim,
                     'id_deskripsi_aktifitas' => $id_deskripsi_aktifitas[$i],
                     'id_tahun_ajaran' => $id_tahun_ajaran,
                 );
-                $this->DetailAktifitasModel->insert($data[$i]);
+                $this->DetailAktifitasModel->insert($data_detail[$i]);
             }
             require __DIR__ . '/../../vendor/autoload.php';
 

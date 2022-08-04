@@ -15,13 +15,14 @@
             <?php $no = 1 ?>
             <?php foreach ($aktifitas as $item) :
                 $id = $item['id_aktifitas'];
+                $ta = $item['id_tahun_ajaran'];
                 $nimHash = base64_encode($item['nim']);
-                // $id_ta = base64_encode('@49innqwj//;-' . $id_tahun_ajaran . '')
+                // $id_ta = base64_encode('@49innqwj//;-' . $ta . '');
             ?>
                 <tr>
                     <td style="text-align: center;width: 5%;"><?= $no++ ?></td>
                     <td style="width: 6%;">
-                        <a href="<?= base_url('/detail-aktifitas-dosen/' . $nimHash . ''); ?>" class="badge badge-inverse-info">
+                        <a href="<?= base_url('/detail-aktifitas-dosen/' . $nimHash . ''); ?>" class="badge badge-inverse-primary">
                             <span class="icofont icofont-info-circle" style="font-size: 11px;font-weight:bold; text-align:center"> Detail</span>
                         </a>
                         <a href="#" class="badge badge-inverse-warning">

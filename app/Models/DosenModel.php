@@ -48,6 +48,16 @@ class DosenModel extends Model
             ->get()->getResultArray();
     }
 
+    public function viewDosen()
+    {
+        return $this->db->table('dosens')
+            ->join('programstudis', 'programstudis.id=dosens.id_ps')
+            ->join('fakultas', 'fakultas.id=dosens.id_fak')
+            ->join('statusdosens', 'statusdosens.id=dosens.id_status_dosen')
+            ->get()->getRowArray();
+    }
+
+
     public function edit($data, $nip)
     {
         return $this->db->table('dosens')->update($data, ['nip' => $nip]);
