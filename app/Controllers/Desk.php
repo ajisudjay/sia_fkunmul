@@ -3,21 +3,18 @@
 namespace App\Controllers;
 
 use App\Models\KoneksiModel;
-use App\Models\ProgramStudiModel;
-use App\Models\KurikulumModel;
+use App\Models\DeskripsiAktifitasModel;
 use App\Controllers\BaseController;
 
-class Kurikulum extends BaseController
+class Desk extends BaseController
 {
 
     protected $KoneksiModel;
-    protected $KurikulumModel;
-    protected $ProgramStudiModel;
+    protected $DeskripsiAktifitasModel;
     public function __construct()
     {
         $this->KoneksiModel = new KoneksiModel();
-        $this->KurikulumModel = new KurikulumModel();
-        $this->ProgramStudiModel = new ProgramStudiModel();
+        $this->DeskripsiAktifitasModel = new DeskripsiAktifitasModel();
     }
     public function index()
     {
@@ -27,12 +24,11 @@ class Kurikulum extends BaseController
         $data = [
             'title' => 'Fakultas Kedokteran Universitas Mulawarman',
             'topHeader' => 'Database',
-            'header' => 'Kurikulum',
+            'header' => 'Detail Aktifitas',
             'validation' => \Config\Services::validation(),
             'koneksi' => $this->KoneksiModel->koneksi(),
-            'programStudi' => $this->ProgramStudiModel->orderBy('program_studi', 'ASC')->get()->getResultArray(),
         ];
-        return view('kurikulum/index', $data);
+        return view('desk/index', $data);
     }
 
     public function viewData()
@@ -43,14 +39,12 @@ class Kurikulum extends BaseController
         $request = \Config\Services::request();
 
         if ($request->isAJAX()) {
-            $programStudi = $request->getVar('programStudi');
             $data = [
                 'koneksi' => $this->KoneksiModel->koneksi(),
-                'kurikulum' => $this->KurikulumModel->dataKurikulum($programStudi),
-                'programStudi' => $programStudi,
+                'desk' => $this->DeskripsiAktifitasModel->orderBy('pertanyaan', 'ASC')->get()->getResultArray(),
             ];
             $msg = [
-                'data' => view('kurikulum/view-data', $data)
+                'data' => view('desk/view-data', $data)
             ];
             echo json_encode($msg);
         } else {
@@ -65,12 +59,11 @@ class Kurikulum extends BaseController
         }
         $request = \Config\Services::request();
         if ($request->isAJAX()) {
-            $kurikulum = $request->getVar('kurikulum');
-            $programStudix = $request->getVar('programStudi');
+            $desk = $request->getVar('desk');
             $validation = \Config\Services::validation();
             $valid = $this->validate([
-                'kurikulum' => [
-                    'label' => 'Kurikulum',
+                'desk' => [
+                    'label' => 'Detail Aktifitas',
                     'rules' => 'required',
                     'errors' => [
                         'required' => '{field} Tidak Boleh Kosong',
@@ -80,31 +73,26 @@ class Kurikulum extends BaseController
             if (!$valid) {
                 $msg = [
                     'error' => [
-                        'kurikulum' => $validation->getError('kurikulum'),
+                        'desk' => $validation->getError('desk'),
                     ],
                 ];
                 echo json_encode($msg);
             } else {
                 $data = [
-                    'kurikulum' => $kurikulum,
-                    'id_ps' => $programStudix,
+                    'pertanyaan' => $desk,
                 ];
-                $this->KurikulumModel->insert($data);
-
+                $this->DeskripsiAktifitasModel->insert($data);
                 $data2 = [
                     'koneksi' => $this->KoneksiModel->koneksi(),
-                    'kurikulum' => $this->KurikulumModel->dataKurikulum($programStudix),
-                    'programStudi' => $programStudix,
+                    'desk' => $this->DeskripsiAktifitasModel->orderBy('pertanyaan', 'ASC')->get()->getResultArray(),
                 ];
                 $msg = [
-                    'sukses' => 'Data Kurikulum Berhasil Ditambahkan !',
+                    'sukses' => 'Pertanyaan Berhasil Ditambahkan !',
                     'status' => 'berhasil',
-                    'data' => view('kurikulum/view-data', $data2)
+                    'data' => view('desk/view-data', $data2)
                 ];
                 echo json_encode($msg);
             }
-        } else {
-            exit('Data Tidak Dapat diproses');
         }
     }
 
@@ -117,12 +105,15 @@ class Kurikulum extends BaseController
         if ($request->isAJAX()) {
 
             $id = $request->getVar('id');
-            $programStudix = $request->getVar('programStudi');
-            $kurikulum = $request->getVar('kurikulum');
+            $desk = $request->getVar('desk');
+            $jenis = $request->getVar('jenis');
+            $tingkat = $request->getVar('tingkat');
+            $tanggal = $request->getVar('tanggal');
+
             $validation = \Config\Services::validation();
             $valid = $this->validate([
-                'kurikulum' => [
-                    'label' => 'Kurikulum',
+                'desk' => [
+                    'label' => 'Detail Aktifitas',
                     'rules' => 'required',
                     'errors' => [
                         'required' => '{field} Tidak Boleh Kosong',
@@ -133,32 +124,28 @@ class Kurikulum extends BaseController
             if (!$valid) {
                 $msg = [
                     'error' => [
-                        'kurikulum' => $validation->getError('kurikulum'),
-                        'id_ps' => $programStudix,
+                        'desk' => $validation->getError('desk'),
                     ],
                 ];
                 echo json_encode($msg);
             } else {
                 $data = [
-                    'kurikulum' => $kurikulum,
+                    'pertanyaan' => $desk,
                 ];
 
-                $this->KurikulumModel->update($id, $data);
+                $this->DeskripsiAktifitasModel->update($id, $data);
 
                 $data2 = [
                     'koneksi' => $this->KoneksiModel->koneksi(),
-                    'kurikulum' => $this->KurikulumModel->dataKurikulum($programStudix),
-                    'programStudi' => $programStudix,
+                    'desk' => $this->DeskripsiAktifitasModel->orderBy('pertanyaan', 'ASC')->get()->getResultArray(),
                 ];
                 $msg = [
-                    'sukses' => 'Kurikulum Berhasil Diedit !',
+                    'sukses' => 'Pertanyaan Berhasil Diubah !',
                     'status' => 'berhasil',
-                    'data' => view('kurikulum/view-data', $data2)
+                    'data' => view('desk/view-data', $data2)
                 ];
                 echo json_encode($msg);
             }
-        } else {
-            exit('Data Tidak Dapat diproses');
         }
     }
 
@@ -167,9 +154,9 @@ class Kurikulum extends BaseController
         if (session()->get('username') == NULL || session()->get('role') !== '1') {
             return redirect()->to('/');
         }
-        $this->KurikulumModel->delete($id);
+        $this->DeskripsiAktifitasModel->delete($id);
 
-        session()->setFlashdata('pesanHapus', 'Kurikulum Berhasil Di Hapus !');
-        return redirect()->to('/kurikulum');
+        session()->setFlashdata('pesanHapus', 'Pertanyaan Berhasil Di Hapus !');
+        return redirect()->to('/desk');
     }
 }

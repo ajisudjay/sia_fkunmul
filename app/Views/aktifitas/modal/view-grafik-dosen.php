@@ -21,7 +21,7 @@
                                             <p class="alert alert-danger col-lg-4">Tahun Ajaran - <?= $itemKompetensi['tahun_ajaran'] ?></p>
                                             <?php foreach ($sqlgrafik1 as $dataCount) :
                                                 if ($itemKompetensi['id_tahun_ajaran'] == $dataCount['id_tahun_ajaran']) { ?>
-                                                    <table class="mt-1">
+                                                    <table class="mt-2">
                                                         <tr>
                                                             <td style="width: 400px;">
                                                                 <p class="badge badge-primary d-inline" style="margin-bottom:10px"><?= $dataCount['data_kompetensi'] ?></p>
@@ -33,7 +33,7 @@
                                                     </table>
                                                     <?php foreach ($sqlcount as $dataCountSub) : ?>
                                                         <?php if ($dataCountSub['kompetensi'] == $dataCount['kompetensi_aktifitas'] and $dataCountSub['id_tahun_ajaran'] == $dataCount['id_tahun_ajaran']) { ?>
-                                                            <table class="mt-3">
+                                                            <table class="mt-1">
                                                                 <tr>
                                                                     <td style="width: 400px;">
                                                                         <span class="icofont icofont-check-circled text-primary ml-1"></span> <?= $dataCountSub['sub_kompetensi'] ?>

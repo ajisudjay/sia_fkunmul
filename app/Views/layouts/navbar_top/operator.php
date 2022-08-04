@@ -68,7 +68,7 @@ $var_foto = $foto['foto']; ?>
                                     <i class="feather icon-maximize full-screen"></i>
                                 </a>
                             </li>
-                            <li class="header-notification">
+                            <!-- <li class="header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-toggle="dropdown">
                                         <i class="feather icon-bell"></i>
@@ -99,7 +99,7 @@ $var_foto = $foto['foto']; ?>
                                         <span class="badge bg-c-green">3</span>
                                     </div>
                                 </div>
-                            </li>
+                            </li> -->
                             <li class="user-profile header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle foto_user_awal" data-toggle="dropdown">
@@ -134,7 +134,7 @@ $var_foto = $foto['foto']; ?>
             </nav>
 
             <!-- Sidebar chat start -->
-            <div id="sidebar" class="users p-chat-user showChat">
+            <!-- <div id="sidebar" class="users p-chat-user showChat">
                 <div class="had-container">
                     <div class="card card_main p-fixed users-main">
                         <div class="user-box">
@@ -198,9 +198,9 @@ $var_foto = $foto['foto']; ?>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- Sidebar inner chat start-->
-            <div class="showChat_inner">
+            <!-- <div class="showChat_inner">
                 <div class="media chat-inner-header">
                     <a class="back_chatBox">
                         <i class="feather icon-chevron-left"></i> Josephin Doe
@@ -238,4 +238,4 @@ $var_foto = $foto['foto']; ?>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->

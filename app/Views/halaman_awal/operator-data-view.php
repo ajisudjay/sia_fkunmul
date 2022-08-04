@@ -10,7 +10,7 @@
                              <div class="page-header-title">
                                  <div class="d-inline">
                                      <h4>Selamat Datang</h4>
-                                     <span><?= $user['nama_user'] ?></span>
+                                     <span>Sistem Informasi Fakultas Kedokteran - Universitas Mulawarman</span>
                                  </div>
                              </div>
                          </div>
@@ -18,7 +18,7 @@
                              <div class="page-header-breadcrumb">
                                  <ul class="breadcrumb-title">
                                      <li class="breadcrumb-item">
-                                         <a href="index-1.htm"> <i class="feather icon-home"></i> </a>
+                                         <a href="/operator"> <i class="feather icon-home"></i> </a>
                                      </li>
                                      <li class="breadcrumb-item"><a href="/operator">Beranda</a>
                                      </li>
@@ -49,13 +49,6 @@
                                                          <!-- <i class="icofont icofont-ui-delete"></i> -->
                                                      </div>
                                                  </div>
-                                                 <!-- Social wallpaper end -->
-                                                 <!-- Timeline button start -->
-                                                 <!-- <div class="timeline-btn">
-                                                     <a href="#" class="btn btn-primary waves-effect waves-light m-r-10">follows</a>
-                                                     <a href="#" class="btn btn-primary waves-effect waves-light">Send Message</a>
-                                                 </div> -->
-                                                 <!-- Timeline button end -->
                                              </div>
                                          </div>
                                          <!-- Row end -->
@@ -76,93 +69,12 @@
                                                              </div>
                                                          </div>
                                                          <div class="card-block social-follower">
-                                                             <h4>Josephin Villa</h4>
-                                                             <h5>Softwear Engineer</h5>
-                                                             <div class="row follower-counter">
-                                                                 <div class="col-4">
-                                                                     <button class="btn btn-primary btn-icon" data-toggle="tooltip" data-placement="top" title="485"><i class="icofont icofont-user-alt-3"></i></button>
-                                                                 </div>
-                                                                 <div class="col-4">
-                                                                     <button class="btn btn-danger btn-icon" data-toggle="tooltip" data-placement="top" title="2k"><i class="icofont icofont-like"></i></button>
-                                                                 </div>
-                                                                 <div class="col-4">
-                                                                     <button class="btn btn-success btn-icon" data-toggle="tooltip" data-placement="top" title="90"><i class="icofont icofont-eye-alt"></i></button>
-                                                                 </div>
-                                                             </div>
-                                                             <div class="">
-                                                                 <button type="button" class="btn btn-outline-primary waves-effect btn-block"><i class="icofont icofont-ui-user m-r-10"></i> Add as Friend</button>
-                                                             </div>
+                                                             <h4><?= $user['nama_user'] ?></h4>
+                                                             <h5><?= $user['user_role'] ?></h5>
                                                          </div>
                                                      </div>
                                                      <!-- social-profile card end -->
-                                                     <!-- Who to follow card start -->
-                                                     <div class="card">
-                                                         <div class="card-header">
-                                                             <h5 class="card-header-text">Who to follow</h5>
-                                                         </div>
-                                                         <div class="card-block user-box">
-                                                             <div class="media m-b-10">
-                                                                 <a class="media-left" href="#!">
-                                                                     <img class="media-object img-radius" src="<?= base_url(''); ?>\assets\images\avatar-1.jpg" alt="Generic placeholder image" data-toggle="tooltip" data-placement="top" title="user image">
-                                                                     <div class="live-status bg-danger"></div>
-                                                                 </a>
-                                                                 <div class="media-body">
-                                                                     <div class="chat-header">Josephin Doe</div>
-                                                                     <div class="text-muted social-designation">Softwear Engineer</div>
-                                                                 </div>
-                                                             </div>
-                                                             <div class="media m-b-10">
-                                                                 <a class="media-left" href="#!">
-                                                                     <img class="media-object img-radius" src="<?= base_url(''); ?>\assets\images\avatar-2.jpg" alt="Generic placeholder image" data-toggle="tooltip" data-placement="top" title="user image">
-                                                                     <div class="live-status bg-success"></div>
-                                                                 </a>
-                                                                 <div class="media-body">
-                                                                     <div class="chat-header">Josephin Doe</div>
-                                                                     <div class="text-muted social-designation">Softwear Engineer</div>
-                                                                 </div>
-                                                             </div>
-                                                             <div class="media m-b-10">
-                                                                 <a class="media-left" href="#!">
-                                                                     <img class="media-object img-radius" src="<?= base_url(''); ?>\assets\images\avatar-3.jpg" alt="Generic placeholder image" data-toggle="tooltip" data-placement="top" title="user image">
-                                                                     <div class="live-status bg-danger"></div>
-                                                                 </a>
-                                                                 <div class="media-body">
-                                                                     <div class="chat-header">Josephin Doe</div>
-                                                                     <div class="text-muted social-designation">Softwear Engineer</div>
-                                                                 </div>
-                                                             </div>
-                                                             <div class="media m-b-10">
-                                                                 <a class="media-left" href="#!">
-                                                                     <img class="media-object img-radius" src="<?= base_url(''); ?>\assets\images\avatar-2.jpg" alt="Generic placeholder image" data-toggle="tooltip" data-placement="top" title="user image">
-                                                                     <div class="live-status bg-success"></div>
-                                                                 </a>
-                                                                 <div class="media-body">
-                                                                     <div class="chat-header">Josephin Doe</div>
-                                                                     <div class="text-muted social-designation">Softwear Engineer</div>
-                                                                 </div>
-                                                             </div>
-                                                         </div>
-                                                     </div>
-                                                     <!-- Who to follow card end -->
-                                                     <!-- Friends card start -->
-                                                     <div class="card">
-                                                         <div class="card-header">
-                                                             <h5 class="card-header-text d-inline-block">Friends</h5>
-                                                             <!-- <span class="friend-more f-right">see 12 more</span> -->
-                                                             <span class="label label-primary f-right"> See 12 More </span>
-                                                         </div>
-                                                         <div class="card-block friend-box">
-                                                             <img class="media-object img-radius" src="<?= base_url(''); ?>\assets\images\avatar-1.jpg" alt="" data-toggle="tooltip" data-placement="top" title="user image">
-                                                             <img class="media-object img-radius" src="<?= base_url(''); ?>\assets\images\avatar-2.jpg" alt="" data-toggle="tooltip" data-placement="top" title="user image">
-                                                             <img class="media-object img-radius" src="<?= base_url(''); ?>\assets\images\avatar-3.jpg" alt="" data-toggle="tooltip" data-placement="top" title="user image">
-                                                             <img class="media-object img-radius" src="<?= base_url(''); ?>\assets\images\avatar-4.jpg" alt="" data-toggle="tooltip" data-placement="top" title="user image">
-                                                             <img class="media-object img-radius" src="<?= base_url(''); ?>\assets\images\avatar-1.jpg" alt="" data-toggle="tooltip" data-placement="top" title="user image">
-                                                             <img class="media-object img-radius" src="<?= base_url(''); ?>\assets\images\avatar-4.jpg" alt="" data-toggle="tooltip" data-placement="top" title="user image">
-                                                             <img class="media-object img-radius" src="<?= base_url(''); ?>\assets\images\avatar-3.jpg" alt="" data-toggle="tooltip" data-placement="top" title="user image">
-                                                             <img class="media-object img-radius" src="<?= base_url(''); ?>\assets\images\avatar-2.jpg" alt="" data-toggle="tooltip" data-placement="top" title="user image">
-                                                         </div>
-                                                     </div>
-                                                     <!-- Friends card end -->
+
                                                  </div>
                                                  <!-- Social timeline left end -->
                                              </div>
@@ -174,7 +86,7 @@
                                                              <a class="nav-link active" data-toggle="tab" href="#timeline" role="tab">Timeline</a>
                                                              <div class="slide"></div>
                                                          </li>
-                                                         <li class="nav-item">
+                                                         <!-- <li class="nav-item">
                                                              <a class="nav-link" data-toggle="tab" href="#about" role="tab">About</a>
                                                              <div class="slide"></div>
                                                          </li>
@@ -185,13 +97,13 @@
                                                          <li class="nav-item">
                                                              <a class="nav-link" data-toggle="tab" href="#friends" role="tab">Friends</a>
                                                              <div class="slide"></div>
-                                                         </li>
+                                                         </li> -->
                                                      </ul>
                                                  </div>
                                                  <!-- Tab panes -->
                                                  <div class="tab-content">
                                                      <!-- Timeline tab start -->
-                                                     <div class="tab-pane active" id="timeline">
+                                                     <!-- <div class="tab-pane active" id="timeline">
                                                          <div class="row">
                                                              <div class="col-md-12 timeline-dot">
                                                                  <div class="social-timelines p-relative">
@@ -403,10 +315,10 @@
                                                                  </div>
                                                              </div>
                                                          </div>
-                                                     </div>
+                                                     </div> -->
                                                      <!-- Timeline tab end -->
                                                      <!-- About tab start -->
-                                                     <div class="tab-pane" id="about">
+                                                     <!-- <div class="tab-pane" id="about">
                                                          <div class="row">
                                                              <div class="col-sm-12">
                                                                  <div class="card">
@@ -613,15 +525,14 @@
                                                                  </div>
                                                              </div>
                                                          </div>
-                                                     </div>
+                                                     </div> -->
                                                      <!-- About tab end -->
                                                      <!-- Photos tab start -->
-                                                     <div class="tab-pane" id="photos">
-                                                         <div class="card">
-                                                             <!-- Row start -->
-
-                                                             <!-- Gallery start -->
-                                                             <div class="card-block">
+                                                     <!-- <div class="tab-pane" id="photos">
+                                                         <div class="card"> -->
+                                                     <!-- Row start -->
+                                                     <!-- Gallery start -->
+                                                     <!-- <div class="card-block">
                                                                  <div class="demo-gallery">
                                                                      <ul id="profile-lightgallery" class="row">
                                                                          <li class="col-md-4 col-lg-2 col-sm-6 col-xs-12">
@@ -646,11 +557,11 @@
                                                                          </li>
                                                                      </ul>
                                                                  </div>
-                                                             </div>
+                                                             </div> -->
 
-                                                             <!-- Gallery end -->
-                                                         </div>
-                                                     </div>
+                                                     <!-- Gallery end -->
+                                                     <!-- </div>
+                                                     </div> -->
                                                      <!-- Photos tab end -->
                                                      <!-- Friends tab start -->
                                                      <div class="tab-pane" id="friends">

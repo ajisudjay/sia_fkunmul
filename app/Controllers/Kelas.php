@@ -33,7 +33,7 @@ class Kelas extends BaseController
         }
         $data = [
             'title' => 'Kelas - Fakultas Kedokteran Universitas Mulawarman',
-            'topHeader' => 'Master Data',
+            'topHeader' => 'Database',
             'header' => 'Kelas',
             'validation' => \Config\Services::validation(),
             'kelas' => $this->KelasModel->orderBy('kelas', 'ASC')->get()->getResultArray(),
@@ -57,7 +57,7 @@ class Kelas extends BaseController
             $tahunAjaran = $request->getVar('tahunAjaran');
             $data = [
                 'title' => 'Kelas - Fakultas Kedokteran Universitas Mulawarman',
-                'topHeader' => 'Master Data',
+                'topHeader' => 'Database',
                 'header' => 'Kelas',
                 'validation' => \Config\Services::validation(),
                 'kelas' => $this->KelasModel->dataKelas($fakultas, $programStudi, $tahunAjaran),
@@ -117,7 +117,7 @@ class Kelas extends BaseController
 
                 $data2 = [
                     'title' => 'Kelas - Fakultas Kedokteran Universitas Mulawarman',
-                    'topHeader' => 'Master Data',
+                    'topHeader' => 'Database',
                     'header' => 'Kelas',
                     'validation' => \Config\Services::validation(),
                     'kelas' => $this->KelasModel->dataKelas($fakultas, $programStudi, $tahunAjaran),
@@ -177,7 +177,7 @@ class Kelas extends BaseController
 
                 $data2 = [
                     'title' => 'Kelas - Fakultas Kedokteran Universitas Mulawarman',
-                    'topHeader' => 'Master Data',
+                    'topHeader' => 'Database',
                     'header' => 'Kelas',
                     'validation' => \Config\Services::validation(),
                     'kelas' => $this->KelasModel->dataKelas($fakultas, $programStudi, $tahunAjaran),
@@ -217,7 +217,7 @@ class Kelas extends BaseController
 
             $data2 = [
                 'title' => 'Kelas - Fakultas Kedokteran Universitas Mulawarman',
-                'topHeader' => 'Master Data',
+                'topHeader' => 'Database',
                 'header' => 'Kelas',
                 'validation' => \Config\Services::validation(),
                 'kelas' => $this->KelasModel->dataKelas($fakultas, $programStudi, $tahunAjaran),

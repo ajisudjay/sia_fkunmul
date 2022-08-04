@@ -14,7 +14,7 @@ class DeskripsiAktifitasModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['deskripsiaktifitas'];
+    protected $allowedFields    = ['id', 'pertanyaan'];
 
     // Dates
     protected $useTimestamps = false;

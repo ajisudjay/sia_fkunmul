@@ -95,7 +95,7 @@ class AktifitasModel extends Model
             ->join('tahunajarans', 'aktifitas.id_tahun_ajaran=tahunajarans.id')
             ->join('subkompetensis', 'aktifitas.subkompetensi_aktifitas=subkompetensis.id_sub_kompetensi', 'left')
             ->where('mahasiswas.nim', $nim)
-            // ->where('jenis', 'REGULAR')
+            ->where('jenis', 'REGULAR')
             ->groupBy('kompetensis.kompetensi')
             ->orderBy('kompetensis.id_kompetensi', 'ASC')->get()->getResultArray();
     }
@@ -148,8 +148,8 @@ class AktifitasModel extends Model
             ->join('subkompetensis', 'aktifitas.subkompetensi_aktifitas=subkompetensis.id_sub_kompetensi', 'left')
             ->where('mahasiswas.nim', $nim)
             // ->where('id_tahun_ajaran', $id_tahun_ajaran)
-            // ->where('jenis', 'REGULAR')
             // ->groupBy('kompetensis.kompetensi')
+            ->where('jenis', 'REGULAR')
             ->groupBy('id_tahun_ajaran')
             ->orderBy('tahunajarans.id', 'ASC')->get()->getResultArray();
     }
@@ -166,7 +166,7 @@ class AktifitasModel extends Model
             ->join('tahunajarans', 'aktifitas.id_tahun_ajaran=tahunajarans.id')
             ->where('mahasiswas.nim', $nim)
             // ->where('id_tahun_ajaran', $id_tahun_ajaran)
-            // ->where('jenis', 'REGULAR')
+            ->where('jenis', 'REGULAR')
             ->groupBy('id_tahun_ajaran')
             ->groupBy('kompetensis.kompetensi')
             ->orderBy('tahunajarans.id', 'ASC')->get()->getResultArray();

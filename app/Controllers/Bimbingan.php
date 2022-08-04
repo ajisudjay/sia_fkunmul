@@ -31,7 +31,7 @@ class Bimbingan extends BaseController
         }
         $data = [
             'title' => 'Bimbingan Akademik - Fakultas Kedokteran Universitas Mulawarman',
-            'topHeader' => 'Bimbingan',
+            'topHeader' => 'Perkuliahan',
             'header' => 'Bimbingan Akademik',
             'angkatan' => $this->AngkatanModel->orderBy('angkatan', 'DESC')->get()->getResultArray(),
             'programStudi' => $this->ProgramStudiModel->get()->getResultArray(),
@@ -110,6 +110,49 @@ class Bimbingan extends BaseController
                 'sukses' => 'Data berhasil Diubah !'
             ];
 
+            echo json_encode($msg);
+        } else {
+            exit('Data Tidak Dapat diproses');
+        }
+    }
+
+    // DOSEN
+
+    public function BimbinganDosen()
+    {
+        if (session()->get('username') == NULL || session()->get('role') !== '3') {
+            return redirect()->to('/');
+        }
+        $data = [
+            'title' => 'Bimbingan Akademik - Fakultas Kedokteran Universitas Mulawarman',
+            'topHeader' => 'Perkuliahan',
+            'header' => 'Bimbingan Akademik',
+            'angkatan' => $this->AngkatanModel->orderBy('angkatan', 'DESC')->get()->getResultArray(),
+            'programStudi' => $this->ProgramStudiModel->get()->getResultArray(),
+        ];
+        return view('bimbingan/dosen-view', $data);
+    }
+
+    public function viewDataDosen()
+    {
+        if (session()->get('username') == NULL || session()->get('role') !== '3') {
+            return redirect()->to('/');
+        }
+        $request = \Config\Services::request();
+        $username = session()->get('username');
+        $cekid_dosen = $this->DosenModel->where('nip', $username)->first();
+        $id_dosen = $cekid_dosen['id'];
+        $id_ps = $request->getVar('programStudi');
+        $id_angkatan = $request->getVar('angkatan');
+        if ($request->isAJAX()) {
+            $data = [
+                'bimbingan' => $this->BimbinganModel->viewData($id_ps, $id_angkatan),
+                'dataDosen' => $this->BimbinganModel->viewDataBimbinganDosen($id_ps, $id_angkatan, $id_dosen),
+                'id_ps' => $id_ps
+            ];
+            $msg = [
+                'data' => view('bimbingan/dosen-data-view', $data)
+            ];
             echo json_encode($msg);
         } else {
             exit('Data Tidak Dapat diproses');

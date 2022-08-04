@@ -253,23 +253,16 @@ class Prestasi extends BaseController
         }
     }
 
-    public function hapus()
+    public function hapus($id)
     {
         if (session()->get('username') == NULL || session()->get('role') !== '2') {
             return redirect()->to('/');
         }
-        $request = \Config\Services::request();
-
-        if ($request->isAJAX()) {
-
-            $id = $request->getVar('id');
-            $file_bukti = $request->getVar('file_bukti');
-
-
-            unlink('../public/file/prestasi/' . $file_bukti);
-            $this->PrestasiModel->delete($id);
-            session()->setFlashdata('berhasil', 'Berhasil Hapus');
-            return redirect()->to('/prestasi-mahasiswa');
-        }
+        $cekfile = $this->PrestasiModel->where('id', $id)->first();
+        $namafile = $cekfile['file_bukti'];
+        unlink('../public/file/prestasi/' . $namafile);
+        $this->PrestasiModel->delete($id);
+        session()->setFlashdata('pesanHapus', 'Prestasi Berhasil Di Hapus !');
+        return redirect()->to('/prestasi-mahasiswa');
     }
 }

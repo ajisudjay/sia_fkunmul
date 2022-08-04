@@ -25,7 +25,7 @@ class ProgramStudi extends BaseController
         }
         $data = [
             'title' => 'Program Studi - Fakultas Kedokteran Universitas Mulawarman',
-            'topHeader' => 'Master Data',
+            'topHeader' => 'Database',
             'header' => 'Program Studi',
             'validation' => \Config\Services::validation(),
             'programStudi' => $this->ProgramStudiModel->orderBy('program_studi', 'ASC')->get()->getResultArray(),

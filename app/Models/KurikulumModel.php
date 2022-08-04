@@ -14,7 +14,7 @@ class KurikulumModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id', 'kurikulum'];
+    protected $allowedFields    = ['id', 'kurikulum', 'id_ps'];
 
     // Dates
     protected $useTimestamps = false;
@@ -39,4 +39,9 @@ class KurikulumModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function dataKurikulum($programStudi)
+    {
+        return $this->db->table('kurikulums')->where(['id_ps' => $programStudi])->orderBy('kurikulum', 'DESC')->get()->getResultArray();
+    }
 }

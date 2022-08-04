@@ -48,19 +48,19 @@
                             </li>
                         </ul>
                     </li> -->
-                    <li class="<?= $topHeader == 'Bimbingan' ? 'active' : '' ?>">
+                    <li class="<?= $topHeader == 'Perkuliahan' ? 'active' : '' ?>">
                         <a href="<?= base_url('bimbingan-akademik'); ?>">
                             <span class="pcoded-micon"><i class="feather icon-user"></i></span>
                             <span class="pcoded-mtext">Bimbingan Akademik</span>
                         </a>
                     </li>
                 </ul>
-                <div class="pcoded-navigatio-lavel">Data</div>
+                <div class="pcoded-navigatio-lavel">Database</div>
                 <ul class="pcoded-item pcoded-left-item">
-                    <li class="<?= $topHeader == 'Master Data' ? 'pcoded-trigger' : '' ?> pcoded-hasmenu">
+                    <li class="<?= $topHeader == 'Database' ? 'pcoded-trigger' : '' ?> pcoded-hasmenu">
                         <a href="javascript:void(0)">
                             <span class="pcoded-micon"><i class="feather icon-box"></i></span>
-                            <span class="pcoded-mtext">Master Data</span>
+                            <span class="pcoded-mtext">Data</span>
                         </a>
                         <ul class="pcoded-submenu">
                             <!-- <li class="<?= $header == 'Fakultas' ? 'active' : '' ?>">
@@ -68,6 +68,11 @@
                                     <span class="pcoded-mtext">Fakultas</span>
                                 </a>
                             </li> -->
+                            <li class="<?= $header == 'Kurikulum' ? 'active' : '' ?>">
+                                <a href="<?= base_url('kurikulum'); ?>">
+                                    <span class="pcoded-mtext">Kurikulum</span>
+                                </a>
+                            </li>
                             <li class="<?= $header == 'Kelas' ? 'active' : '' ?>">
                                 <a href="<?= base_url('kelas'); ?>">
                                     <span class="pcoded-mtext">Kelas</span>
@@ -86,6 +91,21 @@
                             <li class="<?= $header == 'Tahun Ajaran' ? 'active' : '' ?>">
                                 <a href="<?= base_url('tahunAjaran'); ?>">
                                     <span class="pcoded-mtext">Tahun Ajaran</span>
+                                </a>
+                            </li>
+                            <li class="<?= $header == 'Angkatan' ? 'active' : '' ?>">
+                                <a href="<?= base_url('angkatan'); ?>">
+                                    <span class="pcoded-mtext">Angkatan</span>
+                                </a>
+                            </li>
+                            <li class="<?= $header == 'Kegiatan' ? 'active' : '' ?>">
+                                <a href="<?= base_url('kegiatan'); ?>">
+                                    <span class="pcoded-mtext">Kegiatan</span>
+                                </a>
+                            </li>
+                            <li class="<?= $header == 'Detail Aktifitas' ? 'active' : '' ?>">
+                                <a href="<?= base_url('desk'); ?>">
+                                    <span class="pcoded-mtext">Detail Aktifitas</span>
                                 </a>
                             </li>
                         </ul>

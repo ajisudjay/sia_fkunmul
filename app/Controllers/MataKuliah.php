@@ -36,7 +36,7 @@ class MataKuliah extends BaseController
         }
         $data = [
             'title' => 'Mata Kuliah - Fakultas Kedokteran Universitas Mulawarman',
-            'topHeader' => 'Master Data',
+            'topHeader' => 'Database',
             'header' => 'Mata Kuliah',
             'validation' => \Config\Services::validation(),
             'mataKuliah' => $this->MataKuliahModel->orderBy('mata_kuliah', 'ASC')->get()->getResultArray(),

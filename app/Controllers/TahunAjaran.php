@@ -25,7 +25,7 @@ class TahunAjaran extends BaseController
     {
         $data = [
             'title' => 'Tahun Ajaran - Fakultas Kedokteran Universitas Mulawarman',
-            'topHeader' => 'Master Data',
+            'topHeader' => 'Database',
             'header' => 'Tahun Ajaran',
             'validation' => \Config\Services::validation(),
             'tahunAjaran' => $this->TahunAjaranModel->orderBy('id', 'DESC')->get()->getResultArray(),
