@@ -54,6 +54,12 @@
                             <span class="pcoded-mtext">Bimbingan Akademik</span>
                         </a>
                     </li>
+                    <li class="<?= $topHeader == 'IPE' ? 'active' : '' ?>">
+                        <a href="<?= base_url('bimbingan-ipe'); ?>">
+                            <span class="pcoded-micon"><i class="feather icon-user"></i></span>
+                            <span class="pcoded-mtext">Bimbingan IPE</span>
+                        </a>
+                    </li>
                 </ul>
                 <div class="pcoded-navigatio-lavel">Database</div>
                 <ul class="pcoded-item pcoded-left-item">

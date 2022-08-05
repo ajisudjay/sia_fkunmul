@@ -46,6 +46,7 @@ $routes->get('/mataKuliah', 'MataKuliah::index');
 $routes->get('/data-dosen', 'Dosen::index');
 $routes->get('/data-mahasiswa', 'Mahasiswa::index');
 $routes->get('/bimbingan-akademik', 'Bimbingan::index');
+$routes->get('/bimbingan-ipe', 'Bimbingan::ipe');
 $routes->get('/bimbingan-dosen', 'Bimbingan::BimbinganDosen');
 
 $routes->get('/mahasiswa', 'Home::mahasiswa');

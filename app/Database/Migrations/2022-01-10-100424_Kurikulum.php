@@ -20,6 +20,11 @@ class Kurikulum extends Migration
                 'constraint' => 255,
                 'null' => true,
             ],
+            'id_ps' => [
+                'type' => 'INT',
+                'null' => true,
+                'unsigned' => true
+            ],
         ]);
 
         $this->forge->addKey('id', TRUE);

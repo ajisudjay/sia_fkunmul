@@ -45,7 +45,6 @@
                         <div class="main-content">
                             <span class="section-name ">Fakultas Kedokteran Universitas Mulawarman</span>
                             <h2 class="">Registrasi</h2>
-                            <div class="result"></div>
                             <span class="separator"></span>
                             <form class="theme-form register-form" action="<?= base_url('auth/prosesRegister'); ?>" method="post">
                                 <?= csrf_field() ?>
@@ -72,7 +71,7 @@
                                         <span style="font-size: 10px;font-weight:bold" class="text-danger errorjk"></span>
                                         <div class="form-group">
                                             <select name="jk" class="form form-control" id="">
-                                                <option disabled selected hidden>
+                                                <option disabled selected>
                                                     Jenis Kelamin*
                                                 </option>
                                                 <option>Pria</option>
@@ -195,7 +194,7 @@
             },
             complete: function() {
                 $('.btnRegister').removeAttr('disable', 'disabled');
-                $('.btnRegister').html('Login');
+                $('.btnRegister').html('Registrasi');
             },
             success: function(response) {
                 if (response.error) {

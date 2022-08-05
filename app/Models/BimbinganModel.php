@@ -45,9 +45,19 @@ class BimbinganModel extends Model
         return $this->db->table('mahasiswas')->join('dosens', 'dosens.id=mahasiswas.id_pa')->where(['mahasiswas.id_ps' => $id_ps, 'mahasiswas.id_angkatan' => $id_angkatan])->orderBy('nim', 'ASC')->get()->getResultArray();
     }
 
+    public function ipeViewDataJoinDosen($id_ps, $id_angkatan)
+    {
+        return $this->db->table('mahasiswas')->join('dosens', 'dosens.id=mahasiswas.id_dosen_ipe', 'left')->where(['mahasiswas.id_ps' => $id_ps, 'mahasiswas.id_angkatan' => $id_angkatan])->orderBy('nim', 'ASC')->get()->getResultArray();
+    }
+
     public function viewData($id_ps, $id_angkatan)
     {
         return $this->db->table('mahasiswas')->join('dosens', 'dosens.id=mahasiswas.id_pa')->where(['mahasiswas.id_ps' => $id_ps, 'mahasiswas.id_angkatan' => $id_angkatan])->orderBy('nim', 'ASC')->get()->getResultArray();
+    }
+
+    public function ipeViewData($id_ps, $id_angkatan)
+    {
+        return $this->db->table('mahasiswas')->join('dosens', 'dosens.id=mahasiswas.id_dosen_ipe', 'left')->where(['mahasiswas.id_ps' => $id_ps, 'mahasiswas.id_angkatan' => $id_angkatan])->orderBy('nim', 'ASC')->get()->getResultArray();
     }
 
     public function viewDataDetail($id)
